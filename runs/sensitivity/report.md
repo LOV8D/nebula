@@ -21,3 +21,9 @@ so that row is weak evidence — rerun with more seeds before
 quoting its direction.
 Seeds per combo: 2. Raw per-seed values in `results.json`.
 Runs use the shared response cache; provenance in each run's manifest.
+
+**Decision (user, 2026-10-22): the brain is GLM-only.** The deepseek rows are
+retained above as evidence of why it was dropped, not as quotable results.
+Quotable sensitivity evidence = glm-5.3-flash rows: the wording A/B holds on
+both prompts (p1 +15.4pp, p2 +5.9pp, near-zero errors). The default
+`sensitivity` run now uses BRAIN_MODEL only.

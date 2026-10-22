@@ -24,7 +24,10 @@ def run_sensitivity(models=None, prompts=("p1", "p2"), seeds=2, out_root=None):
     base_url = os.environ.get("BRAIN_BASE_URL")
     api_key = os.environ.get("BRAIN_API_KEY")
     brain_default = os.environ.get("BRAIN_MODEL", "glm-5.3-flash")
-    models = models or [brain_default, "deepseek-v4.1-flash-1017"]
+    # GLM-only by user decision 2026-10-22 (deepseek legs were error-polluted
+    # under 8-worker concurrency and sign-unstable at 2 seeds). Pass --models
+    # to add others back deliberately.
+    models = models or [brain_default]
     if not base_url:
         raise SystemExit("BRAIN_BASE_URL missing in .env")
     out_root = Path(out_root) if out_root else ROOT / "runs" / "sensitivity"

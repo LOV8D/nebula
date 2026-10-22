@@ -43,10 +43,11 @@ python3 -m runtime.cli multiday --days 5 --seeds 3        # mock; add --real for
   10Y via Yahoo's public endpoint, documented approximations in
   `config/snapshot.json` provenance). Fetch failure falls back to static
   levels so the demo stays runnable offline.
-- **sensitivity**: runs the A/B across {BRAIN_MODEL, deepseek-v4.1-flash}
-  x {p1 neutral framing, p2 "behave like a real human"} and reports whether
-  the qualitative ranking survives. Instability is a deliverable (BP red
-  line), written up in `runs/sensitivity/report.md`.
+- **sensitivity**: runs the A/B across models x {p1 neutral framing, p2 "behave
+  like a real human"} and reports whether the qualitative ranking survives.
+  GLM-only by default (user decision 2026-10-22; the deepseek legs were
+  error-polluted and sign-unstable — see report footnote). Instability is a
+  deliverable (BP red line), written up in `runs/sensitivity/report.md`.
 - **multiday**: N-day A/B with per-day EQ returns and a behavioral-drift
   check (monotone wake/net-direction drift = persona identity failure,
   BP layer 2).
