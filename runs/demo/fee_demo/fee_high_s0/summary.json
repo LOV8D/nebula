@@ -1,85 +1,85 @@
 {
  "run_id": "fee_high_s0",
  "scenario": "fee_high",
- "elapsed_s": 0.29,
+ "elapsed_s": 0.22,
  "assets": {
   "EQ": {
    "daily_returns": [],
-   "total_ret": 0.0826443849895877,
-   "ann_vol": 0.15578430666545495,
-   "excess_kurtosis": 11.53558412120062,
-   "vol_clustering_lag1": 0.313297147521227,
-   "vol_absret_corr": 0.26086396114813565,
-   "max_drawdown": -0.01134976039391844,
-   "avg_spread_bps": 11.274668072832952,
-   "total_volume": 608137.1821677396,
-   "n_halts": 0
+   "total_ret": -0.08014005679652048,
+   "ann_vol": 0.19203904129758265,
+   "excess_kurtosis": 31.48432361444781,
+   "vol_clustering_lag1": 0.060880801948009725,
+   "vol_absret_corr": 0.39425737997862365,
+   "max_drawdown": -0.10636705984303696,
+   "avg_spread_bps": 10.367223004314834,
+   "total_volume": 241741.03541635897,
+   "n_halts": 14
   },
   "IR": {
    "daily_returns": [],
-   "total_ret": -0.2292886146386902,
-   "ann_vol": 0.18978090986885432,
-   "excess_kurtosis": 6.4497546484590025,
-   "vol_clustering_lag1": 0.036406971588887636,
-   "vol_absret_corr": 0.3378604385613722,
-   "max_drawdown": -0.23421717012841414,
-   "avg_spread_bps": 10.987186248730993,
-   "total_volume": 22631417.90200401,
+   "total_ret": 0.034857506548940265,
+   "ann_vol": 0.13300476044869264,
+   "excess_kurtosis": 8.978521744899924,
+   "vol_clustering_lag1": -0.026819644215538282,
+   "vol_absret_corr": 0.3470374415549442,
+   "max_drawdown": -0.018248360641042405,
+   "avg_spread_bps": 8.180064987695841,
+   "total_volume": 17618537.044951003,
    "n_halts": 0
   },
   "FX": {
    "daily_returns": [],
-   "total_ret": -0.24209338216663223,
-   "ann_vol": 0.3216104915291389,
-   "excess_kurtosis": 6.1586437126576925,
-   "vol_clustering_lag1": -0.058192294862180305,
-   "vol_absret_corr": 0.30736914390687486,
-   "max_drawdown": -0.2887025127913785,
-   "avg_spread_bps": 13.211565790548278,
-   "total_volume": 2685857670.584129,
+   "total_ret": -0.17182687213507486,
+   "ann_vol": 0.2976550286767686,
+   "excess_kurtosis": 3.9925085075399265,
+   "vol_clustering_lag1": -0.07498776720048958,
+   "vol_absret_corr": 0.19656615913513484,
+   "max_drawdown": -0.21812929389229962,
+   "avg_spread_bps": 12.855546605735608,
+   "total_volume": 2875660331.9219656,
    "n_halts": 0
   },
   "CMD": {
    "daily_returns": [],
-   "total_ret": -0.049097597461056575,
-   "ann_vol": 0.24254441984458644,
-   "excess_kurtosis": 11.525095618585201,
-   "vol_clustering_lag1": -0.12162190829801243,
-   "vol_absret_corr": 0.042416045178292304,
-   "max_drawdown": -0.1365379512801448,
-   "avg_spread_bps": 12.26992719871275,
-   "total_volume": 994983.3974831383,
+   "total_ret": -0.04451095121924997,
+   "ann_vol": 0.25667995579836805,
+   "excess_kurtosis": 11.137597583945123,
+   "vol_clustering_lag1": -0.10541542225568264,
+   "vol_absret_corr": 0.06874893948693193,
+   "max_drawdown": -0.15587930426286545,
+   "avg_spread_bps": 12.658531218599885,
+   "total_volume": 1015267.0481495316,
    "n_halts": 0
   },
   "CRYPTO": {
    "daily_returns": [],
-   "total_ret": -0.0426842157423345,
-   "ann_vol": 0.26431392247441204,
-   "excess_kurtosis": 5.390533279508363,
-   "vol_clustering_lag1": 0.04043709327652006,
-   "vol_absret_corr": 0.04012124723969422,
-   "max_drawdown": -0.146256974101309,
-   "avg_spread_bps": 10.846708979435407,
-   "total_volume": 50242.861977100394,
+   "total_ret": -0.0373126530347162,
+   "ann_vol": 0.2929491441443459,
+   "excess_kurtosis": 3.5869892523076743,
+   "vol_clustering_lag1": -0.007556681185395615,
+   "vol_absret_corr": 0.0377817051402899,
+   "max_drawdown": -0.13826472773207754,
+   "avg_spread_bps": 10.89671077626886,
+   "total_volume": 50945.2260157758,
    "n_halts": 0
   }
  },
  "cross": {
-  "dispersion_mean": 0.15842517544013948,
-  "intents_n": 835,
-  "wake_mean_per_round": 4.471794871794872,
-  "flow_hhi": 0.27370389278613455,
+  "dispersion_mean": 0.2632614441462307,
+  "intents_n": 899,
+  "wake_mean_per_round": 6.235897435897436,
+  "flow_hhi": 0.12211644940100892,
   "net_flow_by_class": {
-   "retail": -26120463770.0,
-   "hf_pm": -3159128887.0,
-   "mf_pm": -1281004620.0,
-   "foreig": -249186135.0
+   "retail": -17085888002.0,
+   "foreign_inst": -4297707362.0,
+   "hf_pm": -1502144418.0,
+   "mf_pm": -396045870.0
   }
  },
  "usage": {
-  "calls": 38,
+  "calls": 35,
   "cache_hits": 0,
-  "memo_hits": 763,
+  "memo_hits": 750,
   "in_tokens": 0,
   "out_tokens": 0,
   "errors": 0,
@@ -90,73 +90,73 @@
   {
    "t": 100,
    "headline": "Fund sponsor raises per-transaction fee to 30bps",
-   "EQ_win_ret": -0.0030083738698400975,
-   "EQ_win_vol": 0.0004884808129243643,
-   "IR_win_ret": -0.04903076455348154,
-   "IR_win_vol": 0.002985988284643106,
-   "win_dispersion": 0.45474624384508144,
-   "win_intents": 2717
+   "EQ_win_ret": -0.03788295115860507,
+   "EQ_win_vol": 0.004232201517728688,
+   "IR_win_ret": -0.0060754693439099006,
+   "IR_win_vol": 0.002648128598123059,
+   "win_dispersion": 0.3555987830046014,
+   "win_intents": 2853
   },
   {
    "t": 120,
    "headline": "Fed minutes point to steady policy path",
-   "EQ_win_ret": 0.001000926968938165,
-   "EQ_win_vol": 0.0015173394076025471,
-   "IR_win_ret": -0.046537366344926,
-   "IR_win_vol": 0.0027351177389088924,
-   "FX_win_ret": -0.04414471260253572,
-   "FX_win_vol": 0.004766579616898842,
-   "win_dispersion": 0.38136683080312117,
-   "win_intents": 303
+   "EQ_win_ret": -0.04167533915697952,
+   "EQ_win_vol": 0.0020990982904667403,
+   "IR_win_ret": 0.00818167757046906,
+   "IR_win_vol": 0.0018900740960330184,
+   "FX_win_ret": -0.026926044153731787,
+   "FX_win_vol": 0.0024341028435221606,
+   "win_dispersion": 0.30010578527152987,
+   "win_intents": 89
   }
  ],
  "event_windows_long": [
   {
    "t": 100,
    "headline": "Fund sponsor raises per-transaction fee to 30bps",
-   "EQ_win_ret": 0.0021102904769423336,
-   "EQ_win_vol": 0.0012848828875481409,
-   "IR_win_ret": -0.12173730690094453,
-   "IR_win_vol": 0.002576402485539153,
-   "win_dispersion": 0.451898956815196,
-   "win_intents": 3139
+   "EQ_win_ret": -0.09602210894245167,
+   "EQ_win_vol": 0.0030884230756152114,
+   "IR_win_ret": -0.007854188234650672,
+   "IR_win_vol": 0.0020473614609386047,
+   "win_dispersion": 0.352146715042644,
+   "win_intents": 2939
   },
   {
    "t": 120,
    "headline": "Fed minutes point to steady policy path",
-   "EQ_win_ret": 0.010469736159873344,
-   "EQ_win_vol": 0.0013915609565854669,
-   "IR_win_ret": -0.10648130688739577,
-   "IR_win_vol": 0.002327886039415713,
-   "FX_win_ret": -0.11224162058231268,
-   "FX_win_vol": 0.003760452438998772,
-   "win_dispersion": 0.38316569498829783,
-   "win_intents": 600
+   "EQ_win_ret": -0.07592692304775672,
+   "EQ_win_vol": 0.0020089442712380606,
+   "IR_win_ret": 0.004048806349878031,
+   "IR_win_vol": 0.0015794803054625425,
+   "FX_win_ret": -0.07964529336265991,
+   "FX_win_vol": 0.002775357241869215,
+   "win_dispersion": 0.24346084489583686,
+   "win_intents": 215
   }
  ],
  "event_windows_avg": {
-  "EQ_win_ret": -0.0010037234504509662,
-  "EQ_win_vol": 0.0010029101102634558,
-  "IR_win_ret": -0.04778406544920377,
+  "EQ_win_ret": -0.039779145157792295,
+  "EQ_win_vol": 0.0031656499040977138,
+  "IR_win_ret": 0.0010531041132795793,
   "CRYPTO_win_vol": null,
-  "win_dispersion": 0.4180565373241013,
-  "win_intents": 1510.0,
-  "EQ_win90_ret": 0.006290013318407839,
-  "EQ_win90_vol": 0.0013382219220668039,
-  "IR_win90_ret": -0.11410930689417015
+  "win_dispersion": 0.32785228413806566,
+  "win_intents": 1471.0,
+  "EQ_win90_ret": -0.0859745159951042,
+  "EQ_win90_vol": 0.002548683673426636,
+  "IR_win90_ret": -0.0019026909423863203
  },
  "drift": [
   {
    "day": 0,
-   "intents": 835,
-   "active": 314,
-   "pass_rate": 0.6239520958083833,
-   "net_dir": -0.5859872611464968,
-   "mean_size": 0.42082870995707905
+   "intents": 899,
+   "active": 343,
+   "pass_rate": 0.6184649610678532,
+   "net_dir": -0.3119533527696793,
+   "mean_size": 0.34748736671779384
   }
  ],
  "manifest": {
-  "population": "bca1210e61",
+  "population": "47d972a3fa",
   "intervention": "fee_high",
   "mechanism": {
    "circuit_breaker": {
@@ -177,7 +177,8 @@
   "model": {
    "provider": "mock",
    "model_id": "mock-heuristic-v1",
-   "prompt_version": "p1"
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
   },
   "seed": 11
  }

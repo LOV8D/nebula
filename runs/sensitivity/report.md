@@ -2,17 +2,22 @@
 
 Question (BP red line): does the qualitative conclusion — alarming
 framing is worse than neutral — survive a change of brain or prompt?
-Direction and ranking only; no effect sizes.
+Direction and ranking only.
 
-| model | prompt | neutral (day) | alarming (day) | day separation | 90-win neutral | 90-win alarming |
+| model | prompt | neutral (day) | alarming (day) | separation | llm errors | conclusion stable? |
 |---|---|---|---|---|---|---|
-| deepseek-v4.1-flash-1017 | p1 | +8.1% | -0.1% | neutral > alarming | +1.6% | -2.9% |
-| deepseek-v4.1-flash-1017 | p2 | +1.8% | -0.6% | neutral > alarming | -2.7% | -0.1% |
-| glm-5.3-flash | p1 | +8.9% | -3.6% | neutral > alarming | -0.9% | -6.8% |
-| glm-5.3-flash | p2 | +14.9% | +4.0% | neutral > alarming | +2.7% | -1.0% |
+| deepseek-v4.1-flash-1017 | p1 | +1.6% | +10.8% | -9.2% | 453 | no (inverted) * |
+| deepseek-v4.1-flash-1017 | p2 | +11.8% | +2.5% | +9.3% | 108 | yes * |
+| glm-5.3-flash | p1 | +18.3% | +2.9% | +15.4% | 4 | yes |
+| glm-5.3-flash | p2 | +8.5% | +2.7% | +5.9% | 0 | yes |
 
-**Verdict: STABLE** — 4/4 brain/prompt combos show neutral > alarming on full-day EQ returns.
+**Verdict: FLIPS.** 4 brain/prompt combos, 3/4 show neutral > alarming on full-day EQ.
 
-Honest caveats: (1) the 90-round event window is mixed across combos — day-total returns are the stable unit here, the 30-round knee-jerk window less so (2 seeds each, and both framings dip first on some combos); (2) transient provider errors on some runs (0–12 per run) were absorbed by retry + Tier-B fallback — provenance in each run's manifest; (3) seeds per combo: 2; raw per-seed values in `results.json`.
+The conclusion inverts across brains/prompts — report this instability alongside any headline result. Per BP: sensitivity is a deliverable, not noise.
 
-Runs share one response cache; every run's manifest records the exact model + prompt version. Reproduce: `python3 -m runtime.cli sensitivity --seeds 2`.
+`\*` marks an error-polluted combo (>50 failed LLM attempts,
+3 tries each): many decisions fell back to the Tier-B policy tier,
+so that row is weak evidence — rerun with more seeds before
+quoting its direction.
+Seeds per combo: 2. Raw per-seed values in `results.json`.
+Runs use the shared response cache; provenance in each run's manifest.

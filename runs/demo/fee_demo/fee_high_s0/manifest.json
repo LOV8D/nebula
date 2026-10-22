@@ -1,9 +1,10 @@
 {
  "run_id": "fee_high_s0",
- "created": "2026-10-22T08:46:44",
+ "created": "2026-10-22T11:43:36",
  "runtime_version": "0.1.0",
+ "code_hash": "f38d323d2b",
  "five_tuple": {
-  "population": "bca1210e61",
+  "population": "47d972a3fa",
   "intervention": "fee_high",
   "mechanism": {
    "circuit_breaker": {
@@ -24,7 +25,8 @@
   "model": {
    "provider": "mock",
    "model_id": "mock-heuristic-v1",
-   "prompt_version": "p1"
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
   },
   "seed": 11
  },

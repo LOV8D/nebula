@@ -44,7 +44,7 @@ def run_sensitivity(models=None, prompts=("p1", "p2"), seeds=2, out_root=None):
     for model in models:
         for pv in prompts:
             for scen in ("news_a", "news_b"):
-                rets, wins = [], []
+                rets, wins, errs = [], [], []
                 for i in range(seeds):
                     sc = _load(ROOT / "scenarios" / f"{scen}.yaml")
                     sc["seed"] = sc.get("seed", 11) + i * 101
@@ -61,12 +61,14 @@ def run_sensitivity(models=None, prompts=("p1", "p2"), seeds=2, out_root=None):
                     rets.append(s["assets"]["EQ"]["total_ret"])
                     wins.append(s["event_windows_avg"]["EQ_win90_ret"])
                     u = s["usage"]
+                    errs.append(u["errors"])
                     print(f"  {model[:24]:24s} {pv} {scen} s{i}: "
                           f"day {rets[-1]:+.1%} win90 {wins[-1]:+.1%} "
                           f"calls={u['calls'] + u['cache_hits']} err={u['errors']}")
                 results.append(dict(model=model, prompt=pv, scenario=scen,
                                     day_mean=_mean(rets), win90_mean=_mean(wins),
-                                    day_seeds=rets, win90_seeds=wins))
+                                    day_seeds=rets, win90_seeds=wins,
+                                    errors=sum(errs)))
     report = _report(results, seeds)
     out_root.mkdir(parents=True, exist_ok=True)
     (out_root / "report.md").write_text(report)
@@ -84,27 +86,33 @@ def _report(results, seeds):
              "Question (BP red line): does the qualitative conclusion — alarming",
              "framing is worse than neutral — survive a change of brain or prompt?",
              "Direction and ranking only.", "",
-             "| model | prompt | neutral (day) | alarming (day) | separation | conclusion stable? |",
-             "|---|---|---|---|---|---|"]
-    seps = {}
+             "| model | prompt | neutral (day) | alarming (day) | separation | llm errors | conclusion stable? |",
+             "|---|---|---|---|---|---|---|"]
+    rows = []
     for (model, pv), d in sorted(combos.items()):
         a, b = d["news_a"]["day_mean"], d["news_b"]["day_mean"]
-        sep = a - b
-        seps[(model, pv)] = sep
-        lines.append(f"| {model} | {pv} | {a:+.1%} | {b:+.1%} | {sep:+.1%} | |")
-    signs = {k: (v > 0) for k, v in seps.items()}
+        err = d["news_a"].get("errors", 0) + d["news_b"].get("errors", 0)
+        rows.append((model, pv, a, b, a - b, err))
+    signs = {r[:2]: r[4] > 0 for r in rows}
     n_pos = sum(signs.values())
     stable = n_pos in (0, len(signs)) and len(signs) > 1
+    for model, pv, a, b, sep, err in rows:
+        verdict = "yes" if signs[(model, pv)] else "no (inverted)"
+        flag = " *" if err > 50 else ""    # error-polluted combo
+        lines.append(f"| {model} | {pv} | {a:+.1%} | {b:+.1%} | {sep:+.1%} "
+                     f"| {err} | {verdict}{flag} |")
     flip = "STABLE" if stable else "FLIPS"
-    for i, ((model, pv), _) in enumerate(sorted(combos.items())):
-        lines[i + 6] = lines[i + 6].rstrip(" | ") + f" {'yes' if signs[(model, pv)] else 'no (inverted)'} |"
     lines += ["", f"**Verdict: {flip}.** "
-              f"{len(signs)} brain/prompt combos, {n_pos}/{len(signs)} show "
+              f"{len(rows)} brain/prompt combos, {n_pos}/{len(rows)} show "
               "neutral > alarming on full-day EQ.", ""]
     if not stable:
         lines.append("The conclusion inverts across brains/prompts — report this "
                      "instability alongside any headline result. Per BP: "
                      "sensitivity is a deliverable, not noise.")
-    lines.append(f"Seeds per combo: {seeds}. Raw per-seed values in `results.json`. "
-                 "Runs use the shared response cache; provenance in each run's manifest.")
+    lines += ["", "`\\*` marks an error-polluted combo (>50 failed LLM attempts,",
+              "3 tries each): many decisions fell back to the Tier-B policy tier,",
+              "so that row is weak evidence — rerun with more seeds before",
+              "quoting its direction.",
+              f"Seeds per combo: {seeds}. Raw per-seed values in `results.json`.",
+              "Runs use the shared response cache; provenance in each run's manifest."]
     return "\n".join(lines)
