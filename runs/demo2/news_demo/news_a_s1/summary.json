@@ -1,0 +1,157 @@
+{
+ "run_id": "news_a_s1",
+ "scenario": "news_a",
+ "elapsed_s": 22.48,
+ "assets": {
+  "EQ": {
+   "total_ret": 0.008106497033940618,
+   "ann_vol": 0.4399708328966872,
+   "excess_kurtosis": 49.48742115566763,
+   "vol_clustering_lag1": 0.5638748230465731,
+   "vol_absret_corr": 0.47089963940591384,
+   "max_drawdown": -0.052460948740507884,
+   "avg_spread_bps": 7.594643834277932,
+   "total_volume": 6722042.089394012,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": 0.046382592009727386,
+   "ann_vol": 0.08798419686566172,
+   "excess_kurtosis": 276.1695976624687,
+   "vol_clustering_lag1": 0.25151966738626724,
+   "vol_absret_corr": 0.4169386743770608,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.535475610776814,
+   "total_volume": 887434.6458416756,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": -0.0147011913256887,
+   "ann_vol": 0.3169368831369057,
+   "excess_kurtosis": 7.579580509574223,
+   "vol_clustering_lag1": -0.005167149071389129,
+   "vol_absret_corr": 0.0033667655349275084,
+   "max_drawdown": -0.1583260747252666,
+   "avg_spread_bps": 11.872367200056239,
+   "total_volume": 5085675216.76798,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": -0.28172612982241774,
+   "ann_vol": 0.3040338830429177,
+   "excess_kurtosis": 7.101298010579919,
+   "vol_clustering_lag1": -0.16325337741355148,
+   "vol_absret_corr": 0.1386762232677644,
+   "max_drawdown": -0.33167650498813894,
+   "avg_spread_bps": 14.519761230905733,
+   "total_volume": 995617.7138988762,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": -0.23556866390829034,
+   "ann_vol": 0.2972601626870325,
+   "excess_kurtosis": 5.576671481880085,
+   "vol_clustering_lag1": -0.047775172306518954,
+   "vol_absret_corr": 0.13694819320851637,
+   "max_drawdown": -0.2761141934013591,
+   "avg_spread_bps": 12.931557960874107,
+   "total_volume": 49116.47570927418,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.21281598601532173,
+  "intents_n": 952,
+  "wake_mean_per_round": 3.8794871794871795,
+  "flow_hhi": 0.019352414468229717,
+  "net_flow_by_class": {
+   "hf_pm": -21159045292.0,
+   "retail": -8196419338.0,
+   "foreig": -3589720716.0,
+   "mf_pm": -208916582.0
+  }
+ },
+ "usage": {
+  "calls": 34,
+  "cache_hits": 26,
+  "memo_hits": 433,
+  "in_tokens": 8971,
+  "out_tokens": 460,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": 0.034873860656593925,
+   "EQ_win_vol": 0.0030021434771458303,
+   "IR_win_ret": 0.026801562120239986,
+   "IR_win_vol": 0.003194064180323937,
+   "FX_win_ret": -0.004780762972492636,
+   "FX_win_vol": 0.0035076430673645423,
+   "CMD_win_ret": -0.036491951751966845,
+   "CMD_win_vol": 0.0032214441584245317,
+   "CRYPTO_win_ret": -0.00768972920653721,
+   "CRYPTO_win_vol": 0.0027262552510416787,
+   "win_dispersion": 0.15020402104553135,
+   "win_intents": 342
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": 0.034873860656593925,
+   "EQ_win_vol": 0.0017332883446760242,
+   "IR_win_ret": 0.026801562120239986,
+   "IR_win_vol": 0.0018440938143189664,
+   "FX_win_ret": -0.008045778778039914,
+   "FX_win_vol": 0.003127017543416662,
+   "CMD_win_ret": -0.10237962956391233,
+   "CMD_win_vol": 0.0029611755291772224,
+   "CRYPTO_win_ret": -0.09299697920035999,
+   "CRYPTO_win_vol": 0.0028547448840462544,
+   "win_dispersion": 0.15020402104553135,
+   "win_intents": 342
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": 0.034873860656593925,
+  "EQ_win_vol": 0.0030021434771458303,
+  "IR_win_ret": 0.026801562120239986,
+  "CRYPTO_win_vol": 0.0027262552510416787,
+  "win_dispersion": 0.15020402104553135,
+  "win_intents": 342.0,
+  "EQ_win90_ret": 0.034873860656593925,
+  "EQ_win90_vol": 0.0017332883446760242,
+  "IR_win90_ret": 0.026801562120239986
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "news_a",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "glm-5.3-flash",
+   "prompt_version": "p1"
+  },
+  "seed": 112
+ }
+}

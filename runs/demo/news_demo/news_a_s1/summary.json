@@ -1,0 +1,157 @@
+{
+ "run_id": "news_a_s1",
+ "scenario": "news_a",
+ "elapsed_s": 0.25,
+ "assets": {
+  "EQ": {
+   "total_ret": 0.02134708163822019,
+   "ann_vol": 0.6502250770769994,
+   "excess_kurtosis": 22.008120106920003,
+   "vol_clustering_lag1": 0.5290352290103666,
+   "vol_absret_corr": 0.1449598284677795,
+   "max_drawdown": -0.047678926523502696,
+   "avg_spread_bps": 10.472543600525658,
+   "total_volume": 8077232.03579989,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": 0.022748351964998692,
+   "ann_vol": 0.20359288792355637,
+   "excess_kurtosis": 48.97314391728406,
+   "vol_clustering_lag1": 0.3077998935857479,
+   "vol_absret_corr": 0.2394883863576979,
+   "max_drawdown": -0.032231440322867844,
+   "avg_spread_bps": 7.9722608259050265,
+   "total_volume": 38246076.90483375,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": 0.08061131731746118,
+   "ann_vol": 0.285247796783367,
+   "excess_kurtosis": 7.241723774085603,
+   "vol_clustering_lag1": 0.004093494191869573,
+   "vol_absret_corr": 0.20779267714669847,
+   "max_drawdown": -0.12242097601584556,
+   "avg_spread_bps": 12.01401414576853,
+   "total_volume": 2561218030.947217,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": -0.3060321827953345,
+   "ann_vol": 0.29240395983681783,
+   "excess_kurtosis": 5.550452831077287,
+   "vol_clustering_lag1": -0.15936140244885594,
+   "vol_absret_corr": 0.1166094449042,
+   "max_drawdown": -0.34716059705852764,
+   "avg_spread_bps": 13.51620451927578,
+   "total_volume": 943968.6055026501,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": -0.1915469288168774,
+   "ann_vol": 0.30045578915596216,
+   "excess_kurtosis": 3.450065879467992,
+   "vol_clustering_lag1": -0.0774469084691256,
+   "vol_absret_corr": 0.1333429845417627,
+   "max_drawdown": -0.23747679028720303,
+   "avg_spread_bps": 12.708234587762126,
+   "total_volume": 48931.04997066991,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.23266559481783075,
+  "intents_n": 743,
+  "wake_mean_per_round": 4.858974358974359,
+  "flow_hhi": 0.43608102950586397,
+  "net_flow_by_class": {
+   "retail": -89032918242.0,
+   "hf_pm": -21967692585.0,
+   "foreig": 960625045.0,
+   "mf_pm": -558706133.0
+  }
+ },
+ "usage": {
+  "calls": 30,
+  "cache_hits": 0,
+  "memo_hits": 456,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": 0.018331958959417305,
+   "EQ_win_vol": 0.018116409736745293,
+   "IR_win_ret": 0.003609591245760324,
+   "IR_win_vol": 0.007418350820300282,
+   "FX_win_ret": -7.621409569391613e-05,
+   "FX_win_vol": 0.00312546918365619,
+   "CMD_win_ret": -0.028035590602700444,
+   "CMD_win_vol": 0.002884909463159201,
+   "CRYPTO_win_ret": 0.006803803845407463,
+   "CRYPTO_win_vol": 0.002809755288284912,
+   "win_dispersion": 0.395721632358427,
+   "win_intents": 2208
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": -0.014367416783333198,
+   "EQ_win_vol": 0.013667206043059174,
+   "IR_win_ret": 0.003609591245760324,
+   "IR_win_vol": 0.004282986843043449,
+   "FX_win_ret": 0.03367530117441819,
+   "FX_win_vol": 0.002405949058503247,
+   "CMD_win_ret": -0.09809587105195039,
+   "CMD_win_vol": 0.002962890206874024,
+   "CRYPTO_win_ret": -0.08947112889854913,
+   "CRYPTO_win_vol": 0.0032574765775398693,
+   "win_dispersion": 0.38785762192585355,
+   "win_intents": 2318
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": 0.018331958959417305,
+  "EQ_win_vol": 0.018116409736745293,
+  "IR_win_ret": 0.003609591245760324,
+  "CRYPTO_win_vol": 0.002809755288284912,
+  "win_dispersion": 0.395721632358427,
+  "win_intents": 2208.0,
+  "EQ_win90_ret": -0.014367416783333198,
+  "EQ_win90_vol": 0.013667206043059174,
+  "IR_win90_ret": 0.003609591245760324
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "news_a",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 112
+ }
+}

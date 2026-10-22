@@ -1,0 +1,139 @@
+{
+ "run_id": "fee_low_s4",
+ "scenario": "fee_low",
+ "elapsed_s": 0.28,
+ "assets": {
+  "EQ": {
+   "total_ret": 0.08170244802254234,
+   "ann_vol": 0.538798484475605,
+   "excess_kurtosis": 14.415395464151235,
+   "vol_clustering_lag1": 0.5141939048139786,
+   "vol_absret_corr": 0.452310826766913,
+   "max_drawdown": -0.05123528097388419,
+   "avg_spread_bps": 10.780608020654403,
+   "total_volume": 18554556.872867078,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": 0.057977765041528295,
+   "ann_vol": 0.2601537532762422,
+   "excess_kurtosis": 61.988987149509896,
+   "vol_clustering_lag1": 0.2538260356443987,
+   "vol_absret_corr": 0.6999789771656022,
+   "max_drawdown": -0.04656590484252543,
+   "avg_spread_bps": 10.364903960478976,
+   "total_volume": 59163769.52533284,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": 0.0,
+   "ann_vol": 0.0,
+   "excess_kurtosis": 0.0,
+   "vol_clustering_lag1": 0.0,
+   "vol_absret_corr": 0.0,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000002764979885,
+   "total_volume": 0.0,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": 0.0,
+   "ann_vol": 0.0,
+   "excess_kurtosis": 0.0,
+   "vol_clustering_lag1": 0.0,
+   "vol_absret_corr": 0.0,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000000000000932,
+   "total_volume": 0.0,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": 0.0,
+   "ann_vol": 0.0,
+   "excess_kurtosis": 0.0,
+   "vol_clustering_lag1": 0.0,
+   "vol_absret_corr": 0.0,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000000000001737,
+   "total_volume": 0.0,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.28438875699148897,
+  "intents_n": 1371,
+  "wake_mean_per_round": 3.7487179487179487,
+  "flow_hhi": 0.024125154135743537,
+  "net_flow_by_class": {
+   "retail": 29908903310.0,
+   "foreig": -11321296603.0,
+   "mf_pm": -7535120640.0,
+   "hf_pm": 6387013921.0
+  }
+ },
+ "usage": {
+  "calls": 39,
+  "memo_hits": 820,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0
+ },
+ "event_windows": [
+  {
+   "t": 100,
+   "headline": "Fund sponsor raises per-transaction fee to 10bps",
+   "EQ_win_ret": -0.03595808392359401,
+   "EQ_win_vol": 0.0093273657356333,
+   "IR_win_ret": 0.01133446771049873,
+   "IR_win_vol": 0.0003783946613761547,
+   "win_dispersion": 0.47990531014079285,
+   "win_intents": 14062
+  },
+  {
+   "t": 120,
+   "headline": "Fed minutes point to steady policy path",
+   "EQ_win_ret": 0.009574219464757672,
+   "EQ_win_vol": 0.01616943131407513,
+   "IR_win_ret": 0.01309648398437191,
+   "IR_win_vol": 0.0004362769606510396,
+   "FX_win_ret": 0.0,
+   "FX_win_vol": 0.0,
+   "win_dispersion": 0.46043490967465,
+   "win_intents": 2035
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.013191932229418168,
+  "EQ_win_vol": 0.012748398524854213,
+  "IR_win_ret": 0.01221547584743532,
+  "CRYPTO_win_vol": null,
+  "win_dispersion": 0.47017010990772146,
+  "win_intents": 8048.5
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "fee_low",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 10
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 415
+ }
+}

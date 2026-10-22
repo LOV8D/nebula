@@ -1,0 +1,157 @@
+{
+ "run_id": "news_b_s1",
+ "scenario": "news_b",
+ "elapsed_s": 0.25,
+ "assets": {
+  "EQ": {
+   "total_ret": 0.006525596897202002,
+   "ann_vol": 0.2840727149855745,
+   "excess_kurtosis": 65.0531009474843,
+   "vol_clustering_lag1": 0.6614568733789682,
+   "vol_absret_corr": 0.5493833749428016,
+   "max_drawdown": -0.04008934278589782,
+   "avg_spread_bps": 9.075565065323454,
+   "total_volume": 4782865.468947956,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": -0.0317010507707417,
+   "ann_vol": 0.30528354539254904,
+   "excess_kurtosis": 41.33360068343012,
+   "vol_clustering_lag1": 0.4206621155641086,
+   "vol_absret_corr": 0.4926044484382949,
+   "max_drawdown": -0.05790495605593071,
+   "avg_spread_bps": 7.518850122822275,
+   "total_volume": 28504186.057579327,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": 0.08061131731746118,
+   "ann_vol": 0.285247796783367,
+   "excess_kurtosis": 7.241723774085603,
+   "vol_clustering_lag1": 0.004093494191869573,
+   "vol_absret_corr": 0.20779267714669847,
+   "max_drawdown": -0.12242097601584556,
+   "avg_spread_bps": 12.01401414576853,
+   "total_volume": 2561218030.947217,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": -0.30314398947783505,
+   "ann_vol": 0.28430294149121366,
+   "excess_kurtosis": 5.862342324396932,
+   "vol_clustering_lag1": -0.1732766939296012,
+   "vol_absret_corr": 0.14581446946899942,
+   "max_drawdown": -0.3432644572989789,
+   "avg_spread_bps": 13.205780215108025,
+   "total_volume": 945208.4614315795,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": -0.2338348138394304,
+   "ann_vol": 0.29878598885942875,
+   "excess_kurtosis": 4.834037414393012,
+   "vol_clustering_lag1": -0.06421880572038186,
+   "vol_absret_corr": 0.1570125989380305,
+   "max_drawdown": -0.2788218931694012,
+   "avg_spread_bps": 13.083018323294679,
+   "total_volume": 46799.993137768644,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.17581098835668976,
+  "intents_n": 598,
+  "wake_mean_per_round": 4.364102564102564,
+  "flow_hhi": 0.5252014547004556,
+  "net_flow_by_class": {
+   "retail": -160435106271.0,
+   "hf_pm": -49856089429.0,
+   "foreig": -10389779791.0,
+   "mf_pm": -3348003070.0
+  }
+ },
+ "usage": {
+  "calls": 30,
+  "cache_hits": 0,
+  "memo_hits": 456,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 150,
+   "headline": "Fed warns inflation risks have intensified; further tighteni",
+   "EQ_win_ret": -0.03248183318352049,
+   "EQ_win_vol": 0.010247164577092788,
+   "IR_win_ret": -0.02493243674430079,
+   "IR_win_vol": 0.010858365117592712,
+   "FX_win_ret": -7.621409569391613e-05,
+   "FX_win_vol": 0.00312546918365619,
+   "CMD_win_ret": -0.0361462438785628,
+   "CMD_win_vol": 0.0034367355438002095,
+   "CRYPTO_win_ret": -0.05507059098315059,
+   "CRYPTO_win_vol": 0.003798531370703893,
+   "win_dispersion": 0.43847172716122973,
+   "win_intents": 573
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 150,
+   "headline": "Fed warns inflation risks have intensified; further tighteni",
+   "EQ_win_ret": -0.03248183318352049,
+   "EQ_win_vol": 0.005916203227014918,
+   "IR_win_ret": -0.04912516985708948,
+   "IR_win_vol": 0.006425104119685425,
+   "FX_win_ret": 0.03367530117441819,
+   "FX_win_vol": 0.002405949058503247,
+   "CMD_win_ret": -0.10751461340041135,
+   "CMD_win_vol": 0.002953362401301472,
+   "CRYPTO_win_ret": -0.13572889474982763,
+   "CRYPTO_win_vol": 0.003203431161983086,
+   "win_dispersion": 0.43847172716122973,
+   "win_intents": 573
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.03248183318352049,
+  "EQ_win_vol": 0.010247164577092788,
+  "IR_win_ret": -0.02493243674430079,
+  "CRYPTO_win_vol": 0.003798531370703893,
+  "win_dispersion": 0.43847172716122973,
+  "win_intents": 573.0,
+  "EQ_win90_ret": -0.03248183318352049,
+  "EQ_win90_vol": 0.005916203227014918,
+  "IR_win90_ret": -0.04912516985708948
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "news_b",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 112
+ }
+}

@@ -1,0 +1,157 @@
+{
+ "run_id": "deepseek-v4.1-flash-1017|p1|news_a_s1",
+ "scenario": "news_a",
+ "elapsed_s": 438.11,
+ "assets": {
+  "EQ": {
+   "total_ret": 0.04919644869251072,
+   "ann_vol": 0.021806855996441162,
+   "excess_kurtosis": -0.07646477719293587,
+   "vol_clustering_lag1": 0.9343526107884277,
+   "vol_absret_corr": 0.19353276722945567,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 5.577329779763301,
+   "total_volume": 20477.32666058776,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": 0.046382592009727386,
+   "ann_vol": 0.08798419686566172,
+   "excess_kurtosis": 276.1695976624687,
+   "vol_clustering_lag1": 0.25151966738626724,
+   "vol_absret_corr": 0.4169386743770608,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.535475610776814,
+   "total_volume": 887434.6458416756,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": -0.13627412476006606,
+   "ann_vol": 0.31252065947305585,
+   "excess_kurtosis": 5.9820550773894805,
+   "vol_clustering_lag1": -0.07575265704375266,
+   "vol_absret_corr": 0.2885095107172904,
+   "max_drawdown": -0.24701723984429702,
+   "avg_spread_bps": 13.18581369642358,
+   "total_volume": 2647875807.497096,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": -0.27859430515104944,
+   "ann_vol": 0.28301439395321665,
+   "excess_kurtosis": 6.727498183648853,
+   "vol_clustering_lag1": -0.1898174832724037,
+   "vol_absret_corr": 0.17580597638025186,
+   "max_drawdown": -0.3233597614370973,
+   "avg_spread_bps": 14.009860811210531,
+   "total_volume": 969572.6874310211,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": -0.2308032388492408,
+   "ann_vol": 0.28351177353446444,
+   "excess_kurtosis": 2.691432098328466,
+   "vol_clustering_lag1": -0.16633592258493105,
+   "vol_absret_corr": 0.16737221568719302,
+   "max_drawdown": -0.2771733413858366,
+   "avg_spread_bps": 14.963918207901214,
+   "total_volume": 51249.30682133062,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.08064127403093725,
+  "intents_n": 519,
+  "wake_mean_per_round": 5.069230769230769,
+  "flow_hhi": 0.11762626183634477,
+  "net_flow_by_class": {
+   "hf_pm": -24655086350.0,
+   "retail": -6712276245.0,
+   "foreig": 747130719.0,
+   "mf_pm": 319259586.0
+  }
+ },
+ "usage": {
+  "calls": 98,
+  "cache_hits": 0,
+  "memo_hits": 394,
+  "in_tokens": 25648,
+  "out_tokens": 5263,
+  "errors": 16,
+  "consecutive_errors": 0,
+  "error_detail": "429"
+ },
+ "event_windows": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": 0.0007718121988775639,
+   "EQ_win_vol": 0.00014091298382763506,
+   "IR_win_ret": 0.026801562120239986,
+   "IR_win_vol": 0.003194064180323937,
+   "FX_win_ret": -0.03334527692218037,
+   "FX_win_vol": 0.0036100081763005294,
+   "CMD_win_ret": -0.032593551732371884,
+   "CMD_win_vol": 0.003030676285127284,
+   "CRYPTO_win_ret": -0.016818724941008667,
+   "CRYPTO_win_vol": 0.0025178397169207047,
+   "win_dispersion": 0.10042174642207423,
+   "win_intents": 532
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": 0.0007718121988775639,
+   "EQ_win_vol": 8.135614914519848e-05,
+   "IR_win_ret": 0.026801562120239986,
+   "IR_win_vol": 0.0018440938143189664,
+   "FX_win_ret": -0.1091715969945326,
+   "FX_win_vol": 0.0032716272261603166,
+   "CMD_win_ret": -0.10718854831563396,
+   "CMD_win_vol": 0.003051897052705337,
+   "CRYPTO_win_ret": -0.1054425294425464,
+   "CRYPTO_win_vol": 0.0031457212470608043,
+   "win_dispersion": 0.2048812526732102,
+   "win_intents": 1689
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": 0.0007718121988775639,
+  "EQ_win_vol": 0.00014091298382763506,
+  "IR_win_ret": 0.026801562120239986,
+  "CRYPTO_win_vol": 0.0025178397169207047,
+  "win_dispersion": 0.10042174642207423,
+  "win_intents": 532.0,
+  "EQ_win90_ret": 0.0007718121988775639,
+  "EQ_win90_vol": 8.135614914519848e-05,
+  "IR_win90_ret": 0.026801562120239986
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "news_a",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "deepseek-v4.1-flash-1017",
+   "prompt_version": "p1"
+  },
+  "seed": 112
+ }
+}

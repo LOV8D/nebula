@@ -1,0 +1,184 @@
+{
+ "run_id": "fee_high_s0",
+ "scenario": "fee_high",
+ "elapsed_s": 0.29,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": 0.0826443849895877,
+   "ann_vol": 0.15578430666545495,
+   "excess_kurtosis": 11.53558412120062,
+   "vol_clustering_lag1": 0.313297147521227,
+   "vol_absret_corr": 0.26086396114813565,
+   "max_drawdown": -0.01134976039391844,
+   "avg_spread_bps": 11.274668072832952,
+   "total_volume": 608137.1821677396,
+   "n_halts": 0
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": -0.2292886146386902,
+   "ann_vol": 0.18978090986885432,
+   "excess_kurtosis": 6.4497546484590025,
+   "vol_clustering_lag1": 0.036406971588887636,
+   "vol_absret_corr": 0.3378604385613722,
+   "max_drawdown": -0.23421717012841414,
+   "avg_spread_bps": 10.987186248730993,
+   "total_volume": 22631417.90200401,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": -0.24209338216663223,
+   "ann_vol": 0.3216104915291389,
+   "excess_kurtosis": 6.1586437126576925,
+   "vol_clustering_lag1": -0.058192294862180305,
+   "vol_absret_corr": 0.30736914390687486,
+   "max_drawdown": -0.2887025127913785,
+   "avg_spread_bps": 13.211565790548278,
+   "total_volume": 2685857670.584129,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.049097597461056575,
+   "ann_vol": 0.24254441984458644,
+   "excess_kurtosis": 11.525095618585201,
+   "vol_clustering_lag1": -0.12162190829801243,
+   "vol_absret_corr": 0.042416045178292304,
+   "max_drawdown": -0.1365379512801448,
+   "avg_spread_bps": 12.26992719871275,
+   "total_volume": 994983.3974831383,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": -0.0426842157423345,
+   "ann_vol": 0.26431392247441204,
+   "excess_kurtosis": 5.390533279508363,
+   "vol_clustering_lag1": 0.04043709327652006,
+   "vol_absret_corr": 0.04012124723969422,
+   "max_drawdown": -0.146256974101309,
+   "avg_spread_bps": 10.846708979435407,
+   "total_volume": 50242.861977100394,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.15842517544013948,
+  "intents_n": 835,
+  "wake_mean_per_round": 4.471794871794872,
+  "flow_hhi": 0.27370389278613455,
+  "net_flow_by_class": {
+   "retail": -26120463770.0,
+   "hf_pm": -3159128887.0,
+   "mf_pm": -1281004620.0,
+   "foreig": -249186135.0
+  }
+ },
+ "usage": {
+  "calls": 38,
+  "cache_hits": 0,
+  "memo_hits": 763,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 100,
+   "headline": "Fund sponsor raises per-transaction fee to 30bps",
+   "EQ_win_ret": -0.0030083738698400975,
+   "EQ_win_vol": 0.0004884808129243643,
+   "IR_win_ret": -0.04903076455348154,
+   "IR_win_vol": 0.002985988284643106,
+   "win_dispersion": 0.45474624384508144,
+   "win_intents": 2717
+  },
+  {
+   "t": 120,
+   "headline": "Fed minutes point to steady policy path",
+   "EQ_win_ret": 0.001000926968938165,
+   "EQ_win_vol": 0.0015173394076025471,
+   "IR_win_ret": -0.046537366344926,
+   "IR_win_vol": 0.0027351177389088924,
+   "FX_win_ret": -0.04414471260253572,
+   "FX_win_vol": 0.004766579616898842,
+   "win_dispersion": 0.38136683080312117,
+   "win_intents": 303
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 100,
+   "headline": "Fund sponsor raises per-transaction fee to 30bps",
+   "EQ_win_ret": 0.0021102904769423336,
+   "EQ_win_vol": 0.0012848828875481409,
+   "IR_win_ret": -0.12173730690094453,
+   "IR_win_vol": 0.002576402485539153,
+   "win_dispersion": 0.451898956815196,
+   "win_intents": 3139
+  },
+  {
+   "t": 120,
+   "headline": "Fed minutes point to steady policy path",
+   "EQ_win_ret": 0.010469736159873344,
+   "EQ_win_vol": 0.0013915609565854669,
+   "IR_win_ret": -0.10648130688739577,
+   "IR_win_vol": 0.002327886039415713,
+   "FX_win_ret": -0.11224162058231268,
+   "FX_win_vol": 0.003760452438998772,
+   "win_dispersion": 0.38316569498829783,
+   "win_intents": 600
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.0010037234504509662,
+  "EQ_win_vol": 0.0010029101102634558,
+  "IR_win_ret": -0.04778406544920377,
+  "CRYPTO_win_vol": null,
+  "win_dispersion": 0.4180565373241013,
+  "win_intents": 1510.0,
+  "EQ_win90_ret": 0.006290013318407839,
+  "EQ_win90_vol": 0.0013382219220668039,
+  "IR_win90_ret": -0.11410930689417015
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 835,
+   "active": 314,
+   "pass_rate": 0.6239520958083833,
+   "net_dir": -0.5859872611464968,
+   "mean_size": 0.42082870995707905
+  }
+ ],
+ "manifest": {
+  "population": "bca1210e61",
+  "intervention": "fee_high",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 30
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 11
+ }
+}

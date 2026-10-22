@@ -1,0 +1,220 @@
+{
+ "run_id": "baseline_live_s0",
+ "scenario": "baseline_live",
+ "elapsed_s": 0.29,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": 0.021401698473508812,
+   "ann_vol": 0.5531948651193407,
+   "excess_kurtosis": 29.76650791412259,
+   "vol_clustering_lag1": 0.4252474333980827,
+   "vol_absret_corr": 0.36164012503442555,
+   "max_drawdown": -0.04268220125250499,
+   "avg_spread_bps": 10.3082905228555,
+   "total_volume": 4739848.921102119,
+   "n_halts": 0
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": -0.05393142829726738,
+   "ann_vol": 0.01572973676659092,
+   "excess_kurtosis": 17.645745273532885,
+   "vol_clustering_lag1": 0.9105177930466889,
+   "vol_absret_corr": 0.2929059267157733,
+   "max_drawdown": -0.05442526875709763,
+   "avg_spread_bps": 6.739416889660375,
+   "total_volume": 440819.0301814501,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": -0.18824683850459545,
+   "ann_vol": 0.32514715142973516,
+   "excess_kurtosis": 6.513895849854059,
+   "vol_clustering_lag1": 0.03866419226148954,
+   "vol_absret_corr": 0.25657441476497483,
+   "max_drawdown": -0.23745722134804026,
+   "avg_spread_bps": 13.733972257672967,
+   "total_volume": 4509275793.058966,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.15286458582202755,
+   "ann_vol": 0.27301726861668457,
+   "excess_kurtosis": 8.992533758712977,
+   "vol_clustering_lag1": -0.0798322690283127,
+   "vol_absret_corr": 0.12794639200340016,
+   "max_drawdown": -0.18496479164086987,
+   "avg_spread_bps": 15.333036198841548,
+   "total_volume": 1001528.1973892886,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": -0.04183219574827657,
+   "ann_vol": 0.27430404885507514,
+   "excess_kurtosis": 5.2089123933250185,
+   "vol_clustering_lag1": -0.03269573476767995,
+   "vol_absret_corr": 0.06429012002947733,
+   "max_drawdown": -0.15670332697693568,
+   "avg_spread_bps": 11.316805562427398,
+   "total_volume": 50265.42926726119,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.24025087597275366,
+  "intents_n": 941,
+  "wake_mean_per_round": 5.338461538461538,
+  "flow_hhi": 0.14125896860367032,
+  "net_flow_by_class": {
+   "retail": 74763244772.0,
+   "foreig": -15316578929.0,
+   "hf_pm": -8267189288.0,
+   "mf_pm": -4286478885.0
+  }
+ },
+ "usage": {
+  "calls": 48,
+  "cache_hits": 0,
+  "memo_hits": 654,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 120,
+   "headline": "Fed minutes point to steady policy path",
+   "EQ_win_ret": 0.01745950916298078,
+   "EQ_win_vol": 0.0005777932808924948,
+   "IR_win_ret": -0.0033531526185798244,
+   "IR_win_vol": 0.00011234788854119743,
+   "FX_win_ret": -0.003917703692996377,
+   "FX_win_vol": 0.004587523541555382,
+   "win_dispersion": 0.22216626471189826,
+   "win_intents": 3694
+  },
+  {
+   "t": 200,
+   "headline": "Gold ETF holdings tick higher on hedging demand",
+   "FX_win_ret": -0.025308545685684414,
+   "FX_win_vol": 0.0036760734750827806,
+   "CMD_win_ret": 0.02475834049574277,
+   "CMD_win_vol": 0.002384369233041053,
+   "win_dispersion": 0.3719642795826008,
+   "win_intents": 98
+  },
+  {
+   "t": 260,
+   "headline": "Treasury auction sees solid demand",
+   "IR_win_ret": -0.005678773453695496,
+   "IR_win_vol": 0.00019000512699368435,
+   "FX_win_ret": -0.009809682078065873,
+   "FX_win_vol": 0.0021050925656307846,
+   "win_dispersion": 0.3439521403951704,
+   "win_intents": 1222
+  },
+  {
+   "t": 300,
+   "headline": "Spot bitcoin ETF inflows resume after pause",
+   "CRYPTO_win_ret": -0.00920807603529683,
+   "CRYPTO_win_vol": 0.0024746765049097163,
+   "win_dispersion": 0.3402765505577557,
+   "win_intents": 58
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 120,
+   "headline": "Fed minutes point to steady policy path",
+   "EQ_win_ret": -0.01766479061339643,
+   "EQ_win_vol": 0.0116399451674512,
+   "IR_win_ret": -0.011528713896048037,
+   "IR_win_vol": 0.0001299040589521939,
+   "FX_win_ret": -0.06742532753387054,
+   "FX_win_vol": 0.004256577008393437,
+   "win_dispersion": 0.33577804233846803,
+   "win_intents": 15211
+  },
+  {
+   "t": 200,
+   "headline": "Gold ETF holdings tick higher on hedging demand",
+   "FX_win_ret": -0.06497743761132913,
+   "FX_win_vol": 0.0027417227726509873,
+   "CMD_win_ret": 0.011186855611319046,
+   "CMD_win_vol": 0.0029231701318930586,
+   "win_dispersion": 0.39490222848174467,
+   "win_intents": 5036
+  },
+  {
+   "t": 260,
+   "headline": "Treasury auction sees solid demand",
+   "IR_win_ret": -0.018371917323173337,
+   "IR_win_vol": 0.00020660521025705637,
+   "FX_win_ret": -0.08895285575800738,
+   "FX_win_vol": 0.0030894179412389354,
+   "win_dispersion": 0.3421705708789069,
+   "win_intents": 2382
+  },
+  {
+   "t": 300,
+   "headline": "Spot bitcoin ETF inflows resume after pause",
+   "CRYPTO_win_ret": 0.061381503797466985,
+   "CRYPTO_win_vol": 0.0027097693947344547,
+   "win_dispersion": 0.3402765505577557,
+   "win_intents": 58
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": 0.01745950916298078,
+  "EQ_win_vol": 0.0005777932808924948,
+  "IR_win_ret": -0.00451596303613766,
+  "CRYPTO_win_vol": 0.0024746765049097163,
+  "win_dispersion": 0.3195898088118563,
+  "win_intents": 1268.0,
+  "EQ_win90_ret": -0.01766479061339643,
+  "EQ_win90_vol": 0.0116399451674512,
+  "IR_win90_ret": -0.014950315609610687
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 941,
+   "active": 433,
+   "pass_rate": 0.5398512221041445,
+   "net_dir": -0.3579676674364896,
+   "mean_size": 0.4099429742791719
+  }
+ ],
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "baseline_live",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 11
+ }
+}

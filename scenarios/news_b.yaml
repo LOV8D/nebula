@@ -1,0 +1,18 @@
+id: news_b
+tag: news_demo
+days: 1
+rounds_per_day: 390
+seed: 11
+mechanism:
+  circuit_breaker: {enabled: true, levels: [-0.07, -0.13, -0.20], halt_rounds: [15, 60, 1000000]}
+  fee_bps_retail: 0
+assets:
+  EQ:     {start: 5900.0, vol_bps: 45}
+  IR:     {start: 110.5,  vol_bps: 12}
+  FX:     {start: 1.085,  vol_bps: 8}
+  CMD:    {start: 2420.0, vol_bps: 30}
+  CRYPTO: {start: 67000.0, vol_bps: 70}
+model: {provider: mock, model_id: mock-heuristic-v1}
+events:
+  - {t: 150, headline: "Fed warns inflation risks have intensified; further tightening cannot be ruled out", sentiment: -0.6, impact: 1.0, assets: [EQ, IR, FX, CMD, CRYPTO], source: fed_chair_newswire}
+notes: "alarming framing of the same underlying decision"

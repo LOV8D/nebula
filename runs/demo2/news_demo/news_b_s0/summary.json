@@ -1,0 +1,157 @@
+{
+ "run_id": "news_b_s0",
+ "scenario": "news_b",
+ "elapsed_s": 51.65,
+ "assets": {
+  "EQ": {
+   "total_ret": -0.07769422410564975,
+   "ann_vol": 0.8484056099953582,
+   "excess_kurtosis": 8.649810746291282,
+   "vol_clustering_lag1": 0.5636001532592684,
+   "vol_absret_corr": 0.3637380521696205,
+   "max_drawdown": -0.11487907419350984,
+   "avg_spread_bps": 11.686280580737566,
+   "total_volume": 10831197.887552096,
+   "n_halts": 10
+  },
+  "IR": {
+   "total_ret": -0.10111739404174191,
+   "ann_vol": 0.24570415258629724,
+   "excess_kurtosis": 28.09348404476439,
+   "vol_clustering_lag1": -0.028584011786830912,
+   "vol_absret_corr": 0.38933898422554836,
+   "max_drawdown": -0.19643574520319895,
+   "avg_spread_bps": 10.012785553229572,
+   "total_volume": 13804193.691342458,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": -0.051146891484117774,
+   "ann_vol": 0.31269722976198855,
+   "excess_kurtosis": 5.26253017883354,
+   "vol_clustering_lag1": 0.005046228314941295,
+   "vol_absret_corr": 0.06736046443231274,
+   "max_drawdown": -0.10492205497896323,
+   "avg_spread_bps": 12.134679528080463,
+   "total_volume": 6668209408.750455,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": -0.049097597461056575,
+   "ann_vol": 0.24254441984458644,
+   "excess_kurtosis": 11.525095618585201,
+   "vol_clustering_lag1": -0.12162190829801243,
+   "vol_absret_corr": 0.042416045178292304,
+   "max_drawdown": -0.1365379512801448,
+   "avg_spread_bps": 12.26992719871275,
+   "total_volume": 994983.3974831383,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": -0.009636948815987867,
+   "ann_vol": 0.29517324957531976,
+   "excess_kurtosis": 4.409625701666373,
+   "vol_clustering_lag1": -0.06460617261665548,
+   "vol_absret_corr": 0.058888378709019765,
+   "max_drawdown": -0.1321293163897186,
+   "avg_spread_bps": 10.999414186412235,
+   "total_volume": 50553.743867543635,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.31223907828689923,
+  "intents_n": 1035,
+  "wake_mean_per_round": 3.4307692307692306,
+  "flow_hhi": 0.15955870073030146,
+  "net_flow_by_class": {
+   "retail": 108693331290.0,
+   "mf_pm": 2170370142.0,
+   "hf_pm": -1535935491.0,
+   "foreig": -1076245869.0
+  }
+ },
+ "usage": {
+  "calls": 45,
+  "cache_hits": 28,
+  "memo_hits": 423,
+  "in_tokens": 12090,
+  "out_tokens": 991,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 150,
+   "headline": "Fed warns inflation risks have intensified; further tighteni",
+   "EQ_win_ret": -0.044225716573084606,
+   "EQ_win_vol": 0.003963136423553696,
+   "IR_win_ret": -0.05404491165556824,
+   "IR_win_vol": 0.005051255437666525,
+   "FX_win_ret": -0.007105015692177918,
+   "FX_win_vol": 0.004650796565865954,
+   "CMD_win_ret": -0.03124947296049141,
+   "CMD_win_vol": 0.0029633806979136364,
+   "CRYPTO_win_ret": -0.0021436758420141366,
+   "CRYPTO_win_vol": 0.0032637670642392046,
+   "win_dispersion": 0.23630655041618986,
+   "win_intents": 374
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 150,
+   "headline": "Fed warns inflation risks have intensified; further tighteni",
+   "EQ_win_ret": -0.10898456518505095,
+   "EQ_win_vol": 0.0029686500451966097,
+   "IR_win_ret": -0.11267003375983253,
+   "IR_win_vol": 0.004175260322017456,
+   "FX_win_ret": 0.01845040226927086,
+   "FX_win_vol": 0.003825096205940866,
+   "CMD_win_ret": -0.05786969863756675,
+   "CMD_win_vol": 0.002308332145977223,
+   "CRYPTO_win_ret": -0.08599044825304747,
+   "CRYPTO_win_vol": 0.0035070978716913313,
+   "win_dispersion": 0.29274919160208174,
+   "win_intents": 467
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.044225716573084606,
+  "EQ_win_vol": 0.003963136423553696,
+  "IR_win_ret": -0.05404491165556824,
+  "CRYPTO_win_vol": 0.0032637670642392046,
+  "win_dispersion": 0.23630655041618986,
+  "win_intents": 374.0,
+  "EQ_win90_ret": -0.10898456518505095,
+  "EQ_win90_vol": 0.0029686500451966097,
+  "IR_win90_ret": -0.11267003375983253
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "news_b",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "glm-5.3-flash",
+   "prompt_version": "p1"
+  },
+  "seed": 11
+ }
+}

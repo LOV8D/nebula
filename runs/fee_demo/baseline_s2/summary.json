@@ -1,0 +1,157 @@
+{
+ "run_id": "baseline_s2",
+ "scenario": "baseline",
+ "elapsed_s": 0.32,
+ "assets": {
+  "EQ": {
+   "total_ret": 0.04401512851229361,
+   "ann_vol": 0.3555091573271729,
+   "excess_kurtosis": 25.53716473647875,
+   "vol_clustering_lag1": 0.4742054343290885,
+   "vol_absret_corr": 0.5038470577869409,
+   "max_drawdown": -0.04590392793489917,
+   "avg_spread_bps": 14.874385263368636,
+   "total_volume": 15533891.92911682,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": 0.06525941764981802,
+   "ann_vol": 0.4191340824873763,
+   "excess_kurtosis": 45.34475199154037,
+   "vol_clustering_lag1": 0.5268197555326477,
+   "vol_absret_corr": 0.6099222411920524,
+   "max_drawdown": -0.040389981733948144,
+   "avg_spread_bps": 8.428785023893214,
+   "total_volume": 27530015.719180066,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": 0.018402764976958697,
+   "ann_vol": 0.09061766852367277,
+   "excess_kurtosis": 383.7906319586387,
+   "vol_clustering_lag1": -0.002669683801512533,
+   "vol_absret_corr": 0.7066594870570725,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.141022720085413,
+   "total_volume": 37311970.34573999,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": 0.0,
+   "ann_vol": 0.0,
+   "excess_kurtosis": 0.0,
+   "vol_clustering_lag1": 0.0,
+   "vol_absret_corr": 0.0,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000000000000932,
+   "total_volume": 0.0,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": 0.020472437313432845,
+   "ann_vol": 0.08030375528656243,
+   "excess_kurtosis": 327.56470433094063,
+   "vol_clustering_lag1": 0.2763986102032422,
+   "vol_absret_corr": 0.40324221891259976,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.04286199818018,
+   "total_volume": 645.7305792436446,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.2490472064424353,
+  "intents_n": 1060,
+  "wake_mean_per_round": 2.948717948717949,
+  "flow_hhi": 0.028661795199932203,
+  "net_flow_by_class": {
+   "retail": 49854825321.0,
+   "hf_pm": 9490620170.0,
+   "foreig": -7129608908.0,
+   "mf_pm": -594552395.0
+  }
+ },
+ "usage": {
+  "calls": 35,
+  "memo_hits": 622,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0
+ },
+ "event_windows": [
+  {
+   "t": 120,
+   "headline": "Fed minutes point to steady policy path",
+   "EQ_win_ret": -0.02414018570172427,
+   "EQ_win_vol": 0.011673156940992678,
+   "IR_win_ret": 0.006304162123622392,
+   "IR_win_vol": 0.00021051584960189831,
+   "FX_win_ret": 0.0,
+   "FX_win_vol": 0.0,
+   "win_dispersion": 0.392954203115761,
+   "win_intents": 3177
+  },
+  {
+   "t": 200,
+   "headline": "Gold ETF holdings tick higher on hedging demand",
+   "FX_win_ret": 0.018402764976958697,
+   "FX_win_vol": 0.0033046445218560265,
+   "CMD_win_ret": 0.0,
+   "CMD_win_vol": 0.0,
+   "win_dispersion": 0.33556626220455366,
+   "win_intents": 136
+  },
+  {
+   "t": 260,
+   "headline": "Treasury auction sees solid demand",
+   "IR_win_ret": -0.009562706211876604,
+   "IR_win_vol": 0.01492944444766184,
+   "FX_win_ret": 0.0,
+   "FX_win_vol": 0.0,
+   "win_dispersion": 0.30734846045585473,
+   "win_intents": 1698
+  },
+  {
+   "t": 300,
+   "headline": "Spot bitcoin ETF inflows resume after pause",
+   "CRYPTO_win_ret": 0.020472437313432845,
+   "CRYPTO_win_vol": 0.002928516803793946,
+   "win_dispersion": 0.12789775055594108,
+   "win_intents": 62
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.02414018570172427,
+  "EQ_win_vol": 0.011673156940992678,
+  "IR_win_ret": -0.0016292720441271058,
+  "CRYPTO_win_vol": 0.002928516803793946,
+  "win_dispersion": 0.2909416690830276,
+  "win_intents": 1268.25
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "baseline",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 213
+ }
+}

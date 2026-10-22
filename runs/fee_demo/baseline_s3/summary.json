@@ -1,0 +1,157 @@
+{
+ "run_id": "baseline_s3",
+ "scenario": "baseline",
+ "elapsed_s": 0.35,
+ "assets": {
+  "EQ": {
+   "total_ret": 0.03056453267409598,
+   "ann_vol": 0.014921165261469884,
+   "excess_kurtosis": 0.7814764847020803,
+   "vol_clustering_lag1": 0.9311070003395769,
+   "vol_absret_corr": 0.8309545224563869,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 8.038267252084498,
+   "total_volume": 13406.498514343704,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": 0.010112975157226645,
+   "ann_vol": 0.6686900028480869,
+   "excess_kurtosis": 18.139418534934542,
+   "vol_clustering_lag1": 0.7100542123142285,
+   "vol_absret_corr": 0.5421987459467673,
+   "max_drawdown": -0.04305943200734863,
+   "avg_spread_bps": 9.477819792924683,
+   "total_volume": 219074793.78126007,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": 0.020939170506912408,
+   "ann_vol": 0.1033106591987593,
+   "excess_kurtosis": 383.83950593650616,
+   "vol_clustering_lag1": 0.01189344917944853,
+   "vol_absret_corr": 0.6752748176161092,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000002764979884,
+   "total_volume": 36718263.46552081,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": 0.017209517355371906,
+   "ann_vol": 0.08464412693152634,
+   "excess_kurtosis": 383.758920353637,
+   "vol_clustering_lag1": -0.002675874487071335,
+   "vol_absret_corr": 0.7449030045679723,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.059615832522245,
+   "total_volume": 10907.67227432089,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": 0.027408869656716295,
+   "ann_vol": 0.10110540200919882,
+   "excess_kurtosis": 312.1702153419324,
+   "vol_clustering_lag1": 0.06034572497989889,
+   "vol_absret_corr": 0.749551012331731,
+   "max_drawdown": -0.0013695858439259911,
+   "avg_spread_bps": 6.252035179220699,
+   "total_volume": 1199.6350779363743,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.1265287355389946,
+  "intents_n": 754,
+  "wake_mean_per_round": 3.3333333333333335,
+  "flow_hhi": 0.6534654763001495,
+  "net_flow_by_class": {
+   "retail": 165402469748.0,
+   "hf_pm": 46236520359.0,
+   "foreig": -70172974.0,
+   "mf_pm": -37440343.0
+  }
+ },
+ "usage": {
+  "calls": 35,
+  "memo_hits": 622,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0
+ },
+ "event_windows": [
+  {
+   "t": 120,
+   "headline": "Fed minutes point to steady policy path",
+   "EQ_win_ret": 0.0028281361593374132,
+   "EQ_win_vol": 0.00019580635053867684,
+   "IR_win_ret": 0.03878062496257262,
+   "IR_win_vol": 0.0036958639860466373,
+   "FX_win_ret": 0.0,
+   "FX_win_vol": 0.0,
+   "win_dispersion": 0.36445811475602197,
+   "win_intents": 16
+  },
+  {
+   "t": 200,
+   "headline": "Gold ETF holdings tick higher on hedging demand",
+   "FX_win_ret": 0.020939170506912408,
+   "FX_win_vol": 0.003767532419809795,
+   "CMD_win_ret": 0.017209517355371906,
+   "CMD_win_vol": 0.003086801447539798,
+   "win_dispersion": 0.4145556043004316,
+   "win_intents": 1475
+  },
+  {
+   "t": 260,
+   "headline": "Treasury auction sees solid demand",
+   "IR_win_ret": 0.0,
+   "IR_win_vol": 0.0,
+   "FX_win_ret": 0.0,
+   "FX_win_vol": 0.0,
+   "win_dispersion": 0.1457447078266741,
+   "win_intents": 1554
+  },
+  {
+   "t": 300,
+   "headline": "Spot bitcoin ETF inflows resume after pause",
+   "CRYPTO_win_ret": 0.02710073943488589,
+   "CRYPTO_win_vol": 0.0036867042705490856,
+   "win_dispersion": 0.1457447078266741,
+   "win_intents": 74
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": 0.0028281361593374132,
+  "EQ_win_vol": 0.00019580635053867684,
+  "IR_win_ret": 0.01939031248128631,
+  "CRYPTO_win_vol": 0.0036867042705490856,
+  "win_dispersion": 0.26762578367745044,
+  "win_intents": 779.75
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "baseline",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 314
+ }
+}

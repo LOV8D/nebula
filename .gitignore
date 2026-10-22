@@ -1,0 +1,26 @@
+# Credentials. The remote-brain key lives here and never leaves the machine.
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# macOS
+.DS_Store
+
+# Explainer-video intermediates: ~3.9k PNG frames plus wav narration, ~192 MB.
+# Regenerate with `python3 tools/make_video.py`; the rendered mp4 is committed.
+runs/_video/
+
+# Run artifacts. The bulk logs are reproducible from the committed code, panel
+# and scenarios — `make demo` rebuilds them offline in about 11 s — so only the
+# auditable parts are versioned: manifest.json (five-tuple, code_hash,
+# prompt_sha8), summary.json, report.md and results.json.
+runs/**/events.jsonl
+runs/**/intents.jsonl
+runs/**/marks.jsonl
+runs/**/trades.jsonl
+runs/**/violations.jsonl
+runs/**/llm_cache.json
+runs/**/viewer.html

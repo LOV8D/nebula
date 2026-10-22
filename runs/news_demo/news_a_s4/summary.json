@@ -1,0 +1,132 @@
+{
+ "run_id": "news_a_s4",
+ "scenario": "news_a",
+ "elapsed_s": 0.29,
+ "assets": {
+  "EQ": {
+   "total_ret": -0.018850512441867973,
+   "ann_vol": 0.005879791537808344,
+   "excess_kurtosis": 260.58590338972607,
+   "vol_clustering_lag1": 0.2649673256859276,
+   "vol_absret_corr": 0.8756928009253925,
+   "max_drawdown": -0.019398270837183262,
+   "avg_spread_bps": 3.751895289832104,
+   "total_volume": 19806.664568254542,
+   "n_halts": 0
+  },
+  "IR": {
+   "total_ret": 0.2788917985237911,
+   "ann_vol": 0.07199916243089564,
+   "excess_kurtosis": -1.069676830275611,
+   "vol_clustering_lag1": 0.968702553207864,
+   "vol_absret_corr": -0.05869071582659994,
+   "max_drawdown": -0.0002500507531032481,
+   "avg_spread_bps": 9.850309074159064,
+   "total_volume": 333005.3477313049,
+   "n_halts": 0
+  },
+  "FX": {
+   "total_ret": 0.0,
+   "ann_vol": 0.0,
+   "excess_kurtosis": 0.0,
+   "vol_clustering_lag1": 0.0,
+   "vol_absret_corr": 0.0,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000002764979885,
+   "total_volume": 0.0,
+   "n_halts": 0
+  },
+  "CMD": {
+   "total_ret": 0.0,
+   "ann_vol": 0.0,
+   "excess_kurtosis": 0.0,
+   "vol_clustering_lag1": 0.0,
+   "vol_absret_corr": 0.0,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000000000000932,
+   "total_volume": 0.0,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "total_ret": 0.0,
+   "ann_vol": 0.0,
+   "excess_kurtosis": 0.0,
+   "vol_clustering_lag1": 0.0,
+   "vol_absret_corr": 0.0,
+   "max_drawdown": 0.0,
+   "avg_spread_bps": 6.000000000001737,
+   "total_volume": 0.0,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.13025758778837576,
+  "intents_n": 440,
+  "wake_mean_per_round": 1.1846153846153846,
+  "flow_hhi": 0.8504116347276178,
+  "net_flow_by_class": {
+   "retail": -10578320030.0,
+   "hf_pm": -927524601.0,
+   "foreig": -9192080.0
+  }
+ },
+ "usage": {
+  "calls": 17,
+  "memo_hits": 422,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0
+ },
+ "event_windows": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": -0.0013719385821234775,
+   "EQ_win_vol": 4.588576321232674e-05,
+   "IR_win_ret": 0.015801116049726893,
+   "IR_win_vol": 0.0005248055071079919,
+   "FX_win_ret": 0.0,
+   "FX_win_vol": 0.0,
+   "CMD_win_ret": 0.0,
+   "CMD_win_vol": 0.0,
+   "CRYPTO_win_ret": 0.0,
+   "CRYPTO_win_vol": 0.0,
+   "win_dispersion": 0.13025758778837576,
+   "win_intents": 57
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.0013719385821234775,
+  "EQ_win_vol": 4.588576321232674e-05,
+  "IR_win_ret": 0.015801116049726893,
+  "CRYPTO_win_vol": 0.0,
+  "win_dispersion": 0.13025758778837576,
+  "win_intents": 57.0
+ },
+ "manifest": {
+  "population": "8aacc2c1e9",
+  "intervention": "news_a",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1"
+  },
+  "seed": 415
+ }
+}

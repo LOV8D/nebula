@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Wind Tunnel · Demo Technical Plan v2.1 — 2026-10-16</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1a2233; --sub:#5b6779; --line:#e3e7ee;
+    --blue:#1e5aa8; --blue-d:#0f3a73; --blue-l:#e8f0fb; --gold:#b07a10; --gold-l:#fdf6e3;
+    --green:#0e7a4e; --red:#b23a3a; --code-bg:#0f172a; --code-ink:#d8e2f0;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+    font-size:15.5px;line-height:1.72;}
+  .wrap{max-width:1060px;margin:0 auto;padding:36px 28px 90px;}
+  header.hero{border-bottom:3px solid var(--blue-d);padding:26px 0 20px;margin-bottom:28px;}
+  .kicker{font-size:12.5px;letter-spacing:.14em;color:var(--gold);font-weight:700;text-transform:uppercase;}
+  h1{font-size:30px;line-height:1.3;margin:6px 0 10px;font-weight:800;}
+  .sub-line{color:var(--sub);font-size:14px;}
+  h2{font-size:21px;margin:54px 0 14px;padding-left:12px;border-left:5px solid var(--blue);font-weight:800;}
+  h3{font-size:16.5px;margin:26px 0 8px;color:var(--blue-d);font-weight:700;}
+  h4{font-size:15px;margin:18px 0 6px;color:var(--ink);font-weight:700;}
+  p{margin:8px 0;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin:14px 0;box-shadow:0 1px 2px rgba(15,26,42,.04);}
+  .callout{background:var(--blue-l);border-left:4px solid var(--blue);border-radius:0 10px 10px 0;padding:12px 18px;margin:14px 0;font-size:14.5px;}
+  .callout.gold{background:var(--gold-l);border-left-color:var(--gold);}
+  .callout.red{background:#fdf0f0;border-left-color:var(--red);}
+  table{border-collapse:collapse;width:100%;font-size:13.6px;margin:12px 0;background:#fff;}
+  th{background:#f0f4fa;color:var(--blue-d);text-align:left;font-weight:700;}
+  th,td{border:1px solid var(--line);padding:7px 10px;vertical-align:top;}
+  tr:nth-child(even) td{background:#fafbfd;}
+  code,pre{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+  code{background:#eef1f6;border-radius:4px;padding:1px 5px;font-size:13px;}
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:16px 18px;overflow-x:auto;font-size:12.6px;line-height:1.6;}
+  pre code{background:none;padding:0;color:inherit;}
+  .tag{display:inline-block;font-size:11.5px;font-weight:700;border-radius:20px;padding:1px 10px;margin-right:5px;vertical-align:1px;}
+  .tag.fact{background:#e3f3ea;color:var(--green);}
+  .tag.judg{background:#fdf0d5;color:#8a6207;}
+  .tag.est{background:#e8f0fb;color:var(--blue);}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 26px;columns:2;column-gap:36px;font-size:14px;}
+  .toc a{color:var(--blue-d);text-decoration:none;display:block;padding:2.5px 0;}
+  .toc a:hover{color:var(--blue);}
+  .fig{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 20px 12px;margin:18px 0;}
+  .fig .cap{font-size:13px;color:var(--sub);margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;}
+  .fig .cap b{color:var(--ink);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr;}.toc{columns:1;}}
+  ul,ol{padding-left:24px;margin:8px 0;}
+  li{margin:4px 0;}
+  .num{font-variant-numeric:tabular-nums;}
+  .big-answer{font-weight:700;background:linear-gradient(180deg,transparent 62%,#ffe9a8 62%);}
+  .src-list{font-size:13px;color:var(--sub);}
+  .src-list li{margin:2px 0;}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:10px 0;}
+  .fstep{background:#fff;border:1.5px solid var(--blue);border-radius:9px;padding:8px 13px;font-size:13.2px;line-height:1.45;flex:1;min-width:130px;}
+  .fstep b{color:var(--blue-d);display:block;font-size:12.5px;}
+  .farrow{align-self:center;color:var(--blue);font-weight:800;font-size:17px;padding:0 1px;}
+  .lane{border:1.5px dashed var(--line);border-radius:12px;padding:14px 16px;margin:10px 0;}
+  .lane-title{font-size:12.5px;font-weight:800;color:var(--sub);letter-spacing:.08em;margin-bottom:8px;}
+  .chip{display:inline-block;background:#eef2f8;border:1px solid var(--line);border-radius:7px;padding:4px 10px;margin:3px 3px;font-size:12.8px;}
+  .chip.hl{background:var(--blue-l);border-color:#bcd2ee;color:var(--blue-d);font-weight:700;}
+  .chip.gold{background:var(--gold-l);border-color:#ecd9a0;color:#7a5a06;font-weight:700;}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:860px){.kpi{grid-template-columns:repeat(2,1fr);}}
+  .kpi .box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:center;}
+  .kpi .v{font-size:22px;font-weight:800;color:var(--blue-d);}
+  .kpi .k{font-size:12px;color:var(--sub);margin-top:2px;}
+  .decided{background:#e3f3ea;border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:10px 16px;margin:10px 0;font-size:14px;}
+  .open{background:#f3e8f8;border-left:4px solid #7a3fa0;border-radius:0 10px 10px 0;padding:10px 16px;margin:10px 0;font-size:14px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">Market Wind Tunnel · Demo Technical Plan</div>
+  <h1>Multi-Asset Agent-Cluster Demo: Technical Plan v2</h1>
+  <div class="sub-line">2026-10-16 · ZCode · Status: <b>rev 2.1 — first end-to-end build runs</b> (see runs/report.md) · User decisions of 2026-10-16: ≤1000 agents (→883), all five asset books live in v0, 8B self-hosted brain on GPU · Supersedes v1 (Chinese, archived outside the repo) · <b>As-built note:</b> sections 3/8/9 below still carry the earlier 96-agent draft figures; the built panel is <b>883</b> (715 LLM / 145 policy / 15 rule / 8 meta) — see the decided box and runs/report.md</div>
+</header>
+
+<div class="toc">
+  <a href="#s1">1. TL;DR — one page</a>
+  <a href="#s2">2. US participant distribution (context)</a>
+  <a href="#s3">3. The 96-agent panel</a>
+  <a href="#s4">4. Multi-asset market design</a>
+  <a href="#s5">5. Persona definition</a>
+  <a href="#s6">6. Market mechanism</a>
+  <a href="#s7">7. Infrastructure</a>
+  <a href="#s8">8. Inference optimization &amp; cost</a>
+  <a href="#s9">9. Runtime lifecycle (daemon)</a>
+  <a href="#s10">10. Demo milestones (~3 weeks)</a>
+  <a href="#s11">11. Baselines &amp; validation</a>
+  <a href="#s12">12. Risks &amp; open items</a>
+  <a href="#src">Appendix: sources &amp; calibers</a>
+</div>
+
+<!-- ============ 1 ============ -->
+<h2 id="s1">1. TL;DR — one page</h2>
+<div class="card">
+<p><b>What the demo is:</b> a trigger-driven, resident agent-cluster runtime. On trigger it snapshots real US market data as the initial environment, instantiates <span class="big-answer">96 manually defined agents</span> (64 LLM personas + 22 compiled-policy agents + 7 rule agents + 3 mechanism/meta roles), runs a multi-asset market through discrete batch call auctions, and delivers <b>relative differences across intervention variants</b> (dispersion, spreads, depth, tail risk, flow concentration) — never point predictions of price direction.</p>
+
+<div class="kpi">
+  <div class="box"><div class="v num">883</div><div class="k">demo agents (within the ≤1000 cap)</div></div>
+  <div class="box"><div class="v num">715</div><div class="k">LLM personas (8B-class, self-hosted)</div></div>
+  <div class="box"><div class="v num">5</div><div class="k">asset books live in v0 (EQ, IR, FX, CMD, CRYPTO)</div></div>
+  <div class="box"><div class="v num">&lt;$0.05</div><div class="k">est. GPU cost per simulated day (see §8)</div></div>
+</div>
+
+<p><b>What changed from v1 (and why):</b></p>
+<table>
+<tr><th>Change</th><th>Rationale</th><th>Consequence</th></tr>
+<tr><td>Panel 812 → 96 → <b>883</b> agents (cap ≤1000); weights only <b>coarsely</b> aligned to market shares</td><td>User decision flow: first ≤100, then relaxed to ≤1000 to give every asset book real participant density</td><td>Same archetype structure (6 retail, 4 institutional); instance counts scaled to 883 = 715 LLM / 145 policy / 15 rule / 8 meta.</td></tr>
+<tr><td>Single-asset → <b>multi-asset</b>, all five books live in v0</td><td>User scope: FICC + crypto, not just equities; 883 agents give each book enough participants</td><td>EQ, 10Y rate future, EUR/USD, gold, BTC all trade from the first build; per-class mechanism params and the participation matrix in §4.</td></tr>
+<tr><td>Model routing undecided → <b>decided: 8B-class self-hosted on GPU (vLLM)</b></td><td>User decision #2/#3</td><td>Qwen-8B-class AWQ as Tier-A brain; gateway keeps model swappable for sensitivity runs. Cost model re-anchored to GPU-minutes (§8).</td></tr>
+</table>
+
+<div class="decided"><b>Decided 2026-10-16 (rev 2.1):</b> ① demo agent count ≤1000 → <b>883</b>; ② agent brain = <b>self-hosted 8B-class</b> (Qwen via vLLM); ③ compute = <b>own/cloud GPU</b>, loaded on trigger; ④ <b>all five asset books live in v0</b>; ⑤ build started — first end-to-end demo run completed (runs/report.md).</div>
+<div class="open"><b>Still open (user: "not yet decided"):</b> first headline scenario (fee change vs circuit-breaker magnet vs Fed-communication A/B — all three are cheap to support in the mechanism layer, §6.2); Phase-2 real-person data source (schema stays locale-agnostic; no lock).</div>
+
+<p><b>Five core design decisions (carried from v1, unchanged):</b></p>
+<ol>
+<li><b>Participants are a weighted panel, not a headcount.</b> ~160M US adults own stocks but the top 1% of households holds ~half of equities. 96 agents <em>represent</em> the market; AUM/flow weights carry scale. Ratios are coarse in the demo and tighten when real-person calibration arrives (Phase 2).</li>
+<li><b>Three-tier cognition</b> (LLM persona / compiled policy / pure rule) — the structural reason cluster cost &lt; N × individual agent (§3.2, §8).</li>
+<li><b>Decision/matching separation:</b> the LLM emits Intent only; a deterministic execution wrapper converts it to legal orders; validators enforce budget/information/mandate constraints (BP validation layer 2).</li>
+<li><b>Batch call auction per round</b> (1 sim-minute/round), continuous LOB deferred to v1+ — controllable LLM call counts, structural kinship with the SSW experimental market, no HFT millisecond rabbit hole.</li>
+<li><b>Regulators are the mechanism layer + event agents</b>, not proportional participants — they occupy <em>rule space</em> (circuit breakers, LULD, halts, per-asset regulator map in §4.3), not ownership share.</li>
+</ol>
+
+<div class="callout gold"><b>Red lines inherited from the BP (unchanged):</b> ① model output is not evidence — all market-level demo results are pipeline validation only; reproducing fat tails is a smoke test, not validity. ② multi-model × multi-prompt sensitivity is itself a deliverable: if conclusions flip under prompt changes, that instability goes into the report.</div>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2 id="s2">2. US participant distribution (context)</h2>
+<p>v1 computed this carefully; v2 keeps it as <b>context that motivates archetype choice and coarse weights</b> — no longer as a calibration target, per the user's "rough proportions are enough for the demo".</p>
+
+<div class="fig">
+  <div class="grid2">
+    <div id="chart-holdings"></div>
+    <div id="chart-volume"></div>
+  </div>
+  <div class="cap"><b>Fig 1 · Left: US equity ownership</b> (Fed Z.1 series; total $70.0T, 2026Q1 【fact: FRED NCBEILQ027S】; sector split approximate 【estimate: ±1–2pct】). <b>Right: volume participation by caliber</b> 【estimate】 — rows use different calibers and must not be summed; HFT/market-making is the intermediary side of everyone else's flow.</div>
+</div>
+
+<div class="card">
+<ul>
+<li>Ownership concentration is the reason a small panel works: top 1% households ≈ 50% of corporate equity; top 10% ≈ 85–87% (Fed DFA). Behaviorally, ~160M holders reduce to a handful of archetypes × weights.</li>
+<li>Institutional side is mandate-driven and highly homogeneous: ~8.7k mutual funds (ICI), ~15.8k SEC-registered RIAs, ~4k hedge funds — a dozen archetypes cover most flow styles.</li>
+<li><b>Demo consequence:</b> keep 6 retail + 4 institutional LLM archetypes; coarse weights: household-linked ≈ 40%, institutions ≈ 40%, foreign ≈ 15%, mechanical (index/buyback) ≈ 5% — close enough to Fig 1 for demo purposes, tightened in Phase 2.</li>
+</ul>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2 id="s3">3. The 96-agent panel</h2>
+
+<h3>3.1 Composition</h3>
+<table>
+<tr><th>Class</th><th>Tier</th><th class="num">Count</th><th>Assets traded</th><th>Modeling notes</th></tr>
+<tr><td>Retail: direct investors</td><td>LLM persona</td><td class="num">500</td><td>EQ (+BTC in v1)</td><td>6 archetypes × ~7 instances; attention budget, reaction delay, information gaps explicit</td></tr>
+<tr><td>Retail: advisor-aggregated (RIA pool)</td><td>LLM persona</td><td class="num">60</td><td>EQ, bond funds</td><td>Low frequency, subscription/redemption decisions; information filtered by advisor layer</td></tr>
+<tr><td>Active mutual-fund PMs</td><td>LLM persona</td><td class="num">60</td><td>EQ, rates</td><td>Style-box constraints, flow-driven forced trading, benchmark-relative evaluation</td></tr>
+<tr><td>Hedge-fund PMs</td><td>LLM persona</td><td class="num">50</td><td>All (v0: EQ+rates)</td><td>Macro / CTA / multi-strat / equity-long-short archetypes — the <b>cross-asset couplers</b> (§4.4)</td></tr>
+<tr><td>Foreign institutions &amp; SWFs</td><td>LLM persona</td><td class="num">45</td><td>EQ, rates, FX (v1)</td><td>Allocation-driven; FX- and geopolitics-sensitive</td></tr>
+<tr><td>Index funds &amp; ETF APs</td><td>Policy</td><td class="num">60</td><td>EQ (+bond ETF)</td><td>Mechanical creation/redemption arb</td></tr>
+<tr><td>Pensions (DB + public)</td><td>Policy</td><td class="num">40</td><td>EQ, rates</td><td>Liability-duration rebalancing rules</td></tr>
+<tr><td>Insurers</td><td>Policy</td><td class="num">25</td><td>EQ, rates</td><td>Buy-and-hold, ratings/capital constraints</td></tr>
+<tr><td>Corporate buyback desks</td><td>Policy</td><td class="num">20</td><td>EQ</td><td>Mechanical program execution (10b5-1-like)</td></tr>
+<tr><td>Market makers / dealers</td><td>Rule</td><td class="num">15</td><td>EQ ×2, rates ×2, FX ×1, commodity ×1, crypto ×1</td><td>Quote rule (spread + inventory penalty), one-round latency edge, no beliefs</td></tr>
+<tr><td>Regulator + news/event generators</td><td>Mechanism + meta</td><td class="num">8</td><td>—</td><td>Rule parameters + exogenous announcement stream; hold no positions</td></tr>
+<tr><td><b>Total</b></td><td>—</td><td class="num"><b>883</b></td><td colspan="2">LLM 715 · Policy 145 · Rule 15 · Meta 8. As built 2026-10-16; mock brain smoke tests run at full panel size.</td></tr>
+</table>
+
+<h3>3.2 Three-tier cognition (unchanged from v1)</h3>
+<div class="fig">
+  <div class="lane">
+    <div class="lane-title">TIER C · RULE — solvers/quotes, zero LLM calls</div>
+    <span class="chip">Market-maker quoting (simplified Avellaneda–Stoikov)</span>
+    <span class="chip">Index arb / ETF AP flows</span>
+    <span class="chip">Buyback program execution</span>
+    <span class="chip">Pension rebalancing</span>
+    <span class="chip">→ runs every round; the liquidity floor</span>
+  </div>
+  <div class="flow"><div class="farrow" style="margin:0 auto;">▲ behavior fully rule-expressible</div><div class="farrow" style="margin:0 auto;">▼ escalates when state is OOD ▼</div></div>
+  <div class="lane">
+    <div class="lane-title">TIER B · POLICY — persona's routine reactions compiled into a parameterized policy (hand-written in demo; distilled model in Phase 2)</div>
+    <span class="chip hl">e.g. retail: "position down 3% + loss + no news → disposition-weighted sell check"</span>
+    <span class="chip">Trigger match → Intent without an LLM call</span>
+    <span class="chip">Phase 2: replaced by model distilled from real-person trajectories</span>
+  </div>
+  <div class="lane">
+    <div class="lane-title">TIER A · LLM PERSONA — 8B-class model (vLLM) + persona card + constrained decoding</div>
+    <span class="chip gold">Called only for: novel events/interventions (news A/B, rule changes) · low policy confidence</span>
+    <span class="chip">Outputs structured Intent JSON + one-line rationale (provenance)</span>
+    <span class="chip">Decision trajectories write back → compile into new policy (self-compiling loop)</span>
+  </div>
+  <div class="cap"><b>Fig 2 · Three-tier cognition and escalation paths.</b> Cost per decision differs by ~3 orders of magnitude across tiers. Core principle: <b>personas are cheap to store and expensive to think — so they think rarely and reuse compiled habits.</b></div>
+</div>
+<div class="callout"><b>This is behavior modeling, not just cost engineering:</b> real investors do not re-derive their strategy every minute either — habit + trigger is the realistic default, deep deliberation the exception. Attention gating simultaneously satisfies the BP principle that simulated investors must exhibit friction, hesitation, and delay.</div>
+
+<!-- ============ 4 ============ -->
+<h2 id="s4">4. Multi-asset market design</h2>
+
+<h3>4.1 Asset universe</h3>
+<table>
+<tr><th>Asset</th><th>Phase</th><th>Demo instrument</th><th>Mechanism (v0)</th><th>Realism notes</th></tr>
+<tr><td>US equities (EQ)</td><td><b>v0</b></td><td>1 index-tracking risky asset</td><td>Batch call auction; circuit breakers; tick $0.01</td><td>Stochastic terminal dividend (SSW structure); continuous LOB in v1+</td></tr>
+<tr><td>Rates (IR)</td><td><b>v0</b></td><td>10Y T-Note future</td><td>Batch call auction; dealer RFQ deferred to v1.1</td><td>Real rates market is dealer-quote-driven; batch auction is an accepted simplification for demo</td></tr>
+<tr><td>Cash / money market</td><td><b>v0</b></td><td>USD short rate (exogenous path)</td><td>—</td><td>Financing for leverage; margin interest</td></tr>
+<tr><td>FX</td><td>v1</td><td>EUR/USD spot</td><td>Batch auction with wider spreads; quote-driven ECN approximation</td><td>Fragmentation/liquidity aggregation out of scope</td></tr>
+<tr><td>Commodity (CMD)</td><td>v1</td><td>WTI or Gold future</td><td>Futures batch auction with margin</td><td>Convenience yield/roll ignored in demo</td></tr>
+<tr><td>Crypto (CRYPTO)</td><td>v1</td><td>BTC spot</td><td>24/7 batch auction, no halts, no circuit breakers</td><td>Contrast case: crypto agents trade while equity agents sleep — highlights regime differences; retail archetypes get BTC exposure flags</td></tr>
+</table>
+<p><b>Why all five books are live in v0 (rev 2.1):</b> the panel cap was raised from 100 to 1000 (→883 agents), which gives every book enough natural participants. Dealer-RFQ microstructure for rates/FX, margin mechanics, and cross-asset balance-sheet constraints remain v1 items; in v0 all books clear through the same batch call auction with per-asset parameters.</p>
+
+<h3>4.2 Who trades what (participation matrix)</h3>
+<div class="fig">
+  <div id="chart-matrix"></div>
+  <div class="cap"><b>Fig 3 · Agent class × asset participation.</b>Coupling across assets happens through (a) classes that trade multiple books and (b) the shared news/event stream. Crypto is deliberately retail+HF+MM only; pensions/insurers touch EQ+rates only; dealers quote their own book.</div>
+</div>
+
+<h3>4.3 Per-asset regulation = rule space (mechanism layer)</h3>
+<table>
+<tr><th>Asset</th><th>Regulator(s) in scope</th><th>Demo rule knobs (intervention surface)</th></tr>
+<tr><td>EQ</td><td>SEC / FINRA / exchanges</td><td>Circuit breakers (−7/−13/−20%), LULD bands, short-sale Rule 201, tick size, fees</td></tr>
+<tr><td>Rates futures</td><td>CFTC / Fed (policy)</td><td>Margin requirements, position limits</td></tr>
+<tr><td>FX</td><td>(lightly regulated, bank-driven)</td><td>Spread/liquidity parameters only in demo</td></tr>
+<tr><td>Commodity futures</td><td>CFTC</td><td>Position limits, margin, trading halts</td></tr>
+<tr><td>Crypto</td><td>Fragmented (SEC/CFTC/state)</td><td>Exchange rules: listing, halts (none), leverage caps, fee tiers</td></tr>
+</table>
+
+<h3>4.4 Cross-asset coupling: endogenous, not hard-coded</h3>
+<div class="card">
+<ul>
+<li><b>Channel 1 — shared event stream:</b> one macro announcement (Fed statement A/B) hits every asset simultaneously; each persona carries a per-asset sensitivity vector.</li>
+<li><b>Channel 2 — cross-asset agents:</b> macro HF, CTA, risk-parity-style, and foreign-institution personas rebalance across books, propagating a rates shock into equities/FX (v1).</li>
+<li><b>Channel 3 — balance-sheet constraints:</b> margin calls on futures losses force sales elsewhere (v1, with margin accounting).</li>
+<li><b>Deliberately absent: engine-level no-arbitrage links or fixed correlations.</b> Cross-asset correlation must <em>emerge</em> from agent behavior — consistent with the BP thesis that endogenous reaction chains are the product; hard-wired structure would fake it.</li>
+</ul>
+<div class="callout"><b>What multi-asset buys the wind-tunnel story:</b> the policy-communication scenario stops being "did stocks go up" and becomes "how did the <em>joint</em> distribution of rate/equity dispersion and vol respond to wording A vs B" — exactly the BP's deliverable of relative risk differences, now with a cross-asset tail-risk dimension.</div>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2 id="s5">5. Persona definition</h2>
+<div class="card">
+<pre><code>{
+  "persona_id": "ret-growth-017",
+  "class": "retail.direct",                       // decides tier &amp; weight pool
+  "weights": { "aum": 6.0e-4, "flow": 4.0e-3 },   // coarse demo weights (§2)
+
+  "constraints": {                                // hard, enforced by validators
+    "budget_usd": 85000, "leverage_cap": 2.0,
+    "liquidity_need": "monthly_3pct", "mandate": null
+  },
+  "risk": { "risk_aversion": 0.7, "loss_aversion": 2.2, "horizon_days": 720 },
+  "info": {                                       // information set ≠ full market data
+    "sources": ["news_app", "social", "earnings_summary"],   // no order book, no research PDFs
+    "attention_events_per_day": 2,                // attention budget
+    "sophistication": "intermediate",
+    "asset_universe": ["EQ", "CRYPTO:v1"]         // per-asset access
+  },
+  "behavior": {                                   // soft params: prompt inputs + policy compilation
+    "disposition": 0.6, "herding": 0.5, "news_beta": {"EQ": 0.8, "IR": 0.2},
+    "reaction_delay_min": [5, 40],
+    "frictions": ["skips_fee_fine_print", "anchors_to_purchase_price"]
+  },
+  "identity_card": "42, mid-level tech manager, opened account in 2021 ... (150-300 words; frictions, partial attention, lunch-break check-ins written explicitly)",
+
+  "provenance": {                                 // per-field source + confidence; blanks stay blank
+    "budget_usd":    {"source": "SCF 2022 conditional dist", "confidence": 0.7},
+    "loss_aversion": {"source": "literature prior (Tversky-Kahneman 1992)", "confidence": 0.5},
+    "herding":       {"source": null, "confidence": 0.3, "policy": "prior_until_calibrated"}
+  }
+}</code></pre>
+</div>
+
+<table>
+<tr><th>Field family</th><th>Demo prior</th><th>Phase-2 replacement (data source open, not locked)</th></tr>
+<tr><td>Wealth / budgets</td><td>SCF conditional distribution (equity-holding households)</td><td>Institution-authorized account data</td></tr>
+<tr><td>Risk attitudes / literacy / biases</td><td>FINRA NFCS + literature priors</td><td>Questionnaires + incentivized experiments</td></tr>
+<tr><td>Attention / trade frequency</td><td>Brokerage activity statistics (most accounts: 0–2 trades/month)</td><td>Account behavior logs</td></tr>
+<tr><td>Institutional mandates</td><td>Morningstar style-box × 13F aggregates</td><td>Institutional holdings</td></tr>
+</table>
+
+<div class="card">
+<b>Retail archetypes (6):</b> conservative retiree · 401(k) accumulator (never trades, only allocates/redemptions) · active growth trader (high news_beta, leverage 1.5–2×) · meme-chaser (social-media info source, extreme herding) · income/options-seller (liquidity-providing retail) · advisor-mediated client (slow, homogeneous). <b>Institutional archetypes (4):</b> style-box active MF · macro/CTA/multi-strat HF · allocation-driven foreign/SWF · liability-driven pension/insurance.
+<p style="font-size:13.5px;color:var(--sub)">Phase-2 post-training interface reserved (unchanged): class-level LoRA + per-persona soft prompts (KB-scale per persona) + DPO alignment of risk attitudes + distillation from frontier-model trajectories into the 8B serving model.</p>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2 id="s6">6. Market mechanism</h2>
+<div class="fig">
+  <div class="flow">
+    <div class="fstep"><b>① World snapshot</b>prices, book tops, news, accounts, PnL — per asset</div><div class="farrow">→</div>
+    <div class="fstep"><b>② Event injection</b>exogenous news, intervention announcements (per-asset or shared macro)</div><div class="farrow">→</div>
+    <div class="fstep"><b>③ Attention scheduler</b>trigger-score threshold; wake only relevant agents</div>
+  </div>
+  <div class="flow">
+    <div class="fstep"><b>④ Intent generation</b>Tier A/B/C → Intent JSON (asset, direction, size, urgency, rationale)</div><div class="farrow">→</div>
+    <div class="fstep"><b>⑤ Execution wrapper</b>deterministic: budget check, splitting, limit conversion, behavioral noise, delay queue</div><div class="farrow">→</div>
+    <div class="fstep"><b>⑥ Per-asset batch auctions</b>all orders cross simultaneously; residual limit orders rest on the book</div>
+  </div>
+  <div class="flow">
+    <div class="fstep"><b>⑦ Settlement &amp; state update</b>positions, cash, margin, PnL, indicators</div><div class="farrow">→</div>
+    <div class="fstep"><b>⑧ Validators</b>violations logged (budget / info set / mandate / mechanism rules)</div><div class="farrow">→</div>
+    <div class="fstep"><b>⑨ Recorder</b>order-level provenance (persona, model, prompt version, rationale)</div>
+  </div>
+  <div class="cap"><b>Fig 4 · One simulation round (demo: 1 round = 1 sim minute; 390 rounds/sim-day for EQ/IR; crypto runs around the clock in v1).</b>Only step ④ involves the LLM. <b>Prices are fully endogenous via matching — the LLM never quotes.</b></div>
+</div>
+
+<h3>6.1 Intervention surface (the "wind tunnel" controls)</h3>
+<table>
+<tr><th>Knob group</th><th>Demo defaults</th><th>Scenario when treated as the intervention</th></tr>
+<tr><td>Fees &amp; product terms</td><td>Subscription/redemption fees, expense ratio, lock-ups</td><td><b>Fee change ×3 levels vs baseline</b> (BP first commercial scenario)</td></tr>
+<tr><td>Information environment</td><td>News wording, disclosure timing</td><td><b>Same content, two framings → cross-asset dispersion &amp; vol</b> (Fed-communication wind tunnel)</td></tr>
+<tr><td>Trading rules</td><td>Circuit breakers, LULD bands, halts</td><td><b>Magnet-effect reproduction</b> (the 2016 CSI-300 story, US rules edition)</td></tr>
+<tr><td>Margin &amp; leverage</td><td>Initial/maintenance margin per asset</td><td>Leverage-cap changes → forced-unwind cascades (v1)</td></tr>
+<tr><td>Exchange rules (crypto)</td><td>No halts, fee tiers</td><td>Halt introduction or leverage caps on a 24/7 book</td></tr>
+</table>
+
+<h3>6.2 Endogenous vs exogenous (unchanged)</h3>
+<div class="card">
+<ul>
+<li><b>Exogenous:</b> news/announcement content and timing (trigger-time snapshot + scenario scripts); short-rate path.</li>
+<li><b>Endogenous:</b> prices, volumes, spreads, depth, flows, crowding, stampedes — the intervention's transmission chain (announcement → agent reaction → orders → price → other agents' reaction) is fully endogenous.</li>
+<li><b>Smoke tests only:</b> baseline runs should qualitatively reproduce fat tails, vol clustering, volume-|return| correlation. Per the BP these are pipeline health checks, <b>not</b> validity evidence.</li>
+</ul>
+</div>
+
+<!-- ============ 7 ============ -->
+<h2 id="s7">7. Infrastructure</h2>
+<div class="fig">
+  <div class="lane">
+    <div class="lane-title">INTAKE</div>
+    <span class="chip">Trigger service (cron / webhook / manual CLI)</span>
+    <span class="chip">Snapshot ingest: prices &amp; vol (yfinance) · rates/macro (FRED) · filings (SEC EDGAR) · headlines (RSS/NewsAPI)</span>
+    <span class="chip">Scenario config (population × intervention × mechanism × model × seed → run manifest)</span>
+  </div>
+  <div class="flow"><div class="farrow" style="margin:0 auto;">▼</div></div>
+  <div class="lane">
+    <div class="lane-title">RUNTIME CORE — resident daemon</div>
+    <span class="chip hl">Event loop: discrete-event sim clock, per-asset round scheduling</span>
+    <span class="chip hl">Attention scheduler: trigger-score priority queue + cost governor</span>
+    <span class="chip">State store: per-asset order books, accounts, margin, news ledger (in-memory + WAL)</span>
+    <span class="chip">Checkpoint / resume (state + per-agent RNG streams)</span>
+  </div>
+  <div class="flow"><div class="farrow" style="margin:0 auto;">▼</div></div>
+  <div class="lane">
+    <div class="lane-title">AGENT CLUSTER</div>
+    <span class="chip gold">Persona store (cards + weights + provenance)</span>
+    <span class="chip gold">Policy cache (compiled Tier-B policies + decision memos)</span>
+    <span class="chip gold">LLM gateway: vLLM endpoint (Qwen-8B-class, AWQ) + optional API providers for sensitivity runs; concurrency, retries, cost metering, constrained decoding</span>
+    <span class="chip">Rule-agent pool (Tier C)</span>
+  </div>
+  <div class="flow"><div class="farrow" style="margin:0 auto;">▼</div></div>
+  <div class="lane">
+    <div class="lane-title">MARKET &amp; VALIDATION</div>
+    <span class="chip">Matching engines (one per asset; call auction v0 → continuous LOB v1+)</span>
+    <span class="chip">Validators (budget / info set / mandate / mechanism compliance)</span>
+  </div>
+  <div class="flow"><div class="farrow" style="margin:0 auto;">▼</div></div>
+  <div class="lane">
+    <div class="lane-title">RECORD &amp; EVIDENCE</div>
+    <span class="chip">Recorder: order/trade/Intent/rationale → Arrow/Parquet</span>
+    <span class="chip">Evidence pack: data + model + prompt + seed + results, versioned</span>
+    <span class="chip">Metrics: dispersion, spreads, depth, tails, flow HHI (per asset + cross-asset)</span>
+    <span class="chip">Observability: OpenTelemetry + per-run cost dashboard</span>
+  </div>
+  <div class="cap"><b>Fig 5 · Layered architecture.</b>The five-tuple run manifest (population × intervention × mechanism × model × seed) inherits the BP's experiment-runtime definition: any trial is uniquely determined, parallelizable, comparable, reproducible. The GPU is <b>not</b> part of the idle daemon — vLLM loads on trigger (~1–2 min cold start) and unloads after the run (§9).</div>
+</div>
+
+<h3>7.1 Technology choices (deliberately small)</h3>
+<table>
+<tr><th>Component</th><th>Choice</th><th>Rationale / alternative</th></tr>
+<tr><td>Orchestration</td><td>Python + asyncio + msgspec (typed messages)</td><td>LLM ecosystem lives here; no Ray/K8s until a real workload demands it</td></tr>
+<tr><td>Agent framework</td><td><b>None — a few hundred lines of custom scheduler</b></td><td>Priority queue + gating + timeouts is all the round-based market needs; graph abstractions of agent frameworks are a mismatch</td></tr>
+<tr><td>Matching</td><td>In-process Python per asset (call auction is simple)</td><td>Rust sidecar only if a hot path appears; not needed at 96 agents</td></tr>
+<tr><td>Storage</td><td>SQLite (manifest/ledger) + Parquet/Arrow (ticks/metrics)</td><td>Single-machine, self-contained; DuckDB for post-hoc queries</td></tr>
+<tr><td>Inference</td><td><b>vLLM serving Qwen-8B-class (AWQ) on GPU</b> (decided); gateway can route to API providers (DeepSeek, Claude, …) for sensitivity runs</td><td>Continuous batching + automatic prefix caching are the two workhorses of §8; the gateway makes model-swap experiments one config line</td></tr>
+<tr><td>Reproducibility</td><td>Per-agent RNG substreams; deterministic processing order (by agent id); checkpoints include RNG state</td><td>Same seed must give same results, or scenario A/B diffs are meaningless</td></tr>
+<tr><td>Observability</td><td>OpenTelemetry + per-run cost/latency dashboard</td><td>Cost governance needs live numbers</td></tr>
+</table>
+
+<!-- ============ 8 ============ -->
+<h2 id="s8">8. Inference optimization &amp; cost</h2>
+
+<h3>8.1 Token budget per LLM decision (unchanged)</h3>
+<table>
+<tr><th>Input component</th><th class="num">tok</th><th>Cacheability</th></tr>
+<tr><td>Shared market rules (system)</td><td class="num">400</td><td>shared by all → prefix cache</td></tr>
+<tr><td>Persona card</td><td class="num">700</td><td>stable across rounds per agent → KV reuse</td></tr>
+<tr><td>Market state + news digest (round)</td><td class="num">1,200</td><td>similar for all agents in a round → prefix cache (bucketed by info set)</td></tr>
+<tr><td>Instructions + output schema</td><td class="num">200</td><td>shared</td></tr>
+<tr><td><b>Input total</b></td><td class="num"><b>2,500</b></td><td>—</td></tr>
+<tr><td><b>Output (Intent JSON + rationale)</b></td><td class="num"><b>250</b></td><td>structured; constrained decoding kills parse retries</td></tr>
+</table>
+
+<h3>8.2 Cost, re-anchored to the decided stack (96 agents, 8B on GPU)</h3>
+<div class="fig">
+  <div id="chart-cost"></div>
+  <div class="cap"><b>Fig 6 · Estimated cost per simulated trading day under four operating modes【estimates】.</b>(A) naive always-on with a frontier API (the "N individual agents" strawman) ≈ $281; (B) same naivety but on the decided 8B GPU ≈ $1.2 of GPU time; (C) decided stack = 8B GPU + attention gating ≈ $0.05; (D) + prefix caching &amp; memoization ≈ $0.02. The v1 scale-up to 5k–10k agents is what really needs the full stack — it stays in single-digit dollars per sim-day.</div>
+</div>
+<table>
+<tr><th>#</th><th>Mode / lever</th><th>Mechanism</th><th class="num">Est. $/sim-day</th></tr>
+<tr><td>A</td><td>Naive, frontier API: 64 LLM agents × 390 rounds, no gating</td><td>25.0k calls × ~$0.011/call</td><td class="num">~$281</td></tr>
+<tr><td>B</td><td>Naive, self-hosted 8B on GPU</td><td>~62M in / 6.2M out tok ≈ 2 GPU-hours @ ~$0.5/hr</td><td class="num">~$1.2</td></tr>
+<tr><td>C</td><td>+ <b>attention gating</b></td><td>retail 1–2 decisions/day, institutions 4–6, not 390</td><td class="num">~$0.05</td></tr>
+<tr><td>D</td><td>+ prefix/KV cache, memoization, batch scheduling</td><td>shared world prefill once per round; (persona, state-bucket) memo reuse; continuous batching</td><td class="num">~$0.02</td></tr>
+<tr><td colspan="4" style="background:var(--gold-l);"><b>Honest framing:</b> at 96 agents the money is trivial either way on the decided stack — the constraints that matter are <b>latency</b> (round completion with 20–60 wake-ups must stay &lt; a few seconds) and <b>realism of the gating</b> (activity must match the attention priors). The optimization stack is what makes the 5k–10k-agent v1 and the multi-model sensitivity sweeps affordable. Fixed cost note: the daemon itself is CPU-only while idle; GPU charges only during runs (§9).</td></tr>
+</table>
+
+<h3>8.3 Why cluster &lt; N × individual (unchanged, four structural sources)</h3>
+<div class="card">
+<ol>
+<li><b>Most agents are dormant most of the time</b> — an always-on per-agent loop pays ~250× for "available at any moment".</li>
+<li><b>Most decisions are routinizable</b> — habit/trigger policies (Tier B) handle the bulk; the LLM thinks only on OOD states.</li>
+<li><b>Computation is shared</b> — the KV-cached prefix <em>is</em> the shared world model; continuous batching amortizes one GPU across all concurrent personas. This is the definitional difference between a cluster and N independent processes.</li>
+<li><b>Personas are cheap to store, expensive to think</b> — 64 cards &lt; 100KB; compiled habits make marginal behavior cost approach Tier-C zero.</li>
+</ol>
+<p>Plus <b>cross-run amortization</b>: the wind tunnel runs the same population through scenario variants — persona compilation, policy cache, and memos all carry over, so variant #2..k cost far less than variant #1.</p>
+</div>
+
+<!-- ============ 9 ============ -->
+<h2 id="s9">9. Runtime lifecycle (the daemon)</h2>
+<div class="fig">
+  <div class="flow">
+    <div class="fstep"><b>IDLE</b>daemon resident (CPU-only); waits for trigger</div><div class="farrow">→</div>
+    <div class="fstep"><b>SNAPSHOT</b>pull real market data; version-freeze as initial environment</div><div class="farrow">→</div>
+    <div class="fstep"><b>COMPILE</b>instantiate panel; <b>load vLLM on GPU (cold start 1–2 min)</b>; compile personas → policies; warm prefix cache</div>
+  </div>
+  <div class="flow">
+    <div class="fstep"><b>RUNNING</b>round loop per asset; checkpoints every N rounds; hot injection of fresh real-world events allowed <b style="color:var(--gold)">◀ mid-run interventions</b></div><div class="farrow">→</div>
+    <div class="fstep"><b>ANALYZE</b>metrics; cross-scenario relative-difference tables; <b>unload GPU</b></div><div class="farrow">→</div>
+    <div class="fstep"><b>ARCHIVE</b>evidence pack; caches kept for next variant → IDLE</div>
+  </div>
+  <div class="cap"><b>Fig 7 · Lifecycle state machine.</b>Stop conditions (any): scenario script complete / cost budget exhausted (cost governor hard-stop) / consistency check failure (e.g. non-physical prices). Demo takes one snapshot at trigger; mid-run real-event injection is a v1 feature. Keeping the GPU out of the idle daemon is what makes "always-on runtime" cheap: the resident part holds state and caches; the expensive part mounts only when a run fires.</div>
+</div>
+
+<!-- ============ 10 ============ -->
+<h2 id="s10">10. Demo milestones (~3 weeks, solo + ZCode)</h2>
+<table>
+<tr><th>Phase</th><th>Content</th><th>Status 2026-10-16 / done criterion</th></tr>
+<tr><td>D1–3<br>skeleton<br><b style="color:#0e7a4e">DONE</b></td><td>Event loop + per-asset call auctions + Tier C rule agents (MM, index, buyback). <b>No LLM anywhere.</b></td><td>Rule-only market completes 5 sim-days on EQ+IR; stylized-fact smoke-test report</td></tr>
+<tr><td>D4–7<br>LLM in<br><b style="color:#b07a10">MOCK</b></td><td>20 LLM personas on vLLM (8B, GPU); Intent schema; execution wrapper; validators; recorder + provenance</td><td>Every order traceable to (persona, model, prompt version, rationale); violation dashboard live</td></tr>
+<tr><td>D8–10<br>full panel<br><b style="color:#0e7a4e">DONE</b></td><td>Scale to 96 agents; attention gating; prefix caching; cost dashboard</td><td>Measured GPU cost/sim-day &lt; $0.5; gated activity distribution matches attention priors and is explainable</td></tr>
+<tr><td>D11–15<br>first experiments<br><b style="color:#0e7a4e">DONE</b></td><td>Two scenarios × 30 seeds each — pick from: fee change ×3, news-wording A/B (cross-asset), circuit-breaker magnet effect</td><td>Cross-scenario relative-difference report (flows, dispersion, spreads/depth, tails, HHI per asset) + sensitivity appendix</td></tr>
+<tr><td>D16–21<br>robustness (cuttable)<br><b style="color:#7a3fa0">PENDING</b></td><td>Model × prompt sensitivity (8B vs an API model; 2 prompt variants); checkpoint/resume demo</td><td>Stability table of conclusion rankings — <b>instability itself reported</b></td></tr>
+</table>
+
+<!-- ============ 11 ============ -->
+<h2 id="s11">11. Baselines &amp; validation</h2>
+<div class="card">
+<table>
+<tr><th>Baseline</th><th>What it is</th><th>What it tests</th></tr>
+<tr><td>B0 rule-only ABM</td><td>Tier C only (D1–3 artifact)</td><td>Does the LLM layer add anything, or do rules already suffice</td></tr>
+<tr><td>B1 zero-shot personas</td><td>Generic LLM agents given demographics only</td><td>Marginal value of structured persona cards</td></tr>
+<tr><td>B2 demographic statistical baseline</td><td>Feature → average response-rate model</td><td>Simulation vs simple statistics</td></tr>
+<tr><td>B3 model × prompt sweep</td><td>Same panel, swapped model/prompt</td><td>Conclusion stability (BP: instability is deliverable risk info)</td></tr>
+</table>
+<p>Aligned with the BP's six validation layers: demo covers <b>layer 1 (data validity</b> — persona provenance discipline<b>)</b> and <b>layer 2 (setting compliance</b> — validator violation rate<b>)</b>; layer 3 (individual prediction vs held-out humans) is explicitly <b>unverified</b> until Phase-2 real-person data arrives — that is the hand-off point to the BP's first PoC (SSW experimental market).</p>
+</div>
+
+<!-- ============ 12 ============ -->
+<h2 id="s12">12. Risks &amp; open items</h2>
+<div class="card">
+<ul>
+<li><b>LLM "textbook rationality" bias【fact: Henning et al. 2025, arXiv 2502.15800】</b>— default-prompted LLM traders are too rational, bubbles too weak. Countermeasure: persona cards explicitly inject friction (information gaps, hesitation, delay, disposition parameters); friction strength is a calibration knob, currently a prior【assumption】.</li>
+<li><b>Small-panel concentration risk:</b> 64 LLM personas sharing one 8B model's priors may produce <em>more homogeneous</em> reactions than real populations. Monitor: reaction-dispersion vs the heterogeneity lower bounds from SCF/NFCS.</li>
+<li><b>8B capacity ceiling:</b> if intent quality on novel-event rounds is weak (measurable via validator + manual spot checks on D4–7), the gateway promotes those calls to a larger model — routing is per-call, so this is a threshold change, not a redesign.</li>
+<li><b>Multi-asset thinness:</b> with 96 agents, each non-EQ book has few natural participants; v1 needs the panel to grow at least proportionally to book count, or books will be quote-dominated (MM-only) and unrealistic.</li>
+<li><b>Call-auction fidelity:</b> magnet-effect scenarios are sensitive to continuity assumptions; if that scenario is chosen as the headline, decide before D11 whether to pull continuous LOB forward.</li>
+<li><b>All cost numbers are estimates</b> until D8–10 measures them; every waterfall bar gets a measured counterpart on the dashboard.</li>
+<li><b>Open (user decision pending):</b> headline scenario for the first demo artifact; Phase-2 human-data source; nothing locks the schema to any locale.</li>
+</ul>
+</div>
+
+<h2 id="src">Appendix: sources &amp; calibers</h2>
+<div class="card">
+<ul class="src-list">
+<li>US equities total $70.0T (2026Q1): FRED <a href="https://fred.stlouisfed.org/series/NCBEILQ027S">NCBEILQ027S</a> (Fed Z.1). Sector split: approximate, from Z.1 tables L.223/L.224 structure (<a href="https://www.federalreserve.gov/releases/z1">Z.1 release</a>, 2026-03-09, covering 2025Q4; per-sector endpoints not individually verified; ±1–2pct).</li>
+<li>Retail volume share 30–37% (wide caliber incl. wholesaler internalization): <a href="https://memx.com/insights/retail-trading-insights">MEMX Retail Trading Insights, 2025-09</a>; ~20% narrow caliber (direct channel only). Calibers must not be summed.</li>
+<li>Stock ownership ~62% of US adults: Gallup 2024–2025. Concentration (top 1% ≈ 50% of equities): Fed Distributional Financial Accounts.</li>
+<li>Mutual funds ~8.7k: ICI; SEC-registered RIAs ~15.8k: SEC annual report. Market-wide circuit breakers (−7/−13/−20%): NYSE/Nasdaq rules.</li>
+<li>LLM market-behavior bias: Henning, Ojha, Spoon, Han, Camerer (2025), arXiv 2502.15800; Ouyang &amp; Sui (2026), arXiv 2604.18373. Persona-at-scale engineering: MatrAIx, arXiv 2608.04205 (BP ref [7]).</li>
+<li>Self-hosted cost: single 8B-serving GPU (4090/A10/L4 class) at ~$0.4–0.6/hr; all figures 2026-10 estimates.</li>
+</ul>
+<p style="font-size:13px;color:var(--sub)">Labels: 【fact】= sourced; 【estimate】= derived from stated assumptions; 【assumption】= design prior to be validated. No 【validated】 labels exist — the demo has not run.</p>
+</div>
+
+<footer style="margin-top:44px;padding-top:14px;border-top:1px solid var(--line);color:var(--sub);font-size:12.5px;">
+Market Wind Tunnel — Demo Technical Plan v2 (English) · ZCode · 2026-10-16 · Plan only, no implementation started · v1 (Chinese) archived outside the repo
+</footer>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+function el(t,attrs,parent){const e=document.createElementNS(NS,t);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function txt(parent,s,x,y,attrs){const t=document.createElementNS(NS,'text');for(const k in attrs||{})t.setAttribute(k,attrs[k]);t.setAttribute('x',x);t.setAttribute('y',y);t.textContent=s;parent.appendChild(t);return t;}
+
+/* Fig 1a holdings donut */
+(function(){
+  const data=[
+    {label:'Households (direct)',v:37,c:'#1e5aa8'},
+    {label:'Foreign investors',v:17,c:'#3b82c4'},
+    {label:'Mutual funds',v:17,c:'#6fa8d6'},
+    {label:'ETFs',v:14,c:'#b07a10'},
+    {label:'Private DB pensions',v:3.8,c:'#0e7a4e'},
+    {label:'State/local pensions',v:3.2,c:'#4aa37a'},
+    {label:'Federal retirement',v:1.5,c:'#8fbf9f'},
+    {label:'Insurance',v:2.0,c:'#b23a3a'},
+    {label:'Other',v:4.5,c:'#94a3b8'}
+  ];
+  const W=470,H=330,cx=135,cy=160,r=105,ri=64;
+  const svg=el('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H});
+  document.getElementById('chart-holdings').appendChild(svg);
+  let a0=-Math.PI/2;
+  data.forEach(d=>{
+    const a1=a0+d.v/100*2*Math.PI;
+    const large=(a1-a0)>Math.PI?1:0;
+    const x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+    const xi=cx+ri*Math.cos(a1),yi=cy+ri*Math.sin(a1),xj=cx+ri*Math.cos(a0),yj=cy+ri*Math.sin(a0);
+    el('path',{d:`M ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1} L ${xi} ${yi} A ${ri} ${ri} 0 ${large} 0 ${xj} ${yj} Z`,fill:d.c,stroke:'#fff','stroke-width':'1.5'},svg);
+    const am=(a0+a1)/2,lr=r+12,lx=cx+lr*Math.cos(am),ly=cy+lr*Math.sin(am);
+    if(d.v>=3){txt(svg,d.v+'%',lx,ly+4,{'text-anchor':am>-Math.PI/2&&am<Math.PI/2?'start':'end','font-size':'11.5','font-weight':'700',fill:'#334'});}
+    a0=a1;
+  });
+  txt(svg,'US equities',cx,cy-4,{'text-anchor':'middle','font-size':'11.5',fill:'#5b6779'});
+  txt(svg,'$70.0T',cx,cy+16,{'text-anchor':'middle','font-size':'16','font-weight':'800',fill:'#0f3a73'});
+  txt(svg,'ownership, 2026Q1',cx,cy+34,{'text-anchor':'middle','font-size':'10.5',fill:'#5b6779'});
+  const lx=272;let ly=30;
+  data.forEach(d=>{
+    el('rect',{x:lx,y:ly-9,width:11,height:11,rx:2,fill:d.c},svg);
+    txt(svg,d.label+'  '+d.v+'%',lx+17,ly+1,{'font-size':'11.4',fill:'#1a2233'});
+    ly+=21;
+  });
+})();
+
+/* Fig 1b volume bars */
+(function(){
+  const data=[
+    {label:'HFT/market-making (intermediary, overlaps others)',v:52,c:'#94a3b8',note:'two-sided · no net position'},
+    {label:'Active institutions (MF/HF/pension)',v:27,c:'#3b82c4',note:''},
+    {label:'Retail (wide caliber, incl. internalization)',v:34,c:'#1e5aa8',note:'MEMX 30-37% mid'},
+    {label:'Retail (narrow, direct channel only)',v:20,c:'#6fa8d6',note:''},
+    {label:'Corporate buybacks & other',v:6,c:'#b07a10',note:''}
+  ];
+  const W=470,H=340;
+  const svg=el('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H});
+  document.getElementById('chart-volume').appendChild(svg);
+  txt(svg,'Volume participation by caliber (estimates)',10,18,{'font-size':'13','font-weight':'700',fill:'#0f3a73'});
+  const x0=200,x1=440;let y=44;
+  data.forEach(d=>{
+    txt(svg,d.label,x0-8,y+11,{'text-anchor':'end','font-size':'10.6',fill:'#1a2233'});
+    el('rect',{x:x0,y,width:(x1-x0)*d.v/60,height:17,rx:3,fill:d.c},svg);
+    txt(svg,d.v+'%',x0+(x1-x0)*d.v/60+6,y+12,{'font-size':'11.5','font-weight':'700',fill:'#334'});
+    if(d.note)txt(svg,d.note,x0+5,y+12,{'font-size':'9.5',fill:'#fff'});
+    y+=36;
+  });
+  el('line',{x1:x0,y1:36,x2:x0,y2:y-12,stroke:'#e3e7ee'},svg);
+  txt(svg,'Note: rows use different statistical calibers — do not sum across rows.',10,y+6,{'font-size':'10',fill:'#5b6779'});
+})();
+
+/* Fig 3 participation matrix */
+(function(){
+  const classes=['Retail direct (40)','Advisor pool (4)','Active MF PM (8)','Hedge-fund PM (6)','Foreign/SWF (6)','Index/ETF (8)','Pension (6)','Insurer (4)','Buyback (4)','MM/Dealer (7)'];
+  const assets=['EQ','IR','FX v1','CMD v1','BTC v1'];
+  // 0 none, 1 core, 2 secondary
+  const m=[
+    [2,0,0,0,1],
+    [2,1,0,0,0],
+    [2,1,0,0,0],
+    [2,2,1,1,1],
+    [2,2,1,0,0],
+    [2,1,0,0,0],
+    [2,2,0,1,0],
+    [2,2,0,0,0],
+    [2,0,0,0,0],
+    [2,2,2,2,2]
+  ];
+  const W=920,cw=68,rh=30,x0=210,y0=40;
+  const H=y0+rh*classes.length+16;
+  const svg=el('svg',{width:'100%',viewBox:'0 0 '+W+' '+H});
+  document.getElementById('chart-matrix').appendChild(svg);
+  assets.forEach((a,i)=>txt(svg,a,x0+cw*i+cw/2,y0-12,{'text-anchor':'middle','font-size':'11.5','font-weight':'700',fill:'#0f3a73'}));
+  classes.forEach((c,j)=>{
+    const y=y0+rh*j;
+    txt(svg,c,x0-8,y+rh/2+4,{'text-anchor':'end','font-size':'11.2',fill:'#1a2233'});
+    assets.forEach((a,i)=>{
+      const v=m[j][i];
+      const fill=v===2?'#1e5aa8':(v===1?'#9cc0e5':'#eef1f6');
+      el('rect',{x:x0+cw*i+3,y:y+3,width:cw-6,height:rh-6,rx:5,fill},svg);
+      if(v===2)txt(svg,'●',x0+cw*i+cw/2,y+rh/2+4.5,{'text-anchor':'middle','font-size':'11',fill:'#fff'});
+      else if(v===1)txt(svg,'○',x0+cw*i+cw/2,y+rh/2+4.5,{'text-anchor':'middle','font-size':'11',fill:'#1e5aa8'});
+    });
+  });
+  txt(svg,'● core book    ○ secondary    blank: does not trade',x0,y0+rh*classes.length+12,{'font-size':'10.5',fill:'#5b6779'});
+})();
+
+/* Fig 6 cost modes */
+(function(){
+  const modes=[
+    {label:'A · naive, frontier API ($0.011/call)',v:281,c:'#b23a3a'},
+    {label:'B · naive, 8B GPU (~2 GPU-hr)',v:1.2,c:'#d9883d'},
+    {label:'C · + attention gating (decided stack)',v:0.05,c:'#1e5aa8'},
+    {label:'D · + prefix cache / memo / batching',v:0.02,c:'#0e7a4e'}
+  ];
+  const W=920,left=360,maxW=W-left-110,top=18,rowH=56;
+  const H=top+rowH*modes.length;
+  const svg=el('svg',{width:'100%',viewBox:'0 0 '+W+' '+H});
+  document.getElementById('chart-cost').appendChild(svg);
+  const lg=Math.log10(300),rg=Math.log10(0.008);
+  const wOf=v=>Math.max((Math.log10(v)-rg)/(lg-rg)*maxW,5);
+  modes.forEach((m2,i)=>{
+    const y=top+rowH*i;
+    txt(svg,m2.label,left-10,y+16,{'text-anchor':'end','font-size':'12.2',fill:'#1a2233','font-weight':700});
+    const w=wOf(m2.v);
+    el('rect',{x:left,y,width:w,height:24,rx:4,fill:m2.c},svg);
+    const lab=m2.v>=1?'$'+m2.v.toFixed(1):'$'+m2.v.toFixed(2);
+    txt(svg,lab+'/sim-day',left+w+8,y+17,{'font-size':'12','font-weight':'700',fill:m2.c});
+  });
+  txt(svg,'log scale',left,top-6,{'font-size':'10.5',fill:'#5b6779'});
+})();
+</script>
+</body>
+</html>

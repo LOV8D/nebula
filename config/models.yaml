@@ -1,0 +1,16 @@
+profiles:
+  mock:
+    provider: mock
+    model_id: mock-heuristic-v1
+  vllm_qwen8b:
+    provider: openai_compat
+    model_id: Qwen/Qwen3-8B
+    base_url: http://localhost:8000/v1
+  deepseek:
+    provider: openai_compat
+    model_id: deepseek-chat
+    base_url: https://api.deepseek.com/v1
+  fake8b:
+    provider: openai_compat
+    model_id: fake-qwen-8b
+    base_url: http://127.0.0.1:8000/v1

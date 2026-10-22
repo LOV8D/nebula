@@ -1,0 +1,31 @@
+{
+ "fetched_at": "2026-10-21T09:41:09",
+ "source": "Yahoo public chart endpoint (delayed)",
+ "assets": {
+  "EQ": {
+   "start": 769.049988,
+   "vol_bps": 68.9,
+   "provenance": "SPY last close + 3mo daily-return stdev"
+  },
+  "FX": {
+   "start": 1.122965,
+   "vol_bps": 28.1,
+   "provenance": "EURUSD=X last close + 3mo daily-return stdev"
+  },
+  "CMD": {
+   "start": 4136.200195,
+   "vol_bps": 132.3,
+   "provenance": "GC=F last close + 3mo daily-return stdev"
+  },
+  "CRYPTO": {
+   "start": 82820.15625,
+   "vol_bps": 200.6,
+   "provenance": "BTC-USD last close + 3mo daily-return stdev"
+  },
+  "IR": {
+   "start": 92.181,
+   "vol_bps": 30.8,
+   "provenance": "^TNX 10Y yield 5.117% -> notional note price via P=100-7*(y-4), duration approximation (demo-only)"
+  }
+ }
+}
