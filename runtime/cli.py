@@ -279,8 +279,24 @@ def main():
     vw.add_argument("--agents", nargs="*", default=None)
     vw.set_defaults(fn=cmd_viewer)
 
+    ui = sub.add_parser("ui", help="write the cross-run dashboard (docs/dashboard.html)")
+    ui.add_argument("--ab-root", default=None, help="A/B run dir (default runs/demo2/news_demo)")
+    ui.add_argument("--sensitivity", default=None, help="results.json path")
+    ui.add_argument("--pulse-run", default=None, help="run dir for books/cards (current panel)")
+    ui.add_argument("--telemetry-run", default=None, help="run dir for the telemetry sample")
+    ui.add_argument("-o", "--out", default=None)
+    ui.set_defaults(fn=cmd_ui)
+
     args = ap.parse_args()
     args.fn(args)
+
+
+def cmd_ui(args):
+    from . import ui as _ui
+    out = _ui.build(ab_root=args.ab_root, sens_path=args.sensitivity,
+                    pulse_dir=args.pulse_run, tele_dir=args.telemetry_run,
+                    out=args.out)
+    print(f"dashboard -> {out}")
 
 
 if __name__ == "__main__":

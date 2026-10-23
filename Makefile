@@ -29,3 +29,6 @@ demo2:           ## real-brain showcase (news A/B) — needs .env pointing at th
 
 fake-brain:      ## E2E test of the real-brain path via a local stub (not a model)
 	python3 tests/fake_vllm.py --port 8000
+
+ui:             ## cross-run dashboard (A/B curves, sensitivity, books, cards) -> docs/dashboard.html
+	python3 -m runtime.cli ui

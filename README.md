@@ -52,6 +52,20 @@ python3 -m runtime.cli multiday --days 5 --seeds 3        # mock; add --real for
   check (monotone wake/net-direction drift = persona identity failure,
   BP layer 2).
 
+### Dashboard (the product view)
+
+```bash
+make ui                                        # -> docs/dashboard.html, open in any browser
+```
+
+- **ui**: one self-contained static HTML page assembled from existing run
+  artifacts (nothing recomputed, no server, no dependencies): the flagship
+  news-wording A/B on the real brain, the model x prompt sensitivity matrix,
+  a five-book pulse from a current-panel run, trajectory telemetry, and
+  role-aware agent cards with field-level provenance. Data sources are
+  overridable (`--ab-root --sensitivity --pulse-run --telemetry-run`). The
+  footer carries the red lines and the honest grounding status.
+
 Individual pieces:
 
 ```bash
