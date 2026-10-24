@@ -76,6 +76,34 @@ python3 -m runtime.cli compare "runs/fee_demo/*" -o runs/fee_demo/report.md
 make smoke | make report | make clean                          # other actions
 ```
 
+### Closed-value persona fields & the investor survey
+
+The behavioural parameters are continuous; real people answer in words. This
+layer adds the closed-value vocabulary a survey can map onto.
+
+```bash
+python3 -m runtime.cli fields                        # 16-field schema + panel consistency check
+python3 -m runtime.cli survey                        # -> docs/investor_survey.html (+ .json)
+python3 -m runtime.cli ingest ANSWERS.json           # validate -> evidence patch (dry-run)
+python3 -m runtime.cli ingest ANSWERS.json --apply   # patch without the .dryrun suffix
+```
+
+- **fields**: 5 groups / 16 closed fields (account, attention, behaviour,
+  constraints, wealth band). Dependency rules reject only logically
+  impossible combinations; rare-but-real combos are flagged, never deleted
+  (BP principle). `synthesize` derives each retail agent's bands from its
+  continuous parameters so the two layers can never disagree; the panel
+  check fails the build on any violation.
+- **survey**: a static consent-first questionnaire (closed answers only, no
+  free text), printable as JSON for online survey platforms.
+- **ingest**: validates answers against the closed sets and dependency
+  rules, then writes an evidence patch (`self_report`, consent `granted`,
+  split `calibration` — never train) under `personas/patches/`. Patches are
+  the deliverable; wiring them into a panel is a separate explicit step.
+  See `tests/survey_example_answers.json` for the four handled cases
+  (clean / impossible / rare-but-real / no consent).
+
+
 ## demo2 — the real 8B brain
 
 `demo2` is the same showcase with the cognitive tier pointed at the decided

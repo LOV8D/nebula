@@ -1,0 +1,60 @@
+{
+  "survey_version": "v1-2026-10-24",
+  "note": "SYNTHETIC example answers for pipeline E2E only — no real person answered anything. Covers four cases: clean, logically impossible, rare-but-real, no consent.",
+  "respondents": [
+    {
+      "respondent_id": "demo-clean-001",
+      "consent_granted": true,
+      "as_of": "2026-10-24",
+      "answers": {
+        "account_type": "both",
+        "advice_channel": "app_robo_advisor",
+        "years_investing_band": "y6_20",
+        "statement_check_frequency": "weekly",
+        "information_channels": ["broker_app", "tv_finnews"],
+        "reaction_speed": "same_day",
+        "redemption_history": "once",
+        "trading_frequency_selfreport": "few_times_year",
+        "loss_response_2022": "held",
+        "stop_loss_habit": "sometimes",
+        "fee_sensitivity_selfreport": "noticed_but_stayed",
+        "risk_questionnaire_grade": "c3_4_balanced",
+        "product_comprehension_selfreport": "basic",
+        "leverage_use": "none",
+        "derivatives_use": "none",
+        "aum_band": "b50_250k"
+      }
+    },
+    {
+      "respondent_id": "demo-impossible-002",
+      "consent_granted": true,
+      "as_of": "2026-10-24",
+      "answers": {
+        "account_type": "retirement_only",
+        "leverage_use": "margin_routine",
+        "statement_check_frequency": "monthly",
+        "aum_band": "b10_50k"
+      }
+    },
+    {
+      "respondent_id": "demo-rare-003",
+      "consent_granted": true,
+      "as_of": "2026-10-24",
+      "answers": {
+        "account_type": "taxable_only",
+        "aum_band": "lt_10k",
+        "trading_frequency_selfreport": "weekly_or_more",
+        "statement_check_frequency": "daily",
+        "information_channels": ["forums", "social_media"]
+      }
+    },
+    {
+      "respondent_id": "demo-noconsent-004",
+      "consent_granted": false,
+      "answers": {
+        "account_type": "taxable_only",
+        "aum_band": "b250_1m"
+      }
+    }
+  ]
+}

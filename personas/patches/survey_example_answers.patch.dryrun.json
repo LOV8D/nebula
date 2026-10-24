@@ -1,0 +1,284 @@
+{
+ "survey_version": "v1-2026-10-24",
+ "patches": [
+  {
+   "respondent_id": "demo-clean-001",
+   "source_file": "survey_example_answers.json",
+   "errors": [],
+   "warnings": [],
+   "fields": {
+    "account_type": {
+     "value": "both",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "advice_channel": {
+     "value": "app_robo_advisor",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "years_investing_band": {
+     "value": "y6_20",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "statement_check_frequency": {
+     "value": "weekly",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "information_channels": {
+     "value": [
+      "broker_app",
+      "tv_finnews"
+     ],
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "reaction_speed": {
+     "value": "same_day",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "redemption_history": {
+     "value": "once",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "trading_frequency_selfreport": {
+     "value": "few_times_year",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "loss_response_2022": {
+     "value": "held",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "stop_loss_habit": {
+     "value": "sometimes",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "fee_sensitivity_selfreport": {
+     "value": "noticed_but_stayed",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "risk_questionnaire_grade": {
+     "value": "c3_4_balanced",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "product_comprehension_selfreport": {
+     "value": "basic",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "leverage_use": {
+     "value": "none",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "derivatives_use": {
+     "value": "none",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "aum_band": {
+     "value": "b50_250k",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    }
+   },
+   "status": "valid"
+  },
+  {
+   "respondent_id": "demo-impossible-002",
+   "source_file": "survey_example_answers.json",
+   "errors": [
+    "account_type=retirement_only with leverage_use=margin_routine impossible: retirement accounts cannot hold margin"
+   ],
+   "warnings": [],
+   "status": "rejected"
+  },
+  {
+   "respondent_id": "demo-rare-003",
+   "source_file": "survey_example_answers.json",
+   "errors": [],
+   "warnings": [
+    "rare-but-real kept: aum_band=lt_10k with trading_frequency_selfreport=weekly_or_more (very active trading on a small account \u2014 real, uncommon)"
+   ],
+   "fields": {
+    "account_type": {
+     "value": "taxable_only",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "aum_band": {
+     "value": "lt_10k",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "trading_frequency_selfreport": {
+     "value": "weekly_or_more",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "statement_check_frequency": {
+     "value": "daily",
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    },
+    "information_channels": {
+     "value": [
+      "forums",
+      "social_media"
+     ],
+     "evidence": {
+      "source": "investor survey survey_example_answers.json",
+      "evidence": "self_report",
+      "confidence": "medium",
+      "consent": "granted",
+      "split": "calibration",
+      "as_of": "2026-10-24"
+     }
+    }
+   },
+   "status": "valid"
+  },
+  {
+   "respondent_id": "demo-noconsent-004",
+   "status": "rejected",
+   "reason": "no consent"
+  }
+ ],
+ "summary": {
+  "respondents": 4,
+  "valid": 2,
+  "rejected": 2,
+  "answer_errors": 2,
+  "rare_flags": 1,
+  "note": "patches only; panel wiring is an explicit later step"
+ }
+}

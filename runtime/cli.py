@@ -9,6 +9,8 @@ import json
 from pathlib import Path
 import yaml
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
 from . import metrics
 from .engine import run_scenario
 from .personas import write_panel
@@ -287,8 +289,67 @@ def main():
     ui.add_argument("-o", "--out", default=None)
     ui.set_defaults(fn=cmd_ui)
 
+    fl = sub.add_parser("fields", help="closed-value persona fields: schema + panel check")
+    fl.set_defaults(fn=cmd_fields)
+
+    sv = sub.add_parser("survey", help="write the investor questionnaire (docs/investor_survey.html)")
+    sv.add_argument("-o", "--out", default=None)
+    sv.set_defaults(fn=cmd_survey)
+
+    ig = sub.add_parser("ingest", help="validate survey answers -> evidence patch")
+    ig.add_argument("answers")
+    ig.add_argument("--apply", action="store_true",
+                    help="write the patch without the .dryrun suffix (still no panel mutation)")
+    ig.set_defaults(fn=cmd_ingest)
+
     args = ap.parse_args()
     args.fn(args)
+
+
+def cmd_fields(args):
+    from . import fields as F
+    n = sum(len(g) for g in F.SCHEMA.values())
+    print(f"closed-value schema: {n} fields in {len(F.SCHEMA)} groups, "
+          f"{len(F.IMPOSSIBLE)} impossible rules, {len(F.RARE)} rare-but-real flags")
+    for grp, fs in F.SCHEMA.items():
+        print(f"  {grp}: {', '.join(fs)}")
+    from .demo import _panel
+    panel = _panel()
+    investors = [a for a in panel if a.get("card_kind") == "position"
+                 and str(a.get("cls", "")).startswith("retail")]
+    n_impossible = n_rare = 0
+    for a in investors:
+        syn = F.synthesize(a)
+        if syn is None:
+            continue
+        flat = {f: v for f, (v, _r) in syn.items()}
+        errs, warns = F.check_answers(flat)
+        n_impossible += len(errs)
+        n_rare += len(warns)
+    print(f"panel check: {len(investors)} retail investors synthesized from "
+          f"continuous params (institutional fields are a separate surface) "
+          f"-> {n_impossible} impossible combos (must be 0), {n_rare} "
+          f"rare-but-real flags (kept)")
+    if n_impossible:
+        raise SystemExit("synthesized panel violates its own dependency rules")
+
+
+def cmd_survey(args):
+    from . import fields as F
+    out = Path(args.out) if args.out else ROOT_DIR / "docs" / "investor_survey.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(F.survey_html())
+    (out.with_suffix(".json")).write_text(json.dumps(F.survey_json(), indent=1))
+    print(f"survey -> {out} (+ .json)")
+
+
+def cmd_ingest(args):
+    from . import fields as F
+    path, summary = F.ingest(args.answers, apply=args.apply)
+    print(f"patch -> {path}")
+    print(f"  respondents {summary['respondents']} | valid {summary['valid']} "
+          f"| rejected {summary['rejected']} | answer errors "
+          f"{summary['answer_errors']} | rare flags {summary['rare_flags']}")
 
 
 def cmd_ui(args):
