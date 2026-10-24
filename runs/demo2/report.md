@@ -1,9 +1,9 @@
 # Market Wind Tunnel — demo action output
 
-Generated (352s), seeds=2, brain `glm-5.3-flash`.
+Generated (1612s), seeds=2, brain `glm-5.3-flash`.
 883-agent panel, five books, batch call auctions.
 
-1. **Policy-communication wording A/B.** The same Fed decision, neutral vs alarming framing. Immediate 30-round window: both dip (knee-jerk selling); by the 90-round window and the full day the paths separate: **+0.6% vs -6.7%** (90-round EQ), **+1.4% vs -6.4%** (full-day EQ). Wording moves the recovery, not the first reaction.
+1. **Policy-communication wording A/B.** The same Fed decision, neutral vs alarming framing. Immediate 30-round window: both dip (knee-jerk selling); by the 90-round window and the full day the paths separate: **+3.5% vs -2.5%** (90-round EQ), **+12.5% vs +3.1%** (full-day EQ). Wording moves the recovery, not the first reaction.
 
 ## Artifacts
 

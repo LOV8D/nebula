@@ -113,7 +113,7 @@ def _asset_path(run_dir, asset, step=120):
 
 
 # ---------------------------------------------------------------- sections
-def _ab_section(ab_root):
+def _ab_section(ab_root, panel_hash=None):
     """Flagship news-wording A/B on the real brain."""
     runs = {}
     for scen in ("news_a", "news_b"):
@@ -150,13 +150,18 @@ def _ab_section(ab_root):
     five = json.loads(man.read_text()).get("five_tuple", {}) if man.exists() else {}
     model = five.get("model", {}).get("model_id", "?")
     pop = five.get("population", "?")
+    if panel_hash and pop == panel_hash:
+        panel_chip = "<span class='chip'>current panel</span>"
+    else:
+        panel_chip = ("<span class='chip warn'>panel: pre-id-fix "
+                      "(aggregate results stand, per-agent cards from these "
+                      "runs do not)</span>")
     body = [
         "<div class='chips'>",
         f"<span class='chip'>brain {_esc(model)}</span>",
         f"<span class='chip'>{len(runs['news_a']) + len(runs['news_b'])} runs"
         f" ({len(runs['news_a'])}+{len(runs['news_b'])} seeds)</span>",
-        "<span class='chip warn'>panel: pre-id-fix (aggregate results stand, "
-        "per-agent cards from these runs do not)</span>",
+        panel_chip,
         "</div>",
         _series_svg(series, event_t=ev_t),
         "<div class='legend'>",
@@ -336,11 +341,13 @@ def build(ab_root=None, sens_path=None, pulse_dir=None, tele_dir=None,
     out = Path(out) if out else ROOT / "docs" / "dashboard.html"
 
     from .demo import _panel
+    from . import viewer
+
     panel = _panel()
     n_agents = len(panel)
-
+    panel_hash = viewer.population_hash(panel)
     secs = [
-        _ab_section(ab_root),
+        _ab_section(ab_root, panel_hash=panel_hash),
         _sensitivity_section(sens_path),
         _pulse_section(pulse_dir),
         _telemetry_section(tele_dir),

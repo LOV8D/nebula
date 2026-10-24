@@ -1,9 +1,10 @@
 {
  "run_id": "news_b_s0",
- "created": "2026-10-21T09:21:35",
+ "created": "2026-10-23T09:28:10",
  "runtime_version": "0.1.0",
+ "code_hash": "4445344ca6",
  "five_tuple": {
-  "population": "8aacc2c1e9",
+  "population": "47d972a3fa",
   "intervention": "news_b",
   "mechanism": {
    "circuit_breaker": {
@@ -24,7 +25,8 @@
   "model": {
    "provider": "openai_compat",
    "model_id": "glm-5.3-flash",
-   "prompt_version": "p1"
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
   },
   "seed": 11
  },

@@ -4,23 +4,23 @@ Direction and ranking only; no effect sizes. Model provenance per run in `manife
 
 | metric | news_a | news_b |
 |---|---|---|
-| assets.EQ.total_ret | 0.01352 ±0.007659 (n=2) | -0.06421 ±0.01907 (n=2) |
-| assets.EQ.ann_vol | 0.5578 ±0.1667 (n=2) | 0.6438 ±0.2894 (n=2) |
-| assets.EQ.max_drawdown | -0.0541 ±0.002321 (n=2) | -0.09576 ±0.02704 (n=2) |
-| assets.EQ.excess_kurtosis | 32.7 ±23.8 (n=2) | 29.2 ±29.1 (n=2) |
-| assets.EQ.avg_spread_bps | 11.8 ±5.966 (n=2) | 9.563 ±3.002 (n=2) |
-| assets.EQ.total_volume | 8.49e+06 ±2.51e+06 (n=2) | 8.9e+06 ±2.73e+06 (n=2) |
-| assets.IR.total_ret | 0.04547 ±0.001292 (n=2) | -0.05674 ±0.06275 (n=2) |
-| assets.CRYPTO.ann_vol | 0.2841 ±0.01854 (n=2) | 0.2936 ±0.002262 (n=2) |
-| cross.dispersion_mean | 0.2601 ±0.06687 (n=2) | 0.263 ±0.06958 (n=2) |
-| cross.wake_mean_per_round | 3.647 ±0.3282 (n=2) | 3.65 ±0.31 (n=2) |
-| cross.flow_hhi | 0.02771 ±0.01181 (n=2) | 0.1152 ±0.06267 (n=2) |
-| usage.calls | 38.5 ±6.364 (n=2) | 39.5 ±7.778 (n=2) |
-| event_windows_avg.EQ_win_ret | 0.006037 ±0.04078 (n=2) | -0.0347 ±0.01347 (n=2) |
-| event_windows_avg.EQ_win_vol | 0.003247 ±0.0003457 (n=2) | 0.003398 ±0.0007986 (n=2) |
-| event_windows_avg.EQ_win90_ret | 0.006037 ±0.04078 (n=2) | -0.06708 ±0.05926 (n=2) |
-| event_windows_avg.IR_win90_ret | 0.04181 ±0.02122 (n=2) | -0.07176 ±0.05785 (n=2) |
-| event_windows_avg.win_dispersion | 0.1374 ±0.01804 (n=2) | 0.2029 ±0.04721 (n=2) |
+| assets.EQ.total_ret | 0.1246 ±0.007766 (n=2) | 0.03105 ±0.02445 (n=2) |
+| assets.EQ.ann_vol | 0.2678 ±0.1226 (n=2) | 0.1548 ±0.009998 (n=2) |
+| assets.EQ.max_drawdown | -0.01633 ±0.01159 (n=2) | -0.03995 ±0.009564 (n=2) |
+| assets.EQ.excess_kurtosis | 6.343 ±0.7754 (n=2) | 19.7 ±12.1 (n=2) |
+| assets.EQ.avg_spread_bps | 10.5 ±0.756 (n=2) | 10.8 ±0.2551 (n=2) |
+| assets.EQ.total_volume | 5.45e+05 ±9.77e+04 (n=2) | 3.25e+05 ±2.67e+05 (n=2) |
+| assets.IR.total_ret | 0.05148 ±0.04773 (n=2) | -0.09711 ±0.06668 (n=2) |
+| assets.CRYPTO.ann_vol | 0.3008 ±0.01119 (n=2) | 0.2936 ±0.0006665 (n=2) |
+| cross.dispersion_mean | 0.1532 ±0.0434 (n=2) | 0.1545 ±0.0005763 (n=2) |
+| cross.wake_mean_per_round | 5.404 ±1.137 (n=2) | 5.447 ±1.173 (n=2) |
+| cross.flow_hhi | 0.4187 ±0.5223 (n=2) | 0.4189 ±0.488 (n=2) |
+| usage.calls | 84.5 ±0.7071 (n=2) | 79.5 ±2.121 (n=2) |
+| event_windows_avg.EQ_win_ret | 0.007287 ±0.004192 (n=2) | -0.01502 ±0.006705 (n=2) |
+| event_windows_avg.EQ_win_vol | 0.003498 ±0.002018 (n=2) | 0.001833 ±1.39e-05 (n=2) |
+| event_windows_avg.EQ_win90_ret | 0.03505 ±0.01254 (n=2) | -0.02521 ±0.007717 (n=2) |
+| event_windows_avg.IR_win90_ret | 0.02141 ±0.02489 (n=2) | -0.04595 ±0.009337 (n=2) |
+| event_windows_avg.win_dispersion | 0.2298 ±0.08276 (n=2) | 0.2754 ±0.01277 (n=2) |
 
-- `news_a`: llm_calls=468, memo_hits=425, errors=0, elapsed=57s
-- `news_b`: llm_calls=468, memo_hits=423, errors=0, elapsed=82s
+- `news_a`: llm_calls=466, memo_hits=381, errors=0, elapsed=652s
+- `news_b`: llm_calls=465, memo_hits=387, errors=2, elapsed=541s
