@@ -120,6 +120,18 @@ def _asset_path(run_dir, asset, step=120):
 
 
 # ---------------------------------------------------------------- sections
+_EXPERIMENT_BLURB = (
+    "<div class='read' style='padding-top:12px'><b>What this experiment is.</b> "
+    "The same Federal Reserve policy statement is published to the market at "
+    "t=150 in two wordings: variant <b>A (green)</b> neutral — “policy remains "
+    "data-dependent; risks roughly balanced”; variant <b>B (red)</b> alarming "
+    "— “inflation risk elevated; tightening possible”. Everything else — "
+    "population, mechanism, brain, seeds — is identical. The question: does "
+    "the wording alone move the market? Read the chart as: if green stays "
+    "above red after the intervention, framing matters — direction and "
+    "ranking only, never effect sizes.</div>")
+
+
 def _ab_section(ab_root, panel_hash=None):
     """Flagship news-wording A/B on the real brain."""
     runs = {}
@@ -127,7 +139,7 @@ def _ab_section(ab_root, panel_hash=None):
         seeds = sorted(ab_root.glob(f"{scen}_s*"))
         runs[scen] = seeds
     if not all(runs.values()):
-        return ("Flagship A/B — news wording",  # header kept; body says why empty
+        return ("Flagship experiment — news wording A/B (real brain)",  # header kept; body says why empty
                 "<div class='empty'>No A/B runs found under "
                 f"{_esc(str(ab_root))} — run <code>make demo2</code> first.</div>")
     series, day_means = [], {"news_a": [], "news_b": []}
@@ -164,6 +176,7 @@ def _ab_section(ab_root, panel_hash=None):
                       "(aggregate results stand, per-agent cards from these "
                       "runs do not)</span>")
     body = [
+        _EXPERIMENT_BLURB,
         "<div class='chips'>",
         f"<span class='chip'>brain {_esc(model)}</span>",
         f"<span class='chip'>{len(runs['news_a']) + len(runs['news_b'])} runs"
@@ -172,18 +185,14 @@ def _ab_section(ab_root, panel_hash=None):
         "</div>",
         _series_svg(series, event_t=ev_t),
         "<div class='legend'>",
-        "<span><i style='background:#57c98a'></i> neutral wording "
+        "<span><i style='background:#57c98a'></i> variant A — neutral wording "
         f"(day mean {_fmt_pct(a)})</span> ",
-        "<span><i style='background:#e0685f'></i> alarming wording "
+        "<span><i style='background:#e0685f'></i> variant B — alarming wording "
         f"(day mean {_fmt_pct(b)})</span> ",
         "<span class='mut'>thin = single seeds · bold = seed mean · "
         "band = 90-round reaction+recovery window</span></div>",
-        f"<div class='read'>How to read: if the bold lines separate after the "
-        f"intervention with neutral above alarming ({_fmt_pct(a - b)} on day "
-        "totals), the wording moves the market in the expected direction — "
-        "direction and ranking only, never effect sizes.</div>",
     ]
-    return "Flagship A/B — news wording (real brain)", "".join(body)
+    return "Flagship experiment — news wording A/B (real brain)", "".join(body)
 
 
 def _sensitivity_section(res_path):
@@ -389,6 +398,10 @@ def _replay_pack(run_dir):
         })
     man = json.loads((run_dir / "manifest.json").read_text())
     five = man.get("five_tuple", {})
+    # companion series: the B arm of the same experiment, for the red line
+    eq_b = _eq_series_b(run_dir)
+    for r in rounds:
+        r["eqB"] = eq_b.get(r["t"])
     return {
         "run_id": man.get("run_id", run_dir.name),
         "dir": str(run_dir.name),
@@ -399,6 +412,22 @@ def _replay_pack(run_dir):
         "equilibrium_note": "replay of a recorded run — not a live execution",
         "rounds": rounds,
     }
+
+
+def _eq_series_b(run_a_dir):
+    """EQ cumulative-return series of the B arm (same seed) if it exists:
+    {round: pct}. The A/B pair shares seed and scenario pair naming."""
+    run_a_dir = Path(run_a_dir)
+    b_dir = run_a_dir.parent / run_a_dir.name.replace("news_a", "news_b")
+    if "news_b" not in b_dir.name or not (b_dir / "marks.jsonl").exists():
+        return {}
+    pts = [(m["t"], m["price"]) for m in
+           map(json.loads, (b_dir / "marks.jsonl").read_text().splitlines())
+           if m["asset"] == "EQ" and m["price"]]
+    if not pts:
+        return {}
+    p0 = pts[0][1]
+    return {t: (px / p0 - 1) * 100 for t, px in pts}
 
 
 def _ev_brief(e):
@@ -451,22 +480,21 @@ def build(ab_root=None, sens_path=None, pulse_dir=None, tele_dir=None,
 
     replay = _replay_pack(replay_dir)
     persona_grid = _persona_grid(panel)
-    tele_static = _telemetry_section(tele_dir)[1]  # static fallback sample
 
     overview = "".join(
         f"<section><h2>{_esc(t)}</h2>{b}</section>" for t, b in [
             _ab_section(ab_root, panel_hash=panel_hash),
-            _sensitivity_section(sens_path),
         ])
+    sens_title, sens_body = _sensitivity_section(sens_path)
+    sens_html = f"<section><h2>{_esc(sens_title)}</h2>{sens_body}</section>"
 
     page = _PAGE \
         .replace("__N_AGENTS__", str(n_agents)) \
         .replace("__OVERVIEW__", overview) \
+        .replace("__SENS__", sens_html) \
         .replace("__REPLAY_JSON__", json.dumps(replay).replace("</", "<\\/")) \
         .replace("__PERSONA_JSON__", json.dumps(persona_grid).replace("</", "<\\/")) \
         .replace("__CARDS_HTML__", _cards_html(pulse_dir, panel)) \
-        .replace("__TELE_STATIC__", _esc("\n".join(viewer.stream(
-            viewer.load_run(tele_dir), limit=8)) or "(no decisions)")) \
         .replace("__GENERATED__", __import__("time").strftime("%Y-%m-%d %H:%M"))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page)
@@ -678,16 +706,23 @@ the market tests it.</span>
     <div class="kpi"><div class="v" id="k-tr">0</div><div class="k">trades (cum)</div></div>
     <div class="kpi"><div class="v" id="k-halt">–</div><div class="k">EQ halt</div></div>
   </div>
+  <div class="legend" style="margin:8px 0 0">
+    <span><i style="background:#57c98a'></i> variant A — neutral wording
+    (the replayed run; counters/telemetry below come from this arm)</span>
+    <span><i style="background:#e0685f"></i> variant B — alarming wording
+    (same seed, same everything except the wording)</span>
+  </div>
   <div class="eqsvg" id="eqpath"></div>
   <section><h2>Per-book volume (cumulative units)</h2><div id="bookbars"
     style="padding:12px 16px"></div></section>
-  <section><h2>Trajectory telemetry — this round</h2>
+  <section><h2>Decision stream — what agents did this round</h2>
     <pre class="telebox" id="rtele">(press play)</pre>
-    <div class="read" style="padding:8px 16px 14px">Decisions in the current
-    round; every line names the brain that produced it. Full stream in the
-    run directory.</div></section>
-  <section style="margin-top:16px"><h2>Static sample (whole run)</h2>
-    <pre style="margin:10px 16px 14px">__TELE_STATIC__</pre></section>
+    <div class="read" style="padding:8px 16px 14px">Each line is one
+    agent's decision in the round being replayed: what it saw (news or
+    price move) is folded into the action — buy/sell/pass, size, urgency,
+    whether the order filled, and which brain produced the decision.
+    Quiet rounds have no wake-ups: most agents are not looking. Full
+    stream: <code>runs/&lt;run&gt;/intents.jsonl</code>.</div></section>
 </div>
 
 <div class="page" id="p-per">
@@ -702,9 +737,28 @@ the market tests it.</span>
   roster is in <code>personas/panel_v3.json</code>.</div>
 </div>
 
-<div class="page" id="p-sens"><main id="sens-body"></main></div>
+<div class="page" id="p-sens"><main>__SENS__</main></div>
 
 <div class="page" id="p-ev">
+  <section><h2>Where the persona data comes from</h2>
+  <ul style="padding:10px 16px 14px;line-height:1.8;color:#aeb7c6">
+  <li><b>Panel structure</b> (883 agents; class mix and AUM/flow weights) —
+  derived from published market-share aggregates (Fed Z.1 fund-flow
+  categories, SCF/ICI ownership surveys), coarse by construction.</li>
+  <li><b>Behavioural parameters</b> (attention, news sensitivity,
+  disposition, herding, risk aversion) — <i>literature priors</i> from
+  behavioural-finance and brokerage-activity studies, deliberately
+  uncalibrated. Every parameter carries a field-level evidence record
+  (<code>runtime/provenance.py</code>).</li>
+  <li><b>Identity cards</b> — archetype templates plus deterministic
+  dispersion; no field is copied from a real person.</li>
+  <li><b>Human grounding today: 0%.</b> The attributes a real person would
+  fill (redemption history, statement-check frequency, fee sensitivity…)
+  stay <i>unset</i> and are listed per agent as unknown — never invented.
+  The closed-value investor survey and its evidence-patch pipeline
+  (<code>runtime/fields.py</code>) exist to close exactly this gap, with
+  consent, in the calibration split.</li>
+  </ul></section>
   <section><h2>Red lines (every number on every tab obeys them)</h2>
   <ul style="padding:10px 16px 14px;line-height:1.8;color:#aeb7c6">
   <li>Direction and ranking only — no effect sizes, no point predictions.</li>
@@ -745,25 +799,24 @@ document.querySelectorAll("nav button").forEach(b => b.onclick = () => {
   b.classList.add("on");
   document.getElementById("p-" + b.dataset.p).classList.add("on");
 });
-(() => {
-  const src = document.querySelector("#p-ov section:nth-of-type(2)");
-  if (src) document.getElementById("sens-body").appendChild(src.cloneNode(true));
-})();
-
 let cur = 0, timer = null;
 const $ = id => document.getElementById(id);
-function eqChart(hist) {
+function eqChart(hist, histB) {
   const w = 900, h = 180, pad = 46;
-  if (!hist.filter(x => x !== null).length) return "<div class='empty'></div>";
-  const ys = hist.filter(x => x !== null);
-  let lo = Math.min(...ys), hi = Math.max(...ys);
+  const both = hist.concat(histB || []).filter(x => x !== null);
+  if (!both.length) return "<div class='empty'></div>";
+  let lo = Math.min(...both), hi = Math.max(...both);
   const sp = (hi - lo) || 1; lo -= sp*.08; hi += sp*.08;
   const X = t => pad + t / Math.max(REPLAY.nRounds - 1, 1) * (w - pad - 10);
   const Y = v => h - 20 - (v - lo) / (hi - lo) * (h - 36);
-  let pts = "", dot = "";
+  let pts = "", ptsB = "", dot = "", dotB = "";
   hist.forEach((v, t) => { if (v !== null) {
     pts += (pts ? " " : "") + X(t).toFixed(1) + "," + Y(v).toFixed(1);
     if (t === cur) dot = `<circle cx='${X(t)}' cy='${Y(v)}' r='4' fill='#57c98a'/>`;
+  }});
+  (histB || []).forEach((v, t) => { if (v !== null) {
+    ptsB += (ptsB ? " " : "") + X(t).toFixed(1) + "," + Y(v).toFixed(1);
+    if (t === cur) dotB = `<circle cx='${X(t)}' cy='${Y(v)}' r='4' fill='#e0685f'/>`;
   }});
   const ev = REPLAY.rounds.find(r => r.ev);
   let evmark = "";
@@ -774,7 +827,9 @@ function eqChart(hist) {
     `<text x='${pad-6}' y='${Y(hi)+4}' class='tick' text-anchor='end'>${hi.toFixed(0)}%</text>` +
     `<text x='${pad-6}' y='${Y(lo)+4}' class='tick' text-anchor='end'>${lo.toFixed(0)}%</text>` +
     evmark +
-    `<polyline points='${pts}' fill='none' stroke='#57c98a' stroke-width='2'/>` + dot + `</svg>`;
+    (pts ? `<polyline points='${pts}' fill='none' stroke='#57c98a' stroke-width='2'/>` : "") +
+    (ptsB ? `<polyline points='${ptsB}' fill='none' stroke='#e0685f' stroke-width='1.6' stroke-dasharray='1 0' opacity='0.8'/>` : "") +
+    dot + dotB + `</svg>`;
 }
 function bookBars(vol, ntr) {
   const mx = Math.max(...vol, 1);
@@ -800,7 +855,8 @@ function render() {
   $("k-halt").style.color = r.eqHalt ? "#e0685f" : "";
   $("evline").textContent = r.ev ? `⚡ t=${r.ev.t} "${r.ev.headline}" (sentiment ${r.ev.sentiment})` : "";
   const hist = REPLAY.rounds.slice(0, cur + 1).map(x => x.eq);
-  $("eqpath").innerHTML = eqChart(hist);
+  const histB = REPLAY.rounds.slice(0, cur + 1).map(x => x.eqB);
+  $("eqpath").innerHTML = eqChart(hist, histB);
   $("bookbars").innerHTML = bookBars(r.vol, r.ntr);
   $("rtele").textContent = r.tele.length ? r.tele.join("\\n") : "(quiet round — no LLM wake-ups)";
 }
