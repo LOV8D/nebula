@@ -519,7 +519,9 @@ def _persona_grid(panel):
         cells.append({
             "id": a["persona_id"], "cls": a.get("cls", "?"),
             "arch": a.get("archetype", ""), "tier": a.get("tier", "A"),
-            "card": a.get("card_kind", "position"), "n": n_int.get(a["persona_id"], 0)})
+            "card": a.get("card_kind", "position"), "n": n_int.get(a["persona_id"], 0),
+            "ident": (a.get("identity_card", "") or "")[:110],
+            "budget": a.get("budget_usd")})
     return {"cells": cells}
 
 
@@ -659,6 +661,13 @@ table.grid td { padding:5px 10px 5px 0; border-bottom:1px solid #1d212a; }
 .cs td { padding:2px 10px 2px 0; font-size:11.5px; }
 .cs td.k { color:#7c8494; white-space:nowrap; }
 .ev { font-size:11px; color:#8b93a1; margin-top:8px; }
+.hoverbox { border:1px solid #2c3340; border-radius:8px; background:#13161c;
+  padding:10px 14px; font-size:12.5px; color:#aeb7c6; min-height:58px;
+  margin-bottom:8px; line-height:1.6; }
+.hoverbox b { color:#e6e6e6; font-family:ui-monospace,Menlo,monospace; }
+.hoverbox .mut { color:#8b93a1; font-size:11.5px; }
+.hoverbox.pinned { border-color:#57c98a; }
+.cell.sel { outline:2px solid #e6e6e6; }
 .glegend { display:flex; flex-wrap:wrap; gap:10px; font-size:11px;
   color:#8b93a1; margin:6px 0; }
 .glegend i { display:inline-block; width:10px; height:10px;
@@ -726,6 +735,7 @@ the market tests it.</span>
 </div>
 
 <div class="page" id="p-per">
+  <div class="hoverbox" id="hoverinfo">hover an agent cell — details appear here; click to pin</div>
   <div class="glegend" id="glegend"></div>
   <div class="gwrap">
     <div class="ggrid" id="ggrid"></div>
@@ -883,10 +893,35 @@ render();
   $("glegend").innerHTML = cls.map(c =>
     `<span><i style='background:${color(c)}'></i>${c}</span>`).join("");
   const maxN = Math.max(...PERSONAS.cells.map(c => c.n), 1);
-  $("ggrid").innerHTML = PERSONAS.cells.map(c =>
-    `<div class='cell' title='${c.id} (${c.cls}/${c.arch}, fills ${c.n})' ` +
-    `style='background:${color(c.cls)};opacity:${(0.25 + 0.75 * Math.pow(c.n / maxN, .4)).toFixed(2)}' ` +
-    `onclick='alert("agent: ${c.id}\\nclass: ${c.cls}\\narchetype: ${c.arch}\\nfills in featured run: ${c.n}")'></div>`).join("");
+  $("ggrid").innerHTML = PERSONAS.cells.map((c, i) =>
+    `<div class='cell' data-i='${i}' ` +
+    `style='background:${color(c.cls)};opacity:${(0.25 + 0.75 * Math.pow(c.n / maxN, .4)).toFixed(2)}'></div>`).join("");
+  const fmt$ = v => v == null ? "—" : (v >= 1e6 ? (v / 1e6).toFixed(1) + "M" : (v / 1e3).toFixed(0) + "k");
+  function show(c, pinned) {
+    $("hoverinfo").innerHTML =
+      `<b>${c.id}</b> &nbsp;<span class='mut'>tier ${c.tier} · ${c.card}</span><br>` +
+      `${c.cls} / ${c.arch} · budget ~$${fmt$(c.budget)} · fills in featured run: ${c.n}<br>` +
+      `<span class='mut'>${c.ident}</span>`;
+    $("hoverinfo").classList.toggle("pinned", !!pinned);
+  }
+  let pinnedIdx = null;
+  $("ggrid").addEventListener("mouseover", e => {
+    const el = e.target.closest(".cell");
+    if (!el || +el.dataset.i === pinnedIdx) return;
+    show(PERSONAS.cells[+el.dataset.i], false);
+  });
+  $("ggrid").addEventListener("mouseleave", () => {
+    if (pinnedIdx !== null) show(PERSONAS.cells[pinnedIdx], true);
+  });
+  $("ggrid").addEventListener("click", e => {
+    const el = e.target.closest(".cell");
+    if (!el) return;
+    document.querySelectorAll(".cell.sel").forEach(x => x.classList.remove("sel"));
+    if (+el.dataset.i === pinnedIdx) { pinnedIdx = null; return; }  // unpin
+    pinnedIdx = +el.dataset.i;
+    el.classList.add("sel");
+    show(PERSONAS.cells[pinnedIdx], true);
+  });
 })();
 </script>
 </body></html>
