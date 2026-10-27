@@ -58,13 +58,26 @@ python3 -m runtime.cli multiday --days 5 --seeds 3        # mock; add --real for
 make ui                                        # -> docs/dashboard.html, open in any browser
 ```
 
-- **ui**: one self-contained static HTML page assembled from existing run
-  artifacts (nothing recomputed, no server, no dependencies): the flagship
-  news-wording A/B on the real brain, the model x prompt sensitivity matrix,
-  a five-book pulse from a current-panel run, trajectory telemetry, and
-  role-aware agent cards with field-level provenance. Data sources are
-  overridable (`--ab-root --sensitivity --pulse-run --telemetry-run`). The
-  footer carries the red lines and the honest grounding status.
+- **ui**: one self-contained HTML page (no server, no dependencies) with
+  top-tab navigation, assembled from existing run artifacts — nothing
+  recomputed, nothing re-executed:
+  - **Overview** — the flagship news-wording A/B on the real brain (seed
+    paths + seed means, intervention marker, 90-round window) and the
+    sensitivity matrix.
+  - **Live Run** — round-by-round REPLAY of a recorded run
+    (`runs/demo2/news_demo/news_a_s0`, the fixed-panel GLM run): play /
+    pause / step / speed, growing EQ path with the intervention marker,
+    per-book cumulative volume bars, wake/intent/trade counters, event
+    line, and a per-round OBS → INTENT → FILL telemetry sample. Clearly
+    labelled "replay — recorded run, not a live execution".
+  - **Personas** — the full 883-agent grid (colour = class, brightness =
+    fills in the featured run); hover for identity, click for details.
+    Drawer shows one role-aware card per role with field-level evidence.
+  - **Sensitivity** — the model × prompt matrix with the GLM-only decision
+    and error columns.
+  - **Evidence** — red lines and the reproducibility contract.
+  Data sources are overridable (`--ab-root --sensitivity --pulse-run
+  --telemetry-run --replay-run`).
 
 Individual pieces:
 

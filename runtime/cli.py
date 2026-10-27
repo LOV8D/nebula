@@ -286,6 +286,7 @@ def main():
     ui.add_argument("--sensitivity", default=None, help="results.json path")
     ui.add_argument("--pulse-run", default=None, help="run dir for books/cards (current panel)")
     ui.add_argument("--telemetry-run", default=None, help="run dir for the telemetry sample")
+    ui.add_argument("--replay-run", default=None, help="run dir for the Live Run replay (default runs/demo2/news_demo/news_a_s0)")
     ui.add_argument("-o", "--out", default=None)
     ui.set_defaults(fn=cmd_ui)
 
@@ -356,6 +357,7 @@ def cmd_ui(args):
     from . import ui as _ui
     out = _ui.build(ab_root=args.ab_root, sens_path=args.sensitivity,
                     pulse_dir=args.pulse_run, tele_dir=args.telemetry_run,
+                    replay_dir=getattr(args, "replay_run", None),
                     out=args.out)
     print(f"dashboard -> {out}")
 
