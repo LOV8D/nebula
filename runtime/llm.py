@@ -120,9 +120,12 @@ class LLMGateway:
                       "consecutive_errors": 0, "error_detail": None}
 
     # ------------------------------------------------------------------
+    def _memo_key(self, persona, ctx):
+        return (persona["cls"], persona["archetype"], state_bucket(ctx))
+
     def complete(self, persona, ctx, rng):
         """persona: panel dict; ctx: decision-context digest. -> dict Intent."""
-        key = (persona["cls"], persona["archetype"], state_bucket(ctx))
+        key = self._memo_key(persona, ctx)
         base = None
         with self._lock:
             if self.memo_on and key in self.memo:
@@ -138,6 +141,9 @@ class LLMGateway:
             if base is not None:
                 with self._lock:
                     self.memo[key] = base
+        return self._personalize(persona, base, rng)
+
+    def _personalize(self, persona, base, rng):
         if base is None:
             return None
         # Individual noise on the DECISION itself, not just size: the memo
@@ -169,14 +175,41 @@ class LLMGateway:
     def complete_many(self, jobs):
         """Fire a batch of decisions concurrently. jobs: [(persona, ctx, rng)];
         returns results aligned with jobs (None where a call failed).
-        Concurrency applies to API providers only; every job carries its own
-        RNG, so results are independent of thread completion order.
+
+        Concurrency applies to API providers only. Each memo key is resolved
+        once per batch by the FIRST job (in job order) that needs it; the
+        other jobs with that key reuse its answer. Earlier versions let every
+        job race for the memo, so which agents shared an answer depended on
+        which thread finished first — and a response-cache hit (instant)
+        changed the race. Same-seed A/B arms then diverged before the
+        intervention (seed 1 of the 2026-10-23 flagship: from t=51). Now the
+        outcome depends only on job order, never on thread timing.
         """
         if self.provider == "mock" or len(jobs) <= 1:
             return [self.complete(*j) for j in jobs]
         from concurrent.futures import ThreadPoolExecutor
-        with ThreadPoolExecutor(max_workers=min(self.max_workers, len(jobs))) as ex:
-            return list(ex.map(lambda j: self.complete(*j), jobs))
+        if not self.memo_on:   # no sharing => jobs are independent
+            with ThreadPoolExecutor(max_workers=min(self.max_workers, len(jobs))) as ex:
+                return list(ex.map(lambda j: self.complete(*j), jobs))
+        keys = [self._memo_key(p, c) for p, c, _ in jobs]
+        owner = {}
+        for i, k in enumerate(keys):
+            if k not in self.memo:
+                owner.setdefault(k, i)
+        bases = {}
+        if owner:
+            with ThreadPoolExecutor(max_workers=min(self.max_workers, len(owner))) as ex:
+                got = ex.map(lambda i: self._api_decide(jobs[i][0], jobs[i][1]),
+                             owner.values())
+                bases = dict(zip(owner, got))
+        with self._lock:
+            self.usage["calls"] += len(owner)
+            self.usage["memo_hits"] += len(jobs) - len(owner)
+            for k, b in bases.items():
+                if b is not None:
+                    self.memo[k] = b
+        return [self._personalize(p, bases[k] if k in bases else self.memo[k], r)
+                for (p, _, r), k in zip(jobs, keys)]
 
     # ------------------------------------------------------------------
     def _mock_decide(self, persona, ctx, rng):
@@ -280,7 +313,8 @@ class LLMGateway:
             # gentle pacing: stay under provider rate limits on sustained runs
             _time.sleep(0.3)
         else:
-            self.usage["cache_hits"] += 1
+            with self._lock:
+                self.usage["cache_hits"] += 1
         try:
             j = json.loads(txt[txt.find("{"): txt.rfind("}") + 1])
             side = {"buy": 1, "sell": -1}.get(str(j.get("side", "pass")).lower(), 0)

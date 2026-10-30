@@ -1,0 +1,22 @@
+[project]
+name = "wind-tunnel"
+version = "0.2.0"
+description = "Market Wind Tunnel: behavioural A/B simulation for financial-market interventions"
+requires-python = ">=3.10"
+dependencies = ["pyyaml", "requests"]
+
+[project.optional-dependencies]
+video = ["pillow"]
+
+[project.scripts]
+wt = "runtime.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["runtime", "experiments", "evidence", "ui"]
+
+[tool.setuptools.package-data]
+ui = ["app/*"]

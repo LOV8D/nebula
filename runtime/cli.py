@@ -2,7 +2,7 @@
 
   python -m runtime.cli panel                        # generate personas/panel_v3.json
   python -m runtime.cli run -s scenarios/baseline.yaml [--seeds 5]
-  python -m runtime.cli compare runs/fee_demo runs/news_demo ... -o runs/report.md
+  python -m runtime.cli compare "runs/evidence/demo/fee_demo/*" -o report.md
 """
 import argparse
 import json
@@ -14,7 +14,8 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 from . import metrics
 from .engine import run_scenario
 from .personas import write_panel
-from .demo import run_demo, EXPERIMENTS_LLM
+from .paths import RUNS, SCRATCH, SITE
+from experiments.demo import run_demo, EXPERIMENTS_LLM
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -39,7 +40,7 @@ def cmd_panel(args):
 
 def cmd_run(args):
     base = _load(args.scenario)
-    out_root = Path(args.out or (ROOT / "runs" / base.get("tag", base["id"])))
+    out_root = Path(args.out or (SCRATCH / base.get("tag", base["id"])))
     dirs = []
     for i in range(args.seeds):
         sc = dict(base)
@@ -60,13 +61,13 @@ def cmd_compare(args):
 
 
 def cmd_provenance(args):
-    from . import provenance
+    from evidence import provenance
     panel = json.loads(Path(args.panel or (ROOT / "personas" / "panel_v3.json")).read_text())
     print(provenance.report(panel))
 
 
 def cmd_telemetry(args):
-    from . import viewer
+    from ui import viewer
     run = viewer.load_run(args.run)
     lines = viewer.stream(run, limit=args.limit, agent=args.agent,
                           asset=args.asset, show_pass=args.show_pass)
@@ -74,7 +75,7 @@ def cmd_telemetry(args):
 
 
 def cmd_card(args):
-    from . import viewer
+    from ui import viewer
     run = viewer.load_run(args.run)
     panel = _panel({})
     warn = viewer.check_panel(run, panel)
@@ -97,12 +98,23 @@ def cmd_card(args):
 
 
 def cmd_viewer(args):
-    from . import viewer
+    from ui import viewer
     run = viewer.load_run(args.run)
     out = args.out or (Path(args.run) / "viewer.html")
     viewer.write_html(run, _panel({}), out, n_lines=args.limit,
                       agents=args.agents or None)
     print(f"viewer -> {out}")
+
+
+def cmd_parity(args):
+    from experiments.parity import check_experiment, describe
+    res = check_experiment(args.exp_dir, args.a, args.b)
+    if not res:
+        raise SystemExit(f"no {args.a}_s*/{args.b}_s* pairs under {args.exp_dir}")
+    for r in res:
+        print(describe(r))
+    if any(r["ok"] is False for r in res):
+        raise SystemExit(1)
 
 
 def cmd_snapshot(args):
@@ -111,12 +123,12 @@ def cmd_snapshot(args):
 
 
 def cmd_multiday(args):
-    from .multiday import run_multiday
+    from experiments.multiday import run_multiday
     run_multiday(days=args.days, seeds=args.seeds, real=args.real)
 
 
 def cmd_sensitivity(args):
-    from .sensitivity import run_sensitivity
+    from experiments.sensitivity import run_sensitivity
     run_sensitivity(models=args.models, prompts=args.prompts,
                     seeds=args.seeds)
 
@@ -165,7 +177,7 @@ def cmd_demo2(args):
                 "  vllm serve Qwen/Qwen3-8B --port 8000\n"
                 "or point --base-url at a remote OpenAI-compatible endpoint;\n"
                 "see README 'demo2 — the real 8B brain'")
-    run_demo(seeds=args.seeds, out_root=ROOT / "runs" / "demo2",
+    run_demo(seeds=args.seeds, out_root=RUNS / "demo2",
              model_override=prof, experiments=EXPERIMENTS_LLM)
 
 
@@ -228,6 +240,11 @@ def main():
     d2.add_argument("--base-url", default=None)
     d2.set_defaults(fn=cmd_demo2)
 
+    pa = sub.add_parser("parity", help="same-seed A/B pairs identical before the intervention?")
+    pa.add_argument("exp_dir", help="experiment dir, e.g. runs/evidence/demo2/news_demo")
+    pa.add_argument("--a", default="news_a")
+    pa.add_argument("--b", default="news_b")
+    pa.set_defaults(fn=cmd_parity)
     sn = sub.add_parser("snapshot", help="fetch real market levels -> config/snapshot.json")
     sn.add_argument("--force", action="store_true")
     sn.set_defaults(fn=cmd_snapshot)
@@ -251,7 +268,7 @@ def main():
 
     c = sub.add_parser("compare")
     c.add_argument("runs", nargs="+")
-    c.add_argument("-o", "--out", default=str(ROOT / "runs" / "report.md"))
+    c.add_argument("-o", "--out", default=str(SCRATCH / "report.md"))
     c.set_defaults(fn=cmd_compare)
 
     pv = sub.add_parser("provenance",
@@ -281,19 +298,20 @@ def main():
     vw.add_argument("--agents", nargs="*", default=None)
     vw.set_defaults(fn=cmd_viewer)
 
-    ui = sub.add_parser("ui", help="write the cross-run dashboard (docs/dashboard.html)")
-    ui.add_argument("--ab-root", default=None, help="A/B run dir (default runs/demo2/news_demo)")
-    ui.add_argument("--sensitivity", default=None, help="results.json path")
-    ui.add_argument("--pulse-run", default=None, help="run dir for books/cards (current panel)")
-    ui.add_argument("--telemetry-run", default=None, help="run dir for the telemetry sample")
-    ui.add_argument("--replay-run", default=None, help="run dir for the Live Run replay (default runs/demo2/news_demo/news_a_s0)")
-    ui.add_argument("-o", "--out", default=None)
+    ui = sub.add_parser("ui", help="write the cross-run dashboard (site/dashboard.html)")
+    ui.add_argument("--ab-root", default=None,
+                    help="A/B experiment dir (default runs/evidence/demo2/news_demo)")
+    ui.add_argument("--sensitivity", default=None,
+                    help="sensitivity dir with results.json (default runs/evidence/sensitivity)")
+    ui.add_argument("--replay-seed", type=int, default=0,
+                    help="which seed the Ripple page replays (default 0)")
+    ui.add_argument("-o", "--out", default=None, help="default site/dashboard.html")
     ui.set_defaults(fn=cmd_ui)
 
     fl = sub.add_parser("fields", help="closed-value persona fields: schema + panel check")
     fl.set_defaults(fn=cmd_fields)
 
-    sv = sub.add_parser("survey", help="write the investor questionnaire (docs/investor_survey.html)")
+    sv = sub.add_parser("survey", help="write the investor questionnaire (site/investor_survey.html)")
     sv.add_argument("-o", "--out", default=None)
     sv.set_defaults(fn=cmd_survey)
 
@@ -308,13 +326,13 @@ def main():
 
 
 def cmd_fields(args):
-    from . import fields as F
+    from evidence import fields as F
     n = sum(len(g) for g in F.SCHEMA.values())
     print(f"closed-value schema: {n} fields in {len(F.SCHEMA)} groups, "
           f"{len(F.IMPOSSIBLE)} impossible rules, {len(F.RARE)} rare-but-real flags")
     for grp, fs in F.SCHEMA.items():
         print(f"  {grp}: {', '.join(fs)}")
-    from .demo import _panel
+    from experiments.demo import _panel
     panel = _panel()
     investors = [a for a in panel if a.get("card_kind") == "position"
                  and str(a.get("cls", "")).startswith("retail")]
@@ -336,8 +354,8 @@ def cmd_fields(args):
 
 
 def cmd_survey(args):
-    from . import fields as F
-    out = Path(args.out) if args.out else ROOT_DIR / "docs" / "investor_survey.html"
+    from evidence import fields as F
+    out = Path(args.out) if args.out else SITE / "investor_survey.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(F.survey_html())
     (out.with_suffix(".json")).write_text(json.dumps(F.survey_json(), indent=1))
@@ -345,7 +363,7 @@ def cmd_survey(args):
 
 
 def cmd_ingest(args):
-    from . import fields as F
+    from evidence import fields as F
     path, summary = F.ingest(args.answers, apply=args.apply)
     print(f"patch -> {path}")
     print(f"  respondents {summary['respondents']} | valid {summary['valid']} "
@@ -354,13 +372,10 @@ def cmd_ingest(args):
 
 
 def cmd_ui(args):
-    from . import ui as _ui
-    out = _ui.build(ab_root=args.ab_root, sens_path=args.sensitivity,
-                    pulse_dir=args.pulse_run, tele_dir=args.telemetry_run,
-                    replay_dir=getattr(args, "replay_run", None),
-                    out=args.out)
+    from ui import collect as _ui
+    out = _ui.build(ab_root=args.ab_root, sens_dir=args.sensitivity,
+                    replay_seed=args.replay_seed, out=args.out)
     print(f"dashboard -> {out}")
-
 
 if __name__ == "__main__":
     main()

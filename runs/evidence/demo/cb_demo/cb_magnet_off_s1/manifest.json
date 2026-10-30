@@ -1,0 +1,26 @@
+{
+ "run_id": "cb_magnet_off_s1",
+ "created": "2026-10-29T09:00:51",
+ "runtime_version": "0.2.0",
+ "code_hash": "73b06390bc",
+ "five_tuple": {
+  "population": "47d972a3fa",
+  "intervention": "cb_magnet_off",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": false
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 112
+ },
+ "days": 1,
+ "rounds_per_day": 390,
+ "n_agents": 883
+}

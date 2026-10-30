@@ -1,0 +1,217 @@
+{
+ "run_id": "cb_magnet_on_s1",
+ "scenario": "cb_magnet_on",
+ "elapsed_s": 0.29,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": -0.05612801651030119,
+   "ann_vol": 0.14639312905972038,
+   "excess_kurtosis": 91.71377261121765,
+   "vol_clustering_lag1": 0.18400397389301218,
+   "vol_absret_corr": 0.5706423480639163,
+   "max_drawdown": -0.07475807343487029,
+   "avg_spread_bps": 12.861468922423098,
+   "total_volume": 63187.68546058503,
+   "n_halts": 0
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": -0.4506618410862625,
+   "ann_vol": 0.19291065503243648,
+   "excess_kurtosis": 87.06716307512743,
+   "vol_clustering_lag1": 0.3748031624707092,
+   "vol_absret_corr": 0.02389471996736128,
+   "max_drawdown": -0.45079290302927977,
+   "avg_spread_bps": 17.529540681797844,
+   "total_volume": 1169089.9046640059,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": 0.09250336967605022,
+   "ann_vol": 0.3008599098510155,
+   "excess_kurtosis": 9.639427543717677,
+   "vol_clustering_lag1": -0.0535684691347956,
+   "vol_absret_corr": 0.30133807690245196,
+   "max_drawdown": -0.1534161507745021,
+   "avg_spread_bps": 12.604354621851012,
+   "total_volume": 2345771126.715178,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.3079382351895651,
+   "ann_vol": 0.30260003820947995,
+   "excess_kurtosis": 5.955422539748504,
+   "vol_clustering_lag1": -0.14383843777522157,
+   "vol_absret_corr": 0.17531843564399718,
+   "max_drawdown": -0.3487993207840214,
+   "avg_spread_bps": 14.160948058958123,
+   "total_volume": 966491.7017079336,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": -0.21252459665085555,
+   "ann_vol": 0.32379831591168273,
+   "excess_kurtosis": 6.548942883510264,
+   "vol_clustering_lag1": -0.009993312067994593,
+   "vol_absret_corr": 0.2583944544775357,
+   "max_drawdown": -0.267689066660569,
+   "avg_spread_bps": 12.492047320279726,
+   "total_volume": 43522.20659848488,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.15425692959036483,
+  "intents_n": 1763,
+  "wake_mean_per_round": 5.941025641025641,
+  "flow_hhi": 0.46657143478892027,
+  "net_flow_by_class": {
+   "retail": -413311903877.0,
+   "hf_pm": -213623124958.0,
+   "foreign_inst": -33073540718.0,
+   "mf_pm": -21841719302.0
+  }
+ },
+ "usage": {
+  "calls": 77,
+  "cache_hits": 0,
+  "memo_hits": 1657,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 60,
+   "headline": "Sovereign fund cuts equity allocation, cites valuation",
+   "EQ_win_ret": -0.02721725180204826,
+   "EQ_win_vol": 0.0026174538113983774,
+   "IR_win_ret": -0.05261773581241924,
+   "IR_win_vol": 0.004103909253587803,
+   "win_dispersion": 0.3078206715671034,
+   "win_intents": 349
+  },
+  {
+   "t": 150,
+   "headline": "Large prime broker tightens margin on equity books",
+   "EQ_win_ret": -0.01608558696346052,
+   "EQ_win_vol": 0.0016147173543679945,
+   "CRYPTO_win_ret": -0.051823437630144964,
+   "CRYPTO_win_vol": 0.004518336101888123,
+   "win_dispersion": 0.17629554199709221,
+   "win_intents": 565
+  },
+  {
+   "t": 210,
+   "headline": "Follow-on: dealers report widening bid-ask, thin liquidity",
+   "EQ_win_ret": 0.0,
+   "EQ_win_vol": 0.0,
+   "win_dispersion": 0.1743700648861685,
+   "win_intents": 6234
+  },
+  {
+   "t": 250,
+   "headline": "Second margin tightening wave hits leveraged books",
+   "EQ_win_ret": 0.0,
+   "EQ_win_vol": 0.0,
+   "CRYPTO_win_ret": -0.045957275423335275,
+   "CRYPTO_win_vol": 0.0033575228160021954,
+   "win_dispersion": 0.1747831159327554,
+   "win_intents": 284
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 60,
+   "headline": "Sovereign fund cuts equity allocation, cites valuation",
+   "EQ_win_ret": -0.04519965945797422,
+   "EQ_win_vol": 0.00246587119224122,
+   "IR_win_ret": -0.15948959452753209,
+   "IR_win_vol": 0.0028745270328688483,
+   "win_dispersion": 0.174984566126582,
+   "win_intents": 35472
+  },
+  {
+   "t": 150,
+   "headline": "Large prime broker tightens margin on equity books",
+   "EQ_win_ret": -0.01608558696346052,
+   "EQ_win_vol": 0.000932257499209522,
+   "CRYPTO_win_ret": -0.13177000971199815,
+   "CRYPTO_win_vol": 0.003953592176371952,
+   "win_dispersion": 0.17083013267758831,
+   "win_intents": 39769
+  },
+  {
+   "t": 210,
+   "headline": "Follow-on: dealers report widening bid-ask, thin liquidity",
+   "EQ_win_ret": 0.0,
+   "EQ_win_vol": 0.0,
+   "win_dispersion": 0.1745672867121518,
+   "win_intents": 11914
+  },
+  {
+   "t": 250,
+   "headline": "Second margin tightening wave hits leveraged books",
+   "EQ_win_ret": 0.0,
+   "EQ_win_vol": 0.0,
+   "CRYPTO_win_ret": -0.10199971504488181,
+   "CRYPTO_win_vol": 0.0031693478191588942,
+   "win_dispersion": 0.1747831159327554,
+   "win_intents": 284
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.010825709691377194,
+  "EQ_win_vol": 0.001058042791441593,
+  "IR_win_ret": -0.05261773581241924,
+  "CRYPTO_win_vol": 0.003937929458945159,
+  "win_dispersion": 0.20831734859577988,
+  "win_intents": 1858.0,
+  "EQ_win90_ret": -0.015321311605358684,
+  "EQ_win90_vol": 0.0008495321728626855,
+  "IR_win90_ret": -0.15948959452753209
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 1763,
+   "active": 1202,
+   "pass_rate": 0.318207600680658,
+   "net_dir": -0.9883527454242929,
+   "mean_size": 0.5325578564407902
+  }
+ ],
+ "manifest": {
+  "population": "47d972a3fa",
+  "intervention": "cb_magnet_on",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 112
+ }
+}

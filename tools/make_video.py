@@ -2,7 +2,7 @@
 
 Pipeline: PIL draws every frame of each scene -> macOS `say` (Tingting,
 zh_CN) renders narration per scene -> ffmpeg assembles frames+audio into
-docs/wind_tunnel_explainer.mp4. Uses real experiment data from runs/demo2
+docs/wind_tunnel_explainer.mp4. Uses real experiment data from runs/evidence/demo2
 where the script references actual results.
 
     python3 tools/make_video.py            # full render (~3-5 min)
@@ -18,7 +18,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-WORK = ROOT / "runs" / "_video"
+WORK = ROOT / "runs" / "scratch" / "_video"
 W, H = 1280, 720
 FPS = 12
 
@@ -319,7 +319,7 @@ def sc09(s, t, d, img):
 
 
 def _load_eq(run):
-    p = ROOT / "runs" / "demo2" / "news_demo" / run / "marks.jsonl"
+    p = ROOT / "runs" / "evidence" / "demo2" / "news_demo" / run / "marks.jsonl"
     if not p.exists():
         return []
     return [json.loads(l) for l in p.read_text().splitlines() if l.strip()]
