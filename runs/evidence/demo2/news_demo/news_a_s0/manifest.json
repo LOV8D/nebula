@@ -1,8 +1,8 @@
 {
  "run_id": "news_a_s0",
- "created": "2026-10-23T09:17:18",
- "runtime_version": "0.1.0",
- "code_hash": "4445344ca6",
+ "created": "2026-10-30T23:20:54",
+ "runtime_version": "0.2.0",
+ "code_hash": "73b06390bc",
  "five_tuple": {
   "population": "47d972a3fa",
   "intervention": "news_a",

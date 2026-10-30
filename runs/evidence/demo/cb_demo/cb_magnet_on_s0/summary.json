@@ -1,7 +1,7 @@
 {
  "run_id": "cb_magnet_on_s0",
  "scenario": "cb_magnet_on",
- "elapsed_s": 0.29,
+ "elapsed_s": 0.31,
  "assets": {
   "EQ": {
    "daily_returns": [],

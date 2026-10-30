@@ -1,7 +1,7 @@
 {
  "run_id": "news_a_s0",
  "scenario": "news_a",
- "elapsed_s": 0.27,
+ "elapsed_s": 0.28,
  "assets": {
   "EQ": {
    "daily_returns": [],

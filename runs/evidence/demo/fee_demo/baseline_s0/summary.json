@@ -1,7 +1,7 @@
 {
  "run_id": "baseline_s0",
  "scenario": "baseline",
- "elapsed_s": 0.3,
+ "elapsed_s": 0.33,
  "assets": {
   "EQ": {
    "daily_returns": [],

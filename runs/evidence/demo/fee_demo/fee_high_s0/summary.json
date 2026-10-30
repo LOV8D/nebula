@@ -1,7 +1,7 @@
 {
  "run_id": "fee_high_s0",
  "scenario": "fee_high",
- "elapsed_s": 0.24,
+ "elapsed_s": 0.25,
  "assets": {
   "EQ": {
    "daily_returns": [],
