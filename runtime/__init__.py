@@ -1,4 +1,4 @@
-"""Market Wind Tunnel — demo runtime.
+"""Nebula (Asterium Labs) — market simulation runtime.
 
 A trigger-driven, resident multi-asset agent-cluster simulator.
 Plan of record: docs/demo-plan-v2.html. English-only repo.

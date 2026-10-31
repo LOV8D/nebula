@@ -1,7 +1,7 @@
 [project]
-name = "wind-tunnel"
+name = "nebula"
 version = "0.2.0"
-description = "Market Wind Tunnel: behavioural A/B simulation for financial-market interventions"
+description = "Nebula by Asterium Labs: behavioural A/B simulation for financial-market interventions"
 requires-python = ">=3.10"
 dependencies = ["pyyaml", "requests"]
 

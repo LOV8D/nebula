@@ -66,7 +66,7 @@ def run_demo(seeds=5, out_root=None, model_override=None, experiments=None):
     experiments = experiments or EXPERIMENTS
     t0 = time.time()
     brain = (model_override or {}).get("model_id", "mock-heuristic-v1")
-    print(f"=== Market Wind Tunnel demo (brain: {brain}) ===")
+    print(f"=== Nebula demo (brain: {brain}) ===")
     panel = _panel()
     print(f"panel: {len(panel)} agents ({ROOT / 'personas' / 'panel_v3.json'})")
 
@@ -243,7 +243,7 @@ def _report(h, seeds, elapsed, brain):
                 "3. **Circuit breaker.** Did not fire on any seed this run "
                 "(the selloff never crossed -7% from the open).")
     body = "\n\n".join(secs)
-    return f"""# Market Wind Tunnel — demo action output
+    return f"""# Nebula — demo action output
 
 Generated ({elapsed:.0f}s), seeds={seeds}, brain `{brain}`.
 883-agent panel, five books, batch call auctions.

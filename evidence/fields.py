@@ -340,7 +340,7 @@ def survey_html():
                     f"<span class='grp'>{_esc(it['group'])}</span></legend>"
                     f"<div class='opts'>{opts}</div></fieldset>")
     return ("<!doctype html><html lang='en'><head><meta charset='utf-8'>"
-            "<title>Investor survey — market wind tunnel</title><style>"
+            "<title>Investor survey — Nebula (Asterium Labs)</title><style>"
             ":root{color-scheme:light}"
             "body{font:14px/1.6 -apple-system,'Segoe UI',sans-serif;"
             "max-width:720px;margin:24px auto;padding:0 16px;"

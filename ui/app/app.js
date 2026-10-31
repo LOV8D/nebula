@@ -1,4 +1,4 @@
-/* Market Wind Tunnel dashboard. Reads the JSON block that ui/bundle.py
+/* Nebula dashboard (Asterium Labs). Reads the JSON block that ui/bundle.py
    inlines; draws four pages. No framework, no network. Motion is used for
    three things only: time (replay, cursor), cause (the ring at the
    intervention) and evidence arriving (dots and bars settling). */

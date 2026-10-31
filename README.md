@@ -1,4 +1,7 @@
-# Market Wind Tunnel — Demo
+# Nebula — by Asterium Labs
+
+> behavioural A/B simulation for financial-market interventions.
+> Formerly "Market Wind Tunnel"; the wind-tunnel metaphor survives in the docs.
 
 US-market behavioral simulation & stress-testing demo: a trigger-driven, resident
 agent-cluster runtime that snapshots real market data as its initial environment,

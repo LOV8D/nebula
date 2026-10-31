@@ -59,7 +59,7 @@ class Scene:
         d.text((48, 26), f"{self.idx:02d}", font=font(30), fill=fade(GOLD, 0.8))
         d.text((92, 26), self.title, font=font(30), fill=BLUE_D)
         # footer
-        d.text((48, H - 44), "Market Wind Tunnel · 市场风洞", font=font(16), fill=SUB)
+        d.text((48, H - 44), "Nebula · Asterium Labs", font=font(16), fill=SUB)
         d.text((W - 260, H - 44), "model output is not evidence", font=font(14), fill=SUB)
         d.line([40, 66, W - 40, 66], fill=LINE, width=2)
         return img, d
@@ -112,7 +112,7 @@ def sc01(s, t, d, img):
     d.text((W / 2 - d.textlength("市场风洞", font=big) / 2, 200), "市场风洞",
            font=big, fill=fade(BLUE_D, a))
     a2 = ease(min(1, max(0, t * 2 - 0.6)))
-    d.text((W / 2 - d.textlength("Market Wind Tunnel", font=font(36)) / 2, 300),
+    d.text((W / 2 - d.textlength("Nebula", font=font(36)) / 2, 300),
            "Market Wind Tunnel", font=font(36), fill=fade(SUB, a2))
     a3 = ease(min(1, max(0, t * 2 - 1.2)))
     d.text((W / 2 - d.textlength("新规则上线之前，先在虚拟市场里跑一遍", font=font(26)) / 2, 400),

@@ -353,7 +353,7 @@ def write_html(run, panel, out_path, n_lines=60, agents=None):
 <title>Wind tunnel — {html.escape(m.get('run_id', 'run'))}</title>
 <style>{_CSS}</style>
 <header>
-  <h1>Market Wind Tunnel — run {html.escape(m.get('run_id', '?'))}</h1>
+  <h1>Nebula — run {html.escape(m.get('run_id', '?'))}</h1>
   <div class="sub">
     population {html.escape(str(five.get('population', '?')))} ·
     intervention {html.escape(str(five.get('intervention', '?')))} ·
