@@ -1,0 +1,19 @@
+id: tsp_sim_penny
+tag: tsp_sim
+days: 1
+rounds_per_day: 390
+seed: 11
+mechanism:
+  circuit_breaker: {enabled: true, levels: [-0.05, -0.10], halt_rounds: [12, 30]}
+  fee_bps_retail: 0
+assets:
+  EQ:     {start: 2.05, vol_bps: 45, tick: 0.0001}
+  IR:     {start: 110.5,  vol_bps: 12}
+  FX:     {start: 1.085,  vol_bps: 8}
+  CMD:    {start: 2420.0, vol_bps: 30}
+  CRYPTO: {start: 67000.0, vol_bps: 70}
+model: {provider: mock, model_id: mock-heuristic-v1}
+notes: >-
+  Tick Size Pilot SIM arm, penny group: same stock, same everything as
+  tsp_sim_constrained except the quote grid is $0.0001 (sub-penny, the
+  unconstrained counterfactual). See tsp_sim_constrained notes.

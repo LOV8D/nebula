@@ -62,10 +62,19 @@ def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
             "next": "Keep parity at 100% for every benchmark case and fail closed on missing hashes or logs."
         },
         "mechanism": {
-            "status": "partial" if parity else "not_run",
-            "evidence": "Five books, agent intents, fills, halts and per-agent traces are recorded and inspectable in the current run.",
-            "limitation": "The batch-auction mechanism is simplified and has not received an independent market-microstructure validation.",
-            "next": "Add domain-pack contract tests and commission an independent microstructure review."
+            "status": ("pass" if passed["mechanism"] >= 2 else
+                       "partial" if counts["mechanism"] or parity else "not_run"),
+            "evidence": (f"{counts['mechanism']} registered mechanism-track evaluation(s) "
+                         f"({passed['mechanism']} passed all pre-registered signs): "
+                         "tick-pilot sim arm (spread 10/10, vol 10/10 seeds agree; "
+                         "VR5 direction NOT reproduced — recorded), earnings "
+                         "mock-vs-real divergence reported; five books, intents, "
+                         "fills, halts inspectable."),
+            "limitation": "The batch-auction mechanism is simplified; the tick sim arm "
+                          "covers one price point and a mock brain, and has not received "
+                          "an independent market-microstructure validation.",
+            "next": "Run the historical TSP replication on the real pilot list, then "
+                    "commission an independent microstructure review."
         },
         "market_realism": {
             "status": "pass" if passed["market_realism"] else ("partial" if counts["market_realism"] else "not_run"),
@@ -81,7 +90,11 @@ def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
         },
         "behavior_grounding": {
             "status": "pass" if passed["behavior_grounding"] else ("blocked" if grounded == 0 else "partial"),
-            "evidence": f"{grounded * 100:.0f}% of persona attributes are grounded in consented real-person data; {counts['behavior_grounding']} holdout evaluation(s) registered.",
+            "evidence": (f"{grounded * 100:.0f}% of persona attributes are grounded in consented real-person data; "
+                         f"{counts['behavior_grounding']} holdout evaluation(s) registered; "
+                         f"{counts['population_fidelity']} prior-fidelity evaluation(s) registered "
+                         f"({passed['population_fidelity']} passed — priors sit within tolerance of SCF 2022 "
+                         "conditional moments, which is calibration context, not grounding)."),
             "limitation": "Literature priors and synthetic identity cards are not human behavioral evidence.",
             "next": "Run an authorized, matched-information human holdout with pre-registered direction and distribution metrics."
         },

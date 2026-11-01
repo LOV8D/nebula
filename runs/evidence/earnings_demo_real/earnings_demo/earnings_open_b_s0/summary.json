@@ -1,0 +1,155 @@
+{
+ "run_id": "earnings_open_b_s0",
+ "scenario": "earnings_open_b",
+ "elapsed_s": 93.87,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": -0.028065318069997236,
+   "ann_vol": 0.057398578918865656,
+   "excess_kurtosis": 154.5711268660491,
+   "vol_clustering_lag1": 0.6786102130929815,
+   "vol_absret_corr": 0.6337110105563569,
+   "max_drawdown": -0.028065318069997236,
+   "avg_spread_bps": 17.514740210226392,
+   "total_volume": 46171.35524072675,
+   "n_halts": 0
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": 0.1305706478101818,
+   "ann_vol": 0.03536973558702998,
+   "excess_kurtosis": -0.3591496891006365,
+   "vol_clustering_lag1": 0.9759159300621301,
+   "vol_absret_corr": 0.03214322844507458,
+   "max_drawdown": -0.00042983772589999525,
+   "avg_spread_bps": 7.83080002092751,
+   "total_volume": 362108.758974098,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": 0.1364144380715453,
+   "ann_vol": 0.2988012615911646,
+   "excess_kurtosis": 3.570891848531919,
+   "vol_clustering_lag1": -0.08270043177014912,
+   "vol_absret_corr": 0.22828026576129853,
+   "max_drawdown": -0.09668968557908719,
+   "avg_spread_bps": 12.331453343585801,
+   "total_volume": 2523395328.8054595,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.13465312651646733,
+   "ann_vol": 0.25965408666009687,
+   "excess_kurtosis": 8.217179031878125,
+   "vol_clustering_lag1": -0.10072652576780486,
+   "vol_absret_corr": 0.12515847335781222,
+   "max_drawdown": -0.21419002064255643,
+   "avg_spread_bps": 12.616289862185864,
+   "total_volume": 1045127.8131406493,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": -0.0373126530347162,
+   "ann_vol": 0.2929491441443459,
+   "excess_kurtosis": 3.5869892523076743,
+   "vol_clustering_lag1": -0.007556681185395615,
+   "vol_absret_corr": 0.0377817051402899,
+   "max_drawdown": -0.13826472773207754,
+   "avg_spread_bps": 10.89671077626886,
+   "total_volume": 50945.2260157758,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.12481564781118092,
+  "intents_n": 445,
+  "wake_mean_per_round": 1.6666666666666667,
+  "flow_hhi": 0.816773718657947,
+  "net_flow_by_class": {
+   "retail": -80417320202.0,
+   "hf_pm": -3139379979.0,
+   "mf_pm": -3024828918.0,
+   "foreign_inst": -1760245382.0
+  }
+ },
+ "usage": {
+  "calls": 19,
+  "cache_hits": 0,
+  "memo_hits": 407,
+  "in_tokens": 5165,
+  "out_tokens": 1153,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue missed; management warns th",
+   "EQ_win_ret": -0.028065318069997236,
+   "EQ_win_vol": 0.0020932109871817997,
+   "win_dispersion": 0.34632458104096386,
+   "win_intents": 488
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue missed; management warns th",
+   "EQ_win_ret": -0.028065318069997236,
+   "EQ_win_vol": 0.0012085159269200946,
+   "win_dispersion": 0.3026859061394748,
+   "win_intents": 666
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.028065318069997236,
+  "EQ_win_vol": 0.0020932109871817997,
+  "IR_win_ret": null,
+  "CRYPTO_win_vol": null,
+  "win_dispersion": 0.34632458104096386,
+  "win_intents": 488.0,
+  "EQ_win90_ret": -0.028065318069997236,
+  "EQ_win90_vol": 0.0012085159269200946,
+  "IR_win90_ret": null
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 445,
+   "active": 312,
+   "pass_rate": 0.298876404494382,
+   "net_dir": -0.9230769230769231,
+   "mean_size": 0.5078280725702298
+  }
+ ],
+ "manifest": {
+  "population": "47d972a3fa",
+  "intervention": "earnings_open_b",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.05,
+     -0.1
+    ],
+    "halt_rounds": [
+     12,
+     30
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "glm-5.3-flash",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 11
+ }
+}

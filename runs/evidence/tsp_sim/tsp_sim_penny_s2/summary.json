@@ -1,0 +1,136 @@
+{
+ "run_id": "tsp_sim_penny_s2",
+ "scenario": "tsp_sim_penny",
+ "elapsed_s": 0.24,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": -0.06602254428341392,
+   "ann_vol": 0.05110200658863831,
+   "excess_kurtosis": -1.0909098636099943,
+   "vol_clustering_lag1": -0.20891790810739516,
+   "vol_absret_corr": 0.06882135478841929,
+   "max_drawdown": -0.06602254428341392,
+   "avg_spread_bps": 8.115412082860619,
+   "total_volume": 24419481.25347174,
+   "n_halts": 21
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": -0.02123164551175294,
+   "ann_vol": 0.005619125090781365,
+   "excess_kurtosis": -1.1621683875981637,
+   "vol_clustering_lag1": 0.9699873555301883,
+   "vol_absret_corr": 0.09596045684706397,
+   "max_drawdown": -0.02123164551175294,
+   "avg_spread_bps": 6.162486929942963,
+   "total_volume": 452970.1883061261,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": -0.32529773922856076,
+   "ann_vol": 0.3106643866411293,
+   "excess_kurtosis": 3.989277028011691,
+   "vol_clustering_lag1": 0.0272842194478141,
+   "vol_absret_corr": 0.2545788728265889,
+   "max_drawdown": -0.33134457090699443,
+   "avg_spread_bps": 14.219225399100603,
+   "total_volume": 3103809394.550723,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.2850573961444631,
+   "ann_vol": 0.27835075559267247,
+   "excess_kurtosis": 5.965098913004253,
+   "vol_clustering_lag1": -0.16092378896214538,
+   "vol_absret_corr": 0.09675395862608101,
+   "max_drawdown": -0.2908604253539201,
+   "avg_spread_bps": 13.558492386620808,
+   "total_volume": 1071768.525282642,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": -0.2534842353711797,
+   "ann_vol": 0.29062522039872213,
+   "excess_kurtosis": 3.0489513234019388,
+   "vol_clustering_lag1": -0.05766443228599586,
+   "vol_absret_corr": 0.20625375297905385,
+   "max_drawdown": -0.3036534968646525,
+   "avg_spread_bps": 14.27814366457648,
+   "total_volume": 50334.57168846125,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.08278317477990724,
+  "intents_n": 295,
+  "wake_mean_per_round": 7.420512820512821,
+  "flow_hhi": 0.8352613443739054,
+  "net_flow_by_class": {
+   "retail": -287050217293.0,
+   "hf_pm": -28587694877.0,
+   "foreign_inst": -489358.0
+  }
+ },
+ "usage": {
+  "calls": 22,
+  "cache_hits": 0,
+  "memo_hits": 76,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [],
+ "event_windows_long": [],
+ "event_windows_avg": {
+  "EQ_win_ret": null,
+  "EQ_win_vol": null,
+  "IR_win_ret": null,
+  "CRYPTO_win_vol": null,
+  "win_dispersion": null,
+  "win_intents": null,
+  "EQ_win90_ret": null,
+  "EQ_win90_vol": null,
+  "IR_win90_ret": null
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 295,
+   "active": 215,
+   "pass_rate": 0.27118644067796616,
+   "net_dir": -1.0,
+   "mean_size": 0.42884044054808673
+  }
+ ],
+ "manifest": {
+  "population": "47d972a3fa",
+  "intervention": "tsp_sim_penny",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.05,
+     -0.1
+    ],
+    "halt_rounds": [
+     12,
+     30
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 314
+ }
+}

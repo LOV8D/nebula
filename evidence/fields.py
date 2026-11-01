@@ -57,6 +57,9 @@ SCHEMA = {
             "values": ["broker_app", "tv_finnews", "social_media", "forums",
                        "advisor", "word_of_mouth", "none"],
             "multi": True,
+            "with_other": True,   # EDSL-style *_with_other: closed set plus
+                                  # a free-text "other" (stored separately,
+                                  # never mapped onto the closed values)
             "maps_to": None,
             "closes": "information_channels"},
         "reaction_speed": {
@@ -101,6 +104,16 @@ SCHEMA = {
                        "na"],
             "maps_to": "risk_aversion",
             "closes": "risk_questionnaire_grade"},
+        "loss_tolerance_scale": {
+            "q": "If your portfolio fell 20% in a month, how would you feel "
+                 "about holding it?",
+            "type": "scale",   # EDSL linear_scale/likert-style: a closed
+                               # integer scale, not a choice list
+            "min": 1, "max": 7,
+            "labels": {1: "would sell everything immediately",
+                       4: "uneasy but would hold",
+                       7: "would buy more"},
+            "maps_to": "loss_aversion"},
         "product_comprehension_selfreport": {
             "q": "How well do you understand the products you hold?",
             "values": ["novice", "basic", "confident", "professional"],
@@ -215,6 +228,10 @@ def synthesize(agent):
     bands["risk_questionnaire_grade"] = _band(
         ra, [(0.66, 1.01), (0.33, 0.66), (-1, 0.33)],
         ["c1_2_conservative", "c3_4_balanced", "c5_growth"])
+    # loss_tolerance_scale: 1..7 derived from loss_aversion (high aversion
+    # => low score); consistent with risk_questionnaire_grade by construction
+    la = a.get("loss_aversion", 1.0)
+    bands["loss_tolerance_scale"] = max(1, min(7, 1 + round((2.2 - la) * 3)))
     budget = a.get("budget_usd", 0)
     bands["aum_band"] = _band(
         budget, [(0, 10_000), (10_000, 50_000), (50_000, 250_000),
@@ -288,7 +305,8 @@ def synthesize(agent):
 
 def check_answers(ans):
     """(errors, warnings) for one respondent's answers against the schema.
-    errors = out-of-vocabulary or logically impossible; warnings = rare."""
+    errors = out-of-vocabulary, out-of-scale, logically impossible, or
+    'other' selected without text; warnings = rare."""
     errors, warnings = [], []
 
     def val(f):
@@ -298,11 +316,22 @@ def check_answers(ans):
         v = val(f)
         if v is None:
             continue
+        if spec.get("type") == "scale":
+            if not isinstance(v, int) or not (spec["min"] <= v <= spec["max"]):
+                errors.append(f"{f}: {v!r} not an int in "
+                              f"[{spec['min']}, {spec['max']}]")
+            continue
         vs = [v] if not spec.get("multi") else (v if isinstance(v, list) else [v])
+        allow_other = bool(spec.get("with_other"))
         for x in vs:
+            if allow_other and x == "other":
+                continue   # pseudo-value; the text requirement is checked below
             if x not in spec["values"]:
                 errors.append(f"{f}: {x!r} not in closed set "
                               f"{spec['values']}")
+        if spec.get("with_other") and "other" in vs \
+                and not (ans.get(f + "_other") or "").strip():
+            errors.append(f"{f}: 'other' selected but {f}_other is empty")
     for fa, va, fb, forbidden, why in IMPOSSIBLE:
         if val(fa) == va and val(fb) in forbidden:
             errors.append(f"{fa}={va} with {fb}={val(fb)} impossible: {why}")
@@ -313,18 +342,41 @@ def check_answers(ans):
     return errors, warnings
 
 
+def skip_rules():
+    """EDSL-style skip logic fronting the IMPOSSIBLE rules: a hosting
+    platform hides a follow-up when the condition holds, so contradictory
+    answers can't be submitted; ingest keeps checking as the second line."""
+    hide = {"retirement_only": ["leverage_use", "derivatives_use"],
+            "managed_discretionary": None,   # option-level, not hideable
+            "lt_1": ["loss_response_2022"]}
+    rules = []
+    for fa, va, fb, forbidden, why in IMPOSSIBLE:
+        if hide.get(va) and fb in (hide.get(va) or []):
+            rules.append({"if_field": fa, "equals": va, "hide": fb,
+                          "reason": why})
+    return rules
+
+
 def survey_json():
     items = []
     for group, fields in SCHEMA.items():
         for f, spec in fields.items():
-            items.append({"id": f, "group": group, "question": spec["q"],
-                          "values": spec["values"],
-                          "multi": bool(spec.get("multi"))})
+            it = {"id": f, "group": group, "question": spec["q"],
+                  "type": spec.get("type", "choice"),
+                  "multi": bool(spec.get("multi")),
+                  "with_other": bool(spec.get("with_other"))}
+            if it["type"] == "scale":
+                it.update(min=spec["min"], max=spec["max"],
+                          labels=spec["labels"])
+            else:
+                it["values"] = spec["values"]
+            items.append(it)
     return {"title": "Investor behavior & constraints survey",
-            "version": "v1-2026-10-24",
+            "version": "v2-2026-11-02",
             "consent": ("Answers are used to ground one simulated investor "
                         "persona (research calibration split). Respondent "
                         "may withdraw; no marketing use."),
+            "skip_rules": skip_rules(),
             "items": items}
 
 
@@ -332,13 +384,32 @@ def survey_html():
     s = survey_json()
     rows = []
     for i, it in enumerate(s["items"], 1):
-        opts = "".join(
-            f"<label><input type='{'checkbox' if it['multi'] else 'radio'}' "
-            f"name='{it['id']}' value='{v}'> {v.replace('_', ' ')}</label>"
-            for v in it["values"])
+        if it["type"] == "scale":
+            marks = " ".join(f"<span class='sc-lab'>{n}&nbsp;{lab}</span>"
+                             for n, lab in it["labels"].items())
+            opts = "".join(
+                f"<label class='scale'><input type='radio' name='{it['id']}' "
+                f"value='{v}'> {v}</label>"
+                for v in range(it["min"], it["max"] + 1))
+            body = f"<div class='opts scale-row'>{opts}</div>{marks}"
+        else:
+            opts = "".join(
+                f"<label><input type='{'checkbox' if it['multi'] else 'radio'}' "
+                f"name='{it['id']}' value='{v}'> {v.replace('_', ' ')}</label>"
+                for v in it["values"])
+            if it.get("with_other"):
+                opts += (f"<label><input type='{'checkbox' if it['multi'] else 'radio'}' "
+                         f"name='{it['id']}' value='other'> other</label>"
+                         f"<input type='text' name='{it['id']}_other' "
+                         f"placeholder='specify…' style='width:180px'>")
+            body = f"<div class='opts'>{opts}</div>"
         rows.append(f"<fieldset><legend>{i}. {_esc(it['question'])} "
                     f"<span class='grp'>{_esc(it['group'])}</span></legend>"
-                    f"<div class='opts'>{opts}</div></fieldset>")
+                    f"{body}</fieldset>")
+    skips = "".join(
+        f"<li>if <code>{_esc(r['if_field'])} = {_esc(str(r['equals']))}</code> "
+        f"then <code>{_esc(r['hide'])}</code> is hidden</li>"
+        for r in s["skip_rules"])
     return ("<!doctype html><html lang='en'><head><meta charset='utf-8'>"
             "<title>Investor survey — Nebula (Asterium Labs)</title><style>"
             ":root{color-scheme:light}"
@@ -350,14 +421,22 @@ def survey_html():
             "legend{font-weight:600} .grp{color:#888;font-weight:400;"
             "font-size:11px;margin-left:6px} .opts{display:flex;"
             "flex-wrap:wrap;gap:6px 16px} label{font-size:13px}"
+            ".scale-row{gap:4px 10px} .scale-row .scale{font-size:12px;"
+            "font-family:ui-monospace,Menlo,monospace} "
+            ".sc-lab{font-size:11px;color:#888;margin-right:10px}"
             ".consent{background:#f6f6f8;border-radius:8px;padding:10px 14px;"
-            "font-size:12.5px;color:#555}</style></head><body>"
+            "font-size:12.5px;color:#555} .skip{font-size:11.5px;color:#777}"
+            ".skip code{background:#f2f2f4;padding:0 4px;border-radius:3px}"
+            "</style></head><body>"
             f"<h1>{_esc(s['title'])}</h1>"
             f"<div class='consent'><b>Consent.</b> {_esc(s['consent'])}</div>"
+            f"<div class='skip'><b>Skip logic</b> (hosting platforms should "
+            f"implement these; ingest re-checks): <ul>{skips}</ul></div>"
             + "".join(rows) +
             "<p style='color:#888;font-size:12px'>Closed-value answers map "
-            "onto persona fields; free text is not collected. v1-2026-10-24"
-            "</p></body></html>")
+            "onto persona fields; the only free text is the optional "
+            "'other' note, stored separately from the closed values. "
+            + _esc(s["version"]) + "</p></body></html>")
 
 
 def ingest(answers_path, apply=False, out_dir=None):
@@ -383,21 +462,28 @@ def ingest(answers_path, apply=False, out_dir=None):
         if not errors:
             filled = {}
             for f, v in r["answers"].items():
-                if v is None:
+                if v is None or f.endswith("_other"):
                     continue
-                filled[f] = {"value": v,
-                             "evidence": provenance.evidence(
-                                 source=f"investor survey {answers_path.name}",
-                                 kind="self_report", confidence="medium",
-                                 consent="granted", split="calibration",
-                                 as_of=r.get("as_of"))}
+                rec = {"value": v,
+                       "evidence": provenance.evidence(
+                           source=f"investor survey {answers_path.name}",
+                           kind="self_report", confidence="medium",
+                           consent="granted", split="calibration",
+                           as_of=r.get("as_of"))}
+                # free text is collected ONLY as the *_with_other note and
+                # stored beside the closed value, never mapped onto it
+                if isinstance(v, list) and "other" in v:
+                    txt = (r["answers"].get(f + "_other") or "").strip()
+                    if txt:
+                        rec["other_text"] = txt[:200]
+                filled[f] = rec
             entry["fields"] = filled
             entry["status"] = "valid"
         else:
             entry["status"] = "rejected"
         patches.append(entry)
     ok = [p for p in patches if p["status"] == "valid"]
-    out = {"survey_version": "v1-2026-10-24", "patches": patches,
+    out = {"survey_version": "v2-2026-11-02", "patches": patches,
            "summary": {"respondents": len(patches), "valid": len(ok),
                        "rejected": len(patches) - len(ok),
                        "answer_errors": n_err, "rare_flags": n_warn,

@@ -110,6 +110,7 @@ def market_maker_quotes(agent_id, asset, world, rng, cap_notional=8e6):
     (the physically correct call-auction behavior), instead of walking the
     book forever."""
     from .types import Order
+    from . import matching
     m = world.marks[asset]
     acc = world.accounts[agent_id]
     inv = acc.positions.get(asset, 0.0)
@@ -121,11 +122,22 @@ def market_maker_quotes(agent_id, asset, world, rng, cap_notional=8e6):
     # shed through price — this manufactures two-sided flow in thin books
     center = ref * (1 - 0.02 * max(-1.5, min(1.5, inv / max(cap_qty, 1e-9))))
     qty = cap_qty * rng.uniform(0.7, 1.0)
+    # tick constraint (TSP-style): quotes must land on the increment grid,
+    # bid floored / ask ceiled so the pair never collapses inward; if the
+    # grid eats the whole spread, push the ask one tick above the bid
+    tick = world.tick.get(asset)
+    if tick:
+        bid = matching.round_tick(center - half, tick, side="buy")
+        ask = matching.round_tick(center + half, tick, side="sell")
+        if ask <= bid:
+            ask = round(bid + tick, 10)
+    else:
+        bid, ask = round(center - half, 6), round(center + half, 6)
     out = []
     if inv <= cap_qty:                       # room to buy => post bid
-        out.append(Order(asset, agent_id, 1, qty, round(center - half, 6), world.t, "rule"))
+        out.append(Order(asset, agent_id, 1, qty, bid, world.t, "rule"))
     if inv >= -cap_qty:                      # room to sell => post ask
-        out.append(Order(asset, agent_id, -1, qty, round(center + half, 6), world.t, "rule"))
+        out.append(Order(asset, agent_id, -1, qty, ask, world.t, "rule"))
     return out
 
 

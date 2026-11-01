@@ -23,6 +23,7 @@ EXPERIMENTS = {
     "fee_demo": ["baseline", "fee_low", "fee_high"],
     "news_demo": ["news_a", "news_b"],
     "cb_demo": ["cb_magnet_on", "cb_magnet_off"],
+    "earnings_demo": ["earnings_open_a", "earnings_open_b"],
 }
 # demo2 default: the flagship A/B only — real-model calls are the bottleneck
 EXPERIMENTS_LLM = {"news_demo": ["news_a", "news_b"]}

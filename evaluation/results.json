@@ -390,6 +390,373 @@
       ],
       "config_hash": "2d2d5e179033",
       "registered_at": "2026-11-01T23:04:03"
+    },
+    {
+      "track": "tsp_sim_arm",
+      "case": "tick-pilot mechanism, simulated (constrained $0.005 vs penny $0.0001)",
+      "gate": "mechanism",
+      "seeds": 2,
+      "directions": {
+        "quoted_spread_bps": "constrained_higher",
+        "close_close_vol_bps": "constrained_higher",
+        "vr5_deviation": "constrained_higher"
+      },
+      "arms": {
+        "constrained": [
+          {
+            "quoted_spread_bps": 24.36,
+            "close_close_vol_bps": 30.81,
+            "vr5_deviation": 0.3028
+          },
+          {
+            "quoted_spread_bps": 24.72,
+            "close_close_vol_bps": 32.6,
+            "vr5_deviation": 0.4541
+          }
+        ],
+        "penny": [
+          {
+            "quoted_spread_bps": 8.22,
+            "close_close_vol_bps": 25.69,
+            "vr5_deviation": 0.666
+          },
+          {
+            "quoted_spread_bps": 7.48,
+            "close_close_vol_bps": 26.35,
+            "vr5_deviation": 0.1304
+          }
+        ]
+      },
+      "verdicts": {
+        "quoted_spread_bps": {
+          "per_seed": [
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "close_close_vol_bps": {
+          "per_seed": [
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "vr5_deviation": {
+          "per_seed": [
+            false,
+            true
+          ],
+          "all_agree": false
+        }
+      },
+      "verdict": "PARTIAL",
+      "note": "Mechanism-replication evidence on the simulated market; NOT the historical Tick Size Pilot replication. Signs pre-registered in docs/tick-size-pilot-plan.md before this run; EQ stands in for a $1.00-$2.28 pilot-band stock. Mock brain \u2014 pipeline validation.",
+      "limitations": [
+        "single-name proxy at one price point ($2.05); the real pilot spans a size/liquidity cross-section",
+        "tick effect here acts on MM quotes and limit prices only; the real pilot also changed trade-at set and rebate economics",
+        "mock brain \u2014 cognition is rule-based, so this isolates the microstructure channel only"
+      ],
+      "config_hash": "c629d99a4534",
+      "registered_at": "2026-11-01T23:36:22"
+    },
+    {
+      "track": "tsp_sim_arm",
+      "case": "tick-pilot mechanism, simulated (constrained $0.005 vs penny $0.0001)",
+      "gate": "mechanism",
+      "seeds": 10,
+      "directions": {
+        "quoted_spread_bps": "constrained_higher",
+        "close_close_vol_bps": "constrained_higher",
+        "vr5_deviation": "constrained_higher"
+      },
+      "arms": {
+        "constrained": [
+          {
+            "quoted_spread_bps": 24.36,
+            "close_close_vol_bps": 30.81,
+            "vr5_deviation": 0.3028
+          },
+          {
+            "quoted_spread_bps": 24.72,
+            "close_close_vol_bps": 32.6,
+            "vr5_deviation": 0.4541
+          },
+          {
+            "quoted_spread_bps": 24.3,
+            "close_close_vol_bps": 28.13,
+            "vr5_deviation": 0.3604
+          },
+          {
+            "quoted_spread_bps": 25.48,
+            "close_close_vol_bps": 27.15,
+            "vr5_deviation": 0.4094
+          },
+          {
+            "quoted_spread_bps": 24.18,
+            "close_close_vol_bps": 28.75,
+            "vr5_deviation": 0.4539
+          },
+          {
+            "quoted_spread_bps": 24.91,
+            "close_close_vol_bps": 15.15,
+            "vr5_deviation": 0.5185
+          },
+          {
+            "quoted_spread_bps": 24.66,
+            "close_close_vol_bps": 25.08,
+            "vr5_deviation": 0.436
+          },
+          {
+            "quoted_spread_bps": 24.48,
+            "close_close_vol_bps": 24.02,
+            "vr5_deviation": 0.6627
+          },
+          {
+            "quoted_spread_bps": 24.48,
+            "close_close_vol_bps": 28.57,
+            "vr5_deviation": 0.1605
+          },
+          {
+            "quoted_spread_bps": 25.61,
+            "close_close_vol_bps": 26.64,
+            "vr5_deviation": 0.1251
+          }
+        ],
+        "penny": [
+          {
+            "quoted_spread_bps": 8.22,
+            "close_close_vol_bps": 25.69,
+            "vr5_deviation": 0.666
+          },
+          {
+            "quoted_spread_bps": 7.48,
+            "close_close_vol_bps": 26.35,
+            "vr5_deviation": 0.1304
+          },
+          {
+            "quoted_spread_bps": 8.2,
+            "close_close_vol_bps": 2.9,
+            "vr5_deviation": 0.8247
+          },
+          {
+            "quoted_spread_bps": 8.56,
+            "close_close_vol_bps": 3.91,
+            "vr5_deviation": 0.4298
+          },
+          {
+            "quoted_spread_bps": 8.11,
+            "close_close_vol_bps": 25.48,
+            "vr5_deviation": 0.2549
+          },
+          {
+            "quoted_spread_bps": 7.49,
+            "close_close_vol_bps": 2.12,
+            "vr5_deviation": 1.2655
+          },
+          {
+            "quoted_spread_bps": 7.98,
+            "close_close_vol_bps": 1.73,
+            "vr5_deviation": 1.6184
+          },
+          {
+            "quoted_spread_bps": 6.97,
+            "close_close_vol_bps": 0.81,
+            "vr5_deviation": 2.8435
+          },
+          {
+            "quoted_spread_bps": 7.93,
+            "close_close_vol_bps": 18.19,
+            "vr5_deviation": 0.6111
+          },
+          {
+            "quoted_spread_bps": 8.01,
+            "close_close_vol_bps": 1.84,
+            "vr5_deviation": 1.5188
+          }
+        ]
+      },
+      "verdicts": {
+        "quoted_spread_bps": {
+          "per_seed": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "close_close_vol_bps": {
+          "per_seed": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "vr5_deviation": {
+          "per_seed": [
+            false,
+            true,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "all_agree": false
+        }
+      },
+      "verdict": "PARTIAL",
+      "note": "Mechanism-replication evidence on the simulated market; NOT the historical Tick Size Pilot replication. Signs pre-registered in docs/tick-size-pilot-plan.md before this run; EQ stands in for a $1.00-$2.28 pilot-band stock. Mock brain \u2014 pipeline validation.",
+      "limitations": [
+        "single-name proxy at one price point ($2.05); the real pilot spans a size/liquidity cross-section",
+        "tick effect here acts on MM quotes and limit prices only; the real pilot also changed trade-at set and rebate economics",
+        "mock brain \u2014 cognition is rule-based, so this isolates the microstructure channel only"
+      ],
+      "config_hash": "34f76594b5d5",
+      "registered_at": "2026-11-01T23:36:29"
+    },
+    {
+      "track": "earnings_real",
+      "gate": "mechanism",
+      "case": "earnings-opening disclosure A/B on GLM-5.3-flash vs mock (Issuer & Event pack; reassuring vs blunt wording, LULD -5%/-10% bands)",
+      "model": "glm-5.3-flash",
+      "seeds": 2,
+      "parity": [
+        {
+          "seed": 0,
+          "ok": true,
+          "t_intervention": 0
+        },
+        {
+          "seed": 1,
+          "ok": true,
+          "t_intervention": 0
+        }
+      ],
+      "arms": {
+        "mock": {
+          "earnings_open_a": [
+            null,
+            null
+          ],
+          "earnings_open_b": [
+            null,
+            null
+          ]
+        },
+        "real": {
+          "earnings_open_a": [
+            {
+              "total_ret": 0.09577257432939601,
+              "excess_kurtosis": 2.3738796570043705,
+              "n_halts": 0,
+              "ann_vol": 0.30110883882268286,
+              "win90_ret": 0.009934948159619816,
+              "wake": 19
+            },
+            {
+              "total_ret": 0.4766945702729859,
+              "excess_kurtosis": 16.002670810576813,
+              "n_halts": 0,
+              "ann_vol": 0.32483615333852733,
+              "win90_ret": 0.03523468095164661,
+              "wake": 19
+            }
+          ],
+          "earnings_open_b": [
+            {
+              "total_ret": -0.028065318069997236,
+              "excess_kurtosis": 154.5711268660491,
+              "n_halts": 0,
+              "ann_vol": 0.057398578918865656,
+              "win90_ret": -0.028065318069997236,
+              "wake": 19
+            },
+            {
+              "total_ret": -0.0641690123986347,
+              "excess_kurtosis": 11.883416704522807,
+              "n_halts": 28,
+              "ann_vol": 0.2609580266898371,
+              "win90_ret": -0.06028431715955462,
+              "wake": 20
+            }
+          ]
+        }
+      },
+      "reading": "Direction/ranking only. Ordering (blunt arm worse on disorder metrics) reproduces from mock to real and is amplified: real blunt arm shows a -5% LULD band touch in 1/2 seeds and far heavier tails; real reassuring arm recovers with strong day returns. Single-seed extremes (A s1 +47.7%) are recorded, not averaged away \u2014 2 seeds cannot support effect-size claims.",
+      "verdict": "DIVERGENCE-REPORTED",
+      "limitations": [
+        "2 seeds; single-name EQ proxy for the issuer's stock",
+        "verdict is deliberately not PASS/FAIL: the deliverable is the recorded mock-vs-real divergence table",
+        "LULD bands are a mechanism-level stand-in (halt rounds 12/30), not exchange-microsecond halts"
+      ],
+      "config_hash": "55920d1510b8",
+      "registered_at": "2026-11-01T23:52:21"
+    },
+    {
+      "track": "population_fidelity",
+      "gate": "behavior_grounding",
+      "case": "L1 v0: retail panel aum_band marginals vs SCF 2022 conditional-on-holding statistics",
+      "panel_n": 560,
+      "panel_shares": {
+        "lt_10k": 0.0393,
+        "b10_50k": 0.35,
+        "b50_250k": 0.4643,
+        "b250_1m": 0.1321,
+        "gt_1m": 0.0143
+      },
+      "panel_median_band": "b50_250k",
+      "anchors": {
+        "source": "Changes in U.S. Family Finances from 2019 to 2022 (SCF), Federal Reserve Bulletin, October 2023 \u2014 Box 2 / Table 3, conditional on holding stock",
+        "conditional_median_usd": 52000,
+        "conditional_mean_usd": 491800,
+        "participation_by_income": {
+          "bottom_half": 0.34,
+          "upper_middle": 0.78,
+          "top_decile": 0.95
+        }
+      },
+      "tests": {
+        "M1_median_bracket": {
+          "ok": true,
+          "detail": "median band b50_250k in ('b10_50k', 'b50_250k')"
+        },
+        "M2_right_tail": {
+          "ok": true,
+          "detail": "gt_1m share 1.4% <= 20%"
+        },
+        "M3_heterogeneity": {
+          "ok": true,
+          "detail": "3 brackets >= 5%"
+        }
+      },
+      "verdict": "PASS",
+      "note": "Prior-panel fidelity only: 0% of these attributes are human-grounded; this eval quantifies how far the uncalibrated priors sit from published population moments. FINRA NFCS behavioral anchors (advisor usage, check frequency) are pending \u2014 the report crosstabs were not machine-fetchable this pass. Participation-rate anchors are not comparable (panel is investors-only).",
+      "limitations": [
+        "aum_band is a coarse 5-bracket synthesis of a lognormal prior; band-level comparison loses within-band information",
+        "SCF median is over stock value incl. retirement accounts; the panel band proxies investable assets \u2014 definitional mismatch of roughly one bracket",
+        "2 of 3 tolerances were chosen by the same agent that ran the panel generator \u2014 an independent party should own M1-M3 before this gate can reach PASS weight in external material"
+      ],
+      "config_hash": "e258df3c0179",
+      "registered_at": "2026-11-02T00:01:26"
     }
   ]
 }

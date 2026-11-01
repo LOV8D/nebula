@@ -1,61 +1,92 @@
 {
  "title": "Investor behavior & constraints survey",
- "version": "v1-2026-10-24",
+ "version": "v2-2026-11-02",
  "consent": "Answers are used to ground one simulated investor persona (research calibration split). Respondent may withdraw; no marketing use.",
+ "skip_rules": [
+  {
+   "if_field": "account_type",
+   "equals": "retirement_only",
+   "hide": "leverage_use",
+   "reason": "retirement accounts cannot hold margin"
+  },
+  {
+   "if_field": "account_type",
+   "equals": "retirement_only",
+   "hide": "derivatives_use",
+   "reason": "retirement accounts cannot trade derivatives"
+  },
+  {
+   "if_field": "years_investing_band",
+   "equals": "lt_1",
+   "hide": "loss_response_2022",
+   "reason": "investing for under a year (asked 2026) means no 2022 position"
+  }
+ ],
  "items": [
   {
    "id": "account_type",
    "group": "Account & advice",
    "question": "Which best describes your investment accounts?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "taxable_only",
     "retirement_only",
     "both",
     "managed_discretionary"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "advice_channel",
    "group": "Account & advice",
    "question": "How do you mainly decide on investments?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "pure_self_directed",
     "app_robo_advisor",
     "human_advisor",
     "social_media_tips",
     "mixed"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "years_investing_band",
    "group": "Account & advice",
    "question": "How long have you been investing?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "lt_1",
     "y1_5",
     "y6_20",
     "gt_20"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "statement_check_frequency",
    "group": "Attention & information",
    "question": "How often do you check your portfolio?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "daily",
     "weekly",
     "monthly",
     "quarterly_or_less"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "information_channels",
    "group": "Attention & information",
    "question": "Where do your market information mainly come from? (pick all that apply)",
+   "type": "choice",
+   "multi": true,
+   "with_other": true,
    "values": [
     "broker_app",
     "tv_finnews",
@@ -64,140 +95,176 @@
     "advisor",
     "word_of_mouth",
     "none"
-   ],
-   "multi": true
+   ]
   },
   {
    "id": "reaction_speed",
    "group": "Attention & information",
    "question": "When big market news breaks, how fast do you usually act?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "same_hour",
     "same_day",
     "within_week",
     "later_or_never"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "redemption_history",
    "group": "Behaviour & experience",
    "question": "In the last 12 months, how often did you sell out of a fund or large position?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "none",
     "once",
     "few_2_5",
     "frequent_gt5"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "trading_frequency_selfreport",
    "group": "Behaviour & experience",
    "question": "How often do you trade?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "buy_and_hold",
     "few_times_year",
     "monthly",
     "weekly_or_more"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "loss_response_2022",
    "group": "Behaviour & experience",
    "question": "In the 2022 drawdown, what did you do?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "sold_all_or_most",
     "trimmed",
     "held",
     "bought_more",
     "not_invested_then"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "stop_loss_habit",
    "group": "Behaviour & experience",
    "question": "Do you use stop-losses?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "always_use",
     "sometimes",
     "never",
     "dont_know_what_it_is"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "fee_sensitivity_selfreport",
    "group": "Behaviour & experience",
    "question": "A fund you hold raises its fee. What have you actually done in the past?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "unaware",
     "noticed_but_stayed",
     "switched_for_fees",
     "negotiated_fees"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "risk_questionnaire_grade",
    "group": "Behaviour & experience",
    "question": "If your broker graded your risk tolerance, closest match?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "c1_2_conservative",
     "c3_4_balanced",
     "c5_growth",
     "na"
-   ],
-   "multi": false
+   ]
+  },
+  {
+   "id": "loss_tolerance_scale",
+   "group": "Behaviour & experience",
+   "question": "If your portfolio fell 20% in a month, how would you feel about holding it?",
+   "type": "scale",
+   "multi": false,
+   "with_other": false,
+   "min": 1,
+   "max": 7,
+   "labels": {
+    "1": "would sell everything immediately",
+    "4": "uneasy but would hold",
+    "7": "would buy more"
+   }
   },
   {
    "id": "product_comprehension_selfreport",
    "group": "Behaviour & experience",
    "question": "How well do you understand the products you hold?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "novice",
     "basic",
     "confident",
     "professional"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "leverage_use",
    "group": "Constraints",
    "question": "Do you use margin?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "none",
     "margin_sometimes",
     "margin_routine"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "derivatives_use",
    "group": "Constraints",
    "question": "Do you use options or other derivatives?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "none",
     "options_occasionally",
     "derivatives_routine"
-   ],
-   "multi": false
+   ]
   },
   {
    "id": "aum_band",
    "group": "Wealth band",
    "question": "Total invested assets (band)?",
+   "type": "choice",
+   "multi": false,
+   "with_other": false,
    "values": [
     "lt_10k",
     "b10_50k",
     "b50_250k",
     "b250_1m",
     "gt_1m"
-   ],
-   "multi": false
+   ]
   }
  ]
 }

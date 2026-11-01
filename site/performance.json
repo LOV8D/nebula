@@ -16,7 +16,7 @@
     "flagship_parity_fail": 0,
     "flagship_manifests_complete": true,
     "human_grounded_share": 0.0,
-    "registered_external_evaluations": 1,
+    "registered_external_evaluations": 5,
     "sensitivity_clean": 4,
     "sensitivity_total": 4
   },
@@ -37,9 +37,9 @@
       "question": "Do the simulated rules and traces implement the intended market mechanism without hidden leakage?",
       "gate": "Contract tests pass for each domain pack and an independent market-microstructure review finds no decision-changing implementation defect.",
       "status": "partial",
-      "evidence": "Five books, agent intents, fills, halts and per-agent traces are recorded and inspectable in the current run.",
-      "limitation": "The batch-auction mechanism is simplified and has not received an independent market-microstructure validation.",
-      "next": "Add domain-pack contract tests and commission an independent microstructure review."
+      "evidence": "0 registered mechanism-track evaluation(s) (0 passed all pre-registered signs): tick-pilot sim arm (spread 10/10, vol 10/10 seeds agree; VR5 direction NOT reproduced \u2014 recorded), earnings mock-vs-real divergence reported; five books, intents, fills, halts inspectable.",
+      "limitation": "The batch-auction mechanism is simplified; the tick sim arm covers one price point and a mock brain, and has not received an independent market-microstructure validation.",
+      "next": "Run the historical TSP replication on the real pilot list, then commission an independent microstructure review."
     },
     {
       "id": "market_realism",
@@ -67,7 +67,7 @@
       "question": "Do agent responses agree with authorized held-out human decisions under matched information?",
       "gate": "A pre-registered holdout reports direction accuracy, total-variation distance, subgroup error and identity drift; synthetic output is never used as the reference label.",
       "status": "blocked",
-      "evidence": "0% of persona attributes are grounded in consented real-person data; 0 holdout evaluation(s) registered.",
+      "evidence": "0% of persona attributes are grounded in consented real-person data; 0 holdout evaluation(s) registered; 1 prior-fidelity evaluation(s) registered (0 passed \u2014 priors sit within tolerance of SCF 2022 conditional moments, which is calibration context, not grounding).",
       "limitation": "Literature priors and synthetic identity cards are not human behavioral evidence.",
       "next": "Run an authorized, matched-information human holdout with pre-registered direction and distribution metrics."
     },

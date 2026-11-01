@@ -1,0 +1,155 @@
+{
+ "run_id": "earnings_open_b_s1",
+ "scenario": "earnings_open_b",
+ "elapsed_s": 68.28,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": -0.0641690123986347,
+   "ann_vol": 0.2609580266898371,
+   "excess_kurtosis": 11.883416704522807,
+   "vol_clustering_lag1": -0.09243355144198047,
+   "vol_absret_corr": 0.11992212131209776,
+   "max_drawdown": -0.07644042263526507,
+   "avg_spread_bps": 12.684933360697988,
+   "total_volume": 163020.24929300402,
+   "n_halts": 28
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": -0.13464227503545168,
+   "ann_vol": 0.04115705209937582,
+   "excess_kurtosis": -0.48770659146315154,
+   "vol_clustering_lag1": 0.9704912544160226,
+   "vol_absret_corr": 0.018768582153723002,
+   "max_drawdown": -0.13501648684650647,
+   "avg_spread_bps": 8.224611622863248,
+   "total_volume": 473942.7406085446,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": 0.11965254076339993,
+   "ann_vol": 0.2881015027362898,
+   "excess_kurtosis": 6.051691818805743,
+   "vol_clustering_lag1": -0.0693757242251257,
+   "vol_absret_corr": 0.24736623869045732,
+   "max_drawdown": -0.11028356748016,
+   "avg_spread_bps": 12.33212022268637,
+   "total_volume": 2625979414.940172,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.2768587460535681,
+   "ann_vol": 0.287203452458051,
+   "excess_kurtosis": 5.77094456336682,
+   "vol_clustering_lag1": -0.15482714085529609,
+   "vol_absret_corr": 0.2018466520873441,
+   "max_drawdown": -0.3304738859452411,
+   "avg_spread_bps": 13.651767122439036,
+   "total_volume": 972838.2735044275,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": 0.040246721088151194,
+   "ann_vol": 0.27364832076946743,
+   "excess_kurtosis": 5.18294233663128,
+   "vol_clustering_lag1": 0.03527849082263943,
+   "vol_absret_corr": 0.15769576588519033,
+   "max_drawdown": -0.1584353875935981,
+   "avg_spread_bps": 12.062754992477654,
+   "total_volume": 39972.951274928404,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.1138213510178303,
+  "intents_n": 447,
+  "wake_mean_per_round": 1.6076923076923078,
+  "flow_hhi": 0.7549800721384099,
+  "net_flow_by_class": {
+   "retail": -83819157472.0,
+   "hf_pm": -5634303638.0,
+   "mf_pm": -2891649087.0,
+   "foreign_inst": -1325331748.0
+  }
+ },
+ "usage": {
+  "calls": 20,
+  "cache_hits": 16,
+  "memo_hits": 414,
+  "in_tokens": 5423,
+  "out_tokens": 238,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue missed; management warns th",
+   "EQ_win_ret": -0.050656083096115134,
+   "EQ_win_vol": 0.002962308542245269,
+   "win_dispersion": 0.4244696768094004,
+   "win_intents": 467
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue missed; management warns th",
+   "EQ_win_ret": -0.06028431715955462,
+   "EQ_win_vol": 0.0027857371437348846,
+   "win_dispersion": 0.29622421190000914,
+   "win_intents": 993
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.050656083096115134,
+  "EQ_win_vol": 0.002962308542245269,
+  "IR_win_ret": null,
+  "CRYPTO_win_vol": null,
+  "win_dispersion": 0.4244696768094004,
+  "win_intents": 467.0,
+  "EQ_win90_ret": -0.06028431715955462,
+  "EQ_win90_vol": 0.0027857371437348846,
+  "IR_win90_ret": null
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 447,
+   "active": 304,
+   "pass_rate": 0.31991051454138697,
+   "net_dir": -0.8618421052631579,
+   "mean_size": 0.5123156474305041
+  }
+ ],
+ "manifest": {
+  "population": "47d972a3fa",
+  "intervention": "earnings_open_b",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.05,
+     -0.1
+    ],
+    "halt_rounds": [
+     12,
+     30
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "glm-5.3-flash",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 112
+ }
+}
