@@ -1,12 +1,14 @@
 """Dashboard data: gather everything the product view shows into one dict.
 
-Python only reads recorded runs and computes nothing new; presentation lives
-in ui/app/ (hand-written HTML/CSS/JS) and ui/bundle.py inlines both into one
-self-contained page. The page answers three questions, in this order:
+Python reads recorded runs and derives an evaluation status without running a
+new simulation. Presentation lives in ui/app/ (hand-written HTML/CSS/JS), and
+ui/bundle.py inlines both into one
+self-contained page. The page answers four questions, in this order:
 
     Verdict      — how much did the wording change the market?
     Ripple       — who reacted first, and who pushed? (agent-grid replay)
     Robustness   — does it hold across seeds, models, prompts?
+    Performance  — which validation gates have actually passed?
     Evidence     — appendix: where the persona data comes from
 
     python3 -m runtime.cli ui            # writes site/dashboard.html
@@ -103,6 +105,13 @@ def _flagship(ab_root, panel_hash):
     t0 = parity.intervention_t(ev_a, ev_b)
     head = lambda evs: next((e for e in evs if e["t"] == t0), {})  # noqa: E731
     arms = {"a": _arm(a_dirs), "b": _arm(b_dirs)}
+    manifests = [_json(d / "manifest.json", {}) for d in a_dirs + b_dirs]
+    required = ("population", "intervention", "mechanism", "model", "seed")
+    manifest_complete = all(
+        m.get("code_hash")
+        and all(k in m.get("five_tuple", {}) for k in required)
+        and m.get("five_tuple", {}).get("model", {}).get("prompt_sha8")
+        for m in manifests)
     mean = lambda xs: sum(xs) / len(xs) if xs else None  # noqa: E731
     return {
         "root": _rel(ab_root),
@@ -111,6 +120,7 @@ def _flagship(ab_root, panel_hash):
         "prompt_sha8": five.get("model", {}).get("prompt_sha8", "?"),
         "population": five.get("population"),
         "panel_current": five.get("population") == panel_hash,
+        "manifest_complete": manifest_complete,
         "t0": t0,
         "rounds": man.get("rounds_per_day", 390),
         "wording": {"a": head(ev_a).get("headline"), "b": head(ev_b).get("headline"),
@@ -248,6 +258,10 @@ def collect(ab_root=None, sens_dir=None, replay_seed=0):
     flag = _flagship(ab_root, panel_hash)
     run_a = ab_root / f"news_a_s{replay_seed}"
     run_b = ab_root / f"news_b_s{replay_seed}"
+    robust = _robustness(flag, sens_dir)
+    evidence = _evidence(panel, run_a)
+    from evaluation.scorecard import build_scorecard
+    performance = build_scorecard(flag, robust, evidence)
     return {
         "meta": {"generated": time.strftime("%Y-%m-%d %H:%M"),
                  "code_hash": _code_hash(), "panel_hash": panel_hash,
@@ -257,8 +271,9 @@ def collect(ab_root=None, sens_dir=None, replay_seed=0):
         "agents": {"classes": classes, "rows": agent_rows},
         "replay": {"a": _replay(run_a, idx), "b": _replay(run_b, idx)},
         "who": _who_moved(ab_root, flag["t0"], cls_of),
-        "robustness": _robustness(flag, sens_dir),
-        "evidence": _evidence(panel, run_a),
+        "robustness": robust,
+        "performance": performance,
+        "evidence": evidence,
     }
 
 

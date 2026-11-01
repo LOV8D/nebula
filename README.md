@@ -19,13 +19,12 @@ vLLM endpoint is a one-line change (`config/models.yaml`). Plan of record:
 artifacts and honest caveats: [`runs/evidence/demo/report.md`](runs/evidence/demo/report.md).
 The shared rules that govern all work here are in [`../AGENTS.md`](../AGENTS.md).
 
-> **Open integrity issue (2026-10-29).** Every recorded real-brain A/B pair
-> (flagship `demo2` and the GLM/DeepSeek sensitivity runs) fails the parity
-> check: the two arms already differ before the intervention. Cause: the
-> gateway's concurrent dispatch let threads race for a shared memo entry;
-> fixed in `runtime/llm.py` (see `tests/test_gateway_determinism.py`). The
-> runs predate the fix and need a re-run (`make demo2`, `sensitivity`) before
-> any real-brain A/B is quoted. The mock showcase passes.
+> **Current integrity state (2026-10-31).** The real-brain flagship was rerun
+> after the gateway race fix and both same-seed pairs now pass pre-intervention
+> parity. The older GLM/DeepSeek sensitivity matrix still fails parity and is
+> not robustness evidence; it must be rerun before any sensitivity claim is
+> quoted. Passing parity validates the A/B pipeline only — not market realism,
+> behavioral validity or real-world effect sizes.
 
 ## Quickstart — the demo action
 
@@ -73,8 +72,8 @@ make ui                                        # -> site/dashboard.html, open in
 ```
 
 One self-contained page (no server, no network needed), assembled from
-recorded runs — nothing recomputed, nothing re-executed. Three questions in
-reading order, plus an appendix:
+recorded runs — no simulation is re-executed. Four questions in reading
+order, plus an appendix:
 
 1. **Verdict** — how much did the wording change the market? Direction
    headline across seeds, A/B tiles, both wordings quoted, EQ paths for every
@@ -88,12 +87,28 @@ reading order, plus an appendix:
 3. **Robustness** — does it hold across seeds, models, prompts? One dot per
    seed pair (row means are ticks, never instead of the dots), hollow dots
    for pairs that fail parity, non-GLM rows greyed per the 2026-10-22 decision.
-4. **Evidence** (appendix) — panel provenance coverage, role-aware agent
+4. **Performance** — the evaluation system and current-product assessment:
+   eight independent gates, explicit evidence/limits/next tests, fair baseline
+   arms and planned benchmark cases. There is deliberately no aggregate score.
+5. **Evidence** (appendix) — panel provenance coverage, role-aware agent
    cards, red lines, reproducibility contract, data sources.
 
 Sources are overridable: `--ab-root`, `--sensitivity`, `--replay-seed`, `-o`.
 The page itself is hand-written in `ui/app/` (HTML/CSS/JS); `ui/collect.py`
 gathers the data and `ui/bundle.py` inlines both into one file.
+
+The same Performance assessment is available as machine-readable JSON:
+
+```bash
+make evaluate                                  # -> site/performance.json
+```
+
+The stable contract is `evaluation/benchmark_v0.json`; completed external
+evaluations are appended to `evaluation/results.json`. An absent benchmark is
+always `NOT RUN`, never silently counted as a pass. The current honest state is
+**ENGINEERING-VERIFIED / MARKET-UNVALIDATED**: the clean flagship proves the
+system can run and audit one comparison, while historical intervention,
+human holdout, prospective and customer-utility benchmarks remain unrun.
 
 ### A/B parity
 
@@ -265,6 +280,7 @@ python3 -m runtime.cli viewer runs/evidence/demo/news_demo/news_a_s0          # 
 
 | Date | Decision |
 |---|---|
+| 2026-10-31 | Product performance uses independent evidence gates, not a composite score. Engineering integrity cannot substitute for market, behavioral, prospective or decision-utility validity; unrun tests display as `NOT RUN` |
 | 2026-10-29 | Repo split into `runtime/` (simulator core), `experiments/` (demo, sensitivity, multiday, parity), `evidence/` (provenance, fields) and `ui/` (viewer, dashboard data, hand-written app, bundler). Runs split into committed `runs/evidence/` and gitignored `runs/scratch/`; generated pages go to `site/`. Sensitivity run dirs use `__` instead of `|` |
 | 2026-10-29 | Concurrent LLM dispatch resolves each memo key once per round, owned by the first job in order — never by thread timing. A same-seed A/B pair that is not identical before the intervention fails **parity** and is flagged everywhere it is reported |
 | 2026-10-22 | `persona_id` carries the **full class name** (`retail_direct-0000`). The old 6-char prefix made `retail_direct` and `retail_advised` collide on 60 ids; accounts and RNG streams are keyed by that id, so the advised twin overwrote the direct one. Runs made before this fix have unreliable per-agent attribution for those 60 ids — aggregate flows still stand, single-agent cards from those runs do not. `write_panel` now refuses a panel with duplicate ids |
@@ -303,9 +319,13 @@ wind_tunnel/
 ├── evidence/                 # where persona data comes from
 │   ├── provenance.py         # per-attribute evidence records + coverage
 │   └── fields.py             # closed-value fields, survey, ingest
+├── evaluation/               # benchmark contract, append-only results, scorecard
+│   ├── benchmark_v0.json     # eight gates, baselines, fairness contract, planned cases
+│   ├── results.json          # external evaluation registry (empty until actually run)
+│   └── scorecard.py          # conservative assessment from recorded evidence
 ├── ui/                       # read-only views
 │   ├── viewer.py             # per-run stream + role-aware agent cards
-│   ├── collect.py            # dashboard data (reads runs, computes nothing new)
+│   ├── collect.py            # dashboard data + derived evaluation status; no simulation
 │   ├── app/                  # the dashboard itself: index.html, style.css, app.js
 │   └── bundle.py             # data + app -> one self-contained file
 ├── personas/panel_v3.json    # the generated 883-agent panel
@@ -314,10 +334,10 @@ wind_tunnel/
 │   ├── evidence/             # committed: demo, demo2, sensitivity, multiday, live_test,
 │   │                         #   legacy_2026-10-19 (pre-id-fix runs, kept for history)
 │   └── scratch/              # gitignored: smoke runs, video frames; `make clean`
-├── site/                     # generated: dashboard.html, investor_survey.html/.json
+├── site/                     # generated: dashboard.html, performance.json, survey artifacts
 ├── docs/                     # human-written: plan of record, MatrAIx study, explainer.mp4
 ├── tools/                    # make_video.py, fake_vllm.py (stub endpoint, not a model)
-└── tests/                    # `make test`: gateway determinism, parity, dashboard data, prompts
+└── tests/                    # `make test`: gateway, parity, dashboard, evaluation, prompts
 ```
 
 ## Glossary

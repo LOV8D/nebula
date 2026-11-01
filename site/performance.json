@@ -1,0 +1,209 @@
+{
+  "schema_version": "nebula-performance-v0.1",
+  "config": "evaluation/benchmark_v0.json",
+  "config_hash": "13a02c8053e0",
+  "object": "Whether Nebula can compare financial-market interventions by direction, ranking, mechanism and failure conditions with reviewable evidence.",
+  "decision_rule": "No aggregate score. A claim may advance only when its own gate passes; engineering integrity cannot substitute for external validity.",
+  "verdict": {
+    "state": "ENGINEERING-VERIFIED / MARKET-UNVALIDATED",
+    "summary": "The current product is an engineering prototype with one clean internal A/B. Product validity is not established: no historical, human, prospective or customer-utility benchmark has passed.",
+    "claim_allowed": "The system can run and audit a clean recorded scenario comparison.",
+    "claim_not_allowed": "The system accurately predicts real market or human responses."
+  },
+  "facts": {
+    "flagship_parity_pass": 2,
+    "flagship_parity_total": 2,
+    "flagship_parity_fail": 0,
+    "flagship_manifests_complete": true,
+    "human_grounded_share": 0.0,
+    "registered_external_evaluations": 0,
+    "sensitivity_clean": 0,
+    "sensitivity_total": 4
+  },
+  "tracks": [
+    {
+      "id": "integrity",
+      "label": "A/B integrity & reproducibility",
+      "question": "Do same-seed arms remain identical before the intervention, with versioned inputs and inspectable logs?",
+      "gate": "100% of benchmark pairs pass pre-intervention parity; manifests record population, intervention, mechanism, model, seed, prompt hash and code hash.",
+      "status": "pass",
+      "evidence": "Current flagship: 2/2 same-seed A/B pairs pass pre-intervention parity; panel is current; required manifest fields are present.",
+      "limitation": "This verifies the recorded flagship comparison, not market realism or predictive validity.",
+      "next": "Keep parity at 100% for every benchmark case and fail closed on missing hashes or logs."
+    },
+    {
+      "id": "mechanism",
+      "label": "Mechanism validity",
+      "question": "Do the simulated rules and traces implement the intended market mechanism without hidden leakage?",
+      "gate": "Contract tests pass for each domain pack and an independent market-microstructure review finds no decision-changing implementation defect.",
+      "status": "partial",
+      "evidence": "Five books, agent intents, fills, halts and per-agent traces are recorded and inspectable in the current run.",
+      "limitation": "The batch-auction mechanism is simplified and has not received an independent market-microstructure validation.",
+      "next": "Add domain-pack contract tests and commission an independent microstructure review."
+    },
+    {
+      "id": "market_realism",
+      "label": "Descriptive market realism",
+      "question": "Does the unchanged world reproduce pre-registered stylized facts and distributions?",
+      "gate": "On held-out periods, the product matches the accepted tolerance for spread, depth, volume, volatility, autocorrelation and cross-asset responses, and is compared with historical resampling and ABIDES-class baselines.",
+      "status": "not_run",
+      "evidence": "0 registered descriptive-realism evaluation(s); 0 passed.",
+      "limitation": "Current simulated paths have not been scored against held-out spreads, depth, volume, volatility or cross-asset distributions.",
+      "next": "Freeze a stylized-facts suite and compare against historical resampling and an ABIDES-class baseline."
+    },
+    {
+      "id": "historical_intervention",
+      "label": "Historical intervention replication",
+      "question": "Can the system recover known directional and ranking effects without seeing the post-intervention answer?",
+      "gate": "At least two masked historical interventions are pre-registered and scored on direction, ranking, mechanism and false-positive claims against econometric and analyst baselines.",
+      "status": "not_run",
+      "evidence": "0 registered masked historical intervention(s); 0 passed.",
+      "limitation": "The current wording demo is synthetic and cannot establish recovery of real intervention effects.",
+      "next": "Run the SEC Tick Size Pilot and Regulation SHO Pilot as masked, pre-registered replications."
+    },
+    {
+      "id": "behavior_grounding",
+      "label": "Behavioral grounding",
+      "question": "Do agent responses agree with authorized held-out human decisions under matched information?",
+      "gate": "A pre-registered holdout reports direction accuracy, total-variation distance, subgroup error and identity drift; synthetic output is never used as the reference label.",
+      "status": "blocked",
+      "evidence": "0% of persona attributes are grounded in consented real-person data; 0 holdout evaluation(s) registered.",
+      "limitation": "Literature priors and synthetic identity cards are not human behavioral evidence.",
+      "next": "Run an authorized, matched-information human holdout with pre-registered direction and distribution metrics."
+    },
+    {
+      "id": "robustness",
+      "label": "Robustness & sensitivity",
+      "question": "Does the decision conclusion survive legitimate seeds, prompts, models and parameter uncertainty?",
+      "gate": "Every included A/B pair passes parity; the conclusion and its failure regions are reported over pre-registered seeds, prompts, accessible models and parameter sweeps.",
+      "status": "blocked",
+      "evidence": "Flagship covers 2 clean pair(s). Current quotable sensitivity evidence: 0/4 pair(s) pass parity; 4 fail.",
+      "limitation": "The clean flagship uses one model, one prompt and two seeds; contaminated sensitivity pairs cannot support robustness claims.",
+      "next": "Re-run a pre-registered GLM seed/prompt/parameter matrix after the gateway fix, then add eligible model baselines."
+    },
+    {
+      "id": "prospective_oos",
+      "label": "Prospective / out-of-sample",
+      "question": "Does a frozen report remain useful when the real outcome was unavailable at generation time?",
+      "gate": "At least one report is timestamped before the outcome, frozen, and later adjudicated against the realized outcome without retroactive edits.",
+      "status": "not_run",
+      "evidence": "0 frozen prospective case(s) registered; 0 passed.",
+      "limitation": "No current report was frozen before an unknown real-world outcome.",
+      "next": "Freeze one design-partner report before the outcome and adjudicate it later without retroactive edits."
+    },
+    {
+      "id": "decision_utility",
+      "label": "Decision utility",
+      "question": "Does the product change a consequential decision or review process better than current alternatives?",
+      "gate": "A design partner records the decision, baseline process, action taken, review time and avoided or accepted risk; value is adjudicated by the customer, not inferred from usage.",
+      "status": "not_run",
+      "evidence": "0 customer decision-utility study/studies registered; 0 passed.",
+      "limitation": "No recorded customer decision, time saving, risk change or paid renewal is attributable to the product yet.",
+      "next": "Measure one paid design-partner decision against its existing analyst process."
+    }
+  ],
+  "baselines": [
+    {
+      "id": "no_change",
+      "label": "No-change / historical replay",
+      "required": true,
+      "status": "not_run",
+      "note": "Required comparison has not been run."
+    },
+    {
+      "id": "rules",
+      "label": "Rules-based stress test",
+      "required": true,
+      "status": "not_run",
+      "note": "Required comparison has not been run."
+    },
+    {
+      "id": "econometric",
+      "label": "Econometric / event-study baseline",
+      "required": true,
+      "status": "not_run",
+      "note": "Required comparison has not been run."
+    },
+    {
+      "id": "single_prompt",
+      "label": "Single strong prompt",
+      "required": true,
+      "status": "not_run",
+      "note": "Required comparison has not been run."
+    },
+    {
+      "id": "human_analyst",
+      "label": "Human analyst",
+      "required": true,
+      "status": "not_run",
+      "note": "Required comparison has not been run."
+    },
+    {
+      "id": "nebula",
+      "label": "Nebula multi-agent wind tunnel",
+      "required": true,
+      "status": "candidate",
+      "note": "Current flagship is available, but has not been compared under the fairness contract."
+    },
+    {
+      "id": "model_set",
+      "label": "Eligible model set: GLM plus legitimately accessible Qwen, DeepSeek, global and open-weight models",
+      "required": true,
+      "status": "not_run",
+      "note": "Required comparison has not been run."
+    }
+  ],
+  "fairness_contract": "Every arm receives the same source packet, cutoff date, time or compute budget, question, and output schema. Leakage and abstentions are logged.",
+  "planned_cases": [
+    {
+      "id": "sec_tick_size_pilot",
+      "label": "SEC Tick Size Pilot",
+      "track": "historical_intervention",
+      "status": "planned",
+      "source": "https://www.sec.gov/files/dera_wp_tick_size-market-quality.pdf",
+      "target": "Masked recovery of directional effects on spreads, depth, price efficiency and trading costs."
+    },
+    {
+      "id": "reg_sho_pilot",
+      "label": "Regulation SHO Pilot",
+      "track": "historical_intervention",
+      "status": "planned",
+      "source": "https://www.sec.gov/spotlight/shopilot.htm",
+      "target": "Masked recovery of market-quality effects under altered short-sale constraints."
+    },
+    {
+      "id": "human_holdout_v0",
+      "label": "Authorized financial-behavior holdout",
+      "track": "behavior_grounding",
+      "status": "planned",
+      "source": null,
+      "target": "Matched-information comparison with real human decisions; protocol and threshold must be pre-registered."
+    },
+    {
+      "id": "prospective_partner_v0",
+      "label": "Frozen prospective design-partner case",
+      "track": "prospective_oos",
+      "status": "planned",
+      "source": null,
+      "target": "Timestamped scenario ranking and failure conditions before the real outcome is known."
+    }
+  ],
+  "references": [
+    {
+      "label": "Federal Reserve SR 26-2 \u2014 model risk management principles",
+      "url": "https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm"
+    },
+    {
+      "label": "ABIDES \u2014 Agent-Based Interactive Discrete Event Simulation",
+      "url": "https://github.com/abides-sim/abides"
+    },
+    {
+      "label": "SEC Tick Size Pilot evaluation",
+      "url": "https://www.sec.gov/files/dera_wp_tick_size-market-quality.pdf"
+    },
+    {
+      "label": "SEC Regulation SHO Pilot",
+      "url": "https://www.sec.gov/spotlight/shopilot.htm"
+    }
+  ]
+}

@@ -308,6 +308,14 @@ def main():
     ui.add_argument("-o", "--out", default=None, help="default site/dashboard.html")
     ui.set_defaults(fn=cmd_ui)
 
+    ev = sub.add_parser("evaluate", help="write the evidence-backed performance scorecard")
+    ev.add_argument("--ab-root", default=None,
+                    help="A/B experiment dir (default runs/evidence/demo2/news_demo)")
+    ev.add_argument("--sensitivity", default=None,
+                    help="sensitivity dir with results.json (default runs/evidence/sensitivity)")
+    ev.add_argument("-o", "--out", default=None, help="default site/performance.json")
+    ev.set_defaults(fn=cmd_evaluate)
+
     fl = sub.add_parser("fields", help="closed-value persona fields: schema + panel check")
     fl.set_defaults(fn=cmd_fields)
 
@@ -376,6 +384,18 @@ def cmd_ui(args):
     out = _ui.build(ab_root=args.ab_root, sens_dir=args.sensitivity,
                     replay_seed=args.replay_seed, out=args.out)
     print(f"dashboard -> {out}")
+
+
+def cmd_evaluate(args):
+    from ui.collect import collect
+    from evaluation.scorecard import write_scorecard
+    data = collect(ab_root=args.ab_root, sens_dir=args.sensitivity)
+    out = Path(args.out) if args.out else SITE / "performance.json"
+    write_scorecard(data["performance"], out)
+    print(data["performance"]["verdict"]["state"])
+    for row in data["performance"]["tracks"]:
+        print(f"  {row['status'].upper():8} {row['label']}")
+    print(f"scorecard -> {out}")
 
 if __name__ == "__main__":
     main()

@@ -24,7 +24,7 @@ def main():
     from ui.bundle import MARKERS, bundle
     from ui.collect import collect
     d = collect()
-    assert set(d) == {"meta", "flagship", "agents", "replay", "who", "robustness", "evidence"}, set(d)
+    assert set(d) == {"meta", "flagship", "agents", "replay", "who", "robustness", "performance", "evidence"}, set(d)
     f = d["flagship"]
     assert f["t0"] is not None and 0 < f["t0"] < f["rounds"], f["t0"]
     assert len(f["arms"]["a"]) == len(f["arms"]["b"]) == len(f["parity"]) > 0
@@ -44,6 +44,10 @@ def main():
     assert rows[0]["label"] == "Flagship" and all(r["seeds"] for r in rows)
     assert all(s["parity"] in (True, False, None) for r in rows for s in r["seeds"])
     assert d["evidence"]["cards"] and 0 <= d["evidence"]["coverage"]["grounded_share"] <= 1
+    perf = d["performance"]
+    assert len(perf["tracks"]) == 8 and not perf.get("score")
+    assert {r["status"] for r in perf["tracks"]} <= {"pass", "partial", "blocked", "not_run"}
+    assert perf["facts"]["flagship_parity_total"] == len(f["parity"])
 
     page = bundle(d)
     assert not any(m in page for m in MARKERS), "unreplaced marker"

@@ -1,5 +1,5 @@
 # Market Wind Tunnel — demo actions. `make help` lists them.
-.PHONY: help demo demo2 smoke panel report parity ui test clean brain-setup brain-check fake-brain
+.PHONY: help demo demo2 smoke panel report parity evaluate ui test clean brain-setup brain-check fake-brain
 
 help:            ## list targets
 	@grep -E '^[a-z0-9-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/'
@@ -22,6 +22,9 @@ report:          ## rebuild the demo's comparison tables from existing runs
 
 parity:          ## are the flagship A/B arms identical before the intervention?
 	python3 -m runtime.cli parity runs/evidence/demo2/news_demo
+
+evaluate:        ## evidence-backed scorecard -> site/performance.json
+	python3 -m runtime.cli evaluate
 
 ui:              ## dashboard -> site/dashboard.html (reads runs, re-executes nothing)
 	python3 -m runtime.cli ui

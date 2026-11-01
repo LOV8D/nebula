@@ -1,5 +1,5 @@
 /* Nebula dashboard (Asterium Labs). Reads the JSON block that ui/bundle.py
-   inlines; draws four pages. No framework, no network. Motion is used for
+   inlines; draws five pages. No framework, no network. Motion is used for
    three things only: time (replay, cursor), cause (the ring at the
    intervention) and evidence arriving (dots and bars settling). */
 (function () {
@@ -400,6 +400,43 @@ function buildRobustness() {
   });
 }
 
+/* ================================================================ PERFORMANCE */
+function buildPerformance() {
+  const P = D.performance, V = P.verdict, f = P.facts;
+  $('p-state').textContent = V.state;
+  $('p-summary').textContent = V.summary;
+  $('p-allowed').textContent = V.claim_allowed;
+  $('p-not-allowed').textContent = V.claim_not_allowed;
+  $('p-chips').append(
+    h('span', { class: 'chip' }, P.schema_version),
+    h('span', { class: 'chip' }, `config ${P.config_hash}`),
+    h('span', { class: 'chip warn' }, 'no aggregate score'));
+  $('p-config').textContent = P.config;
+  $('p-facts').append(
+    h('div', { class: 'tile' }, h('div', { class: 'n' }, `${f.flagship_parity_pass}/${f.flagship_parity_total}`), h('div', { class: 'k' }, 'flagship pairs pass parity')),
+    h('div', { class: 'tile' }, h('div', { class: 'n', style: 'color:var(--down)' }, Math.round(f.human_grounded_share * 100) + '%'), h('div', { class: 'k' }, 'human-grounded persona attributes')),
+    h('div', { class: 'tile' }, h('div', { class: 'n' }, f.registered_external_evaluations), h('div', { class: 'k' }, 'registered external evaluations')),
+    h('div', { class: 'tile' }, h('div', { class: 'n' }, `${f.sensitivity_clean}/${f.sensitivity_total}`), h('div', { class: 'k' }, 'current sensitivity pairs clean')));
+
+  const statusClass = s => s === 'pass' ? 'ok' : s === 'partial' ? 'warn' : s === 'blocked' ? 'bad' : '';
+  const statusLabel = s => s.replace('_', ' ').toUpperCase();
+  P.tracks.forEach((r, i) => $('p-scorecard').append(h('article', { class: 'score-row' },
+    h('div', { class: 'score-id' }, h('span', {}, String(i + 1).padStart(2, '0')), h('strong', {}, r.label), h('span', { class: `chip ${statusClass(r.status)}` }, statusLabel(r.status))),
+    h('div', { class: 'score-copy' },
+      h('p', { class: 'score-q' }, r.question),
+      h('dl', {}, h('dt', {}, 'Evidence'), h('dd', {}, r.evidence), h('dt', {}, 'Limit'), h('dd', {}, r.limitation), h('dt', {}, 'Next gate'), h('dd', {}, r.next)),
+      h('details', {}, h('summary', {}, 'Acceptance rule'), h('p', {}, r.gate))))));
+
+  $('p-fairness').textContent = P.fairness_contract;
+  P.baselines.forEach(r => $('p-baselines').append(h('div', { class: 'baseline-row' },
+    h('div', {}, h('strong', {}, r.label), h('small', {}, r.note)),
+    h('span', { class: `chip ${r.status === 'candidate' ? 'warn' : ''}` }, statusLabel(r.status)))));
+  P.planned_cases.forEach(r => $('p-cases').append(h('div', { class: 'case-row' },
+    h('div', {}, r.source ? h('a', { href: r.source, target: '_blank', rel: 'noreferrer' }, r.label) : h('strong', {}, r.label), h('small', {}, r.target)),
+    h('span', { class: 'chip' }, r.status.toUpperCase()))));
+  P.references.forEach(r => $('p-refs').append(h('li', {}, h('a', { href: r.url, target: '_blank', rel: 'noreferrer' }, r.label))));
+}
+
 /* ================================================================ EVIDENCE */
 function buildEvidence() {
   const E = D.evidence, cov = E.coverage;
@@ -437,7 +474,7 @@ function buildEvidence() {
 }
 
 /* ================================================================ ROUTING */
-const PAGES = ['verdict', 'ripple', 'robustness', 'evidence'];
+const PAGES = ['verdict', 'ripple', 'robustness', 'performance', 'evidence'];
 let current = null;
 // Page links are handled in-page: some viewers (embedded previews, data:
 // URLs) refuse hash navigation, and the page must still switch.
@@ -461,7 +498,7 @@ function route(want) {
   if (id === 'ripple') RP.start();
   if (id === 'robustness' && !RM) document.querySelectorAll('#b-svg .slide').forEach(c => { c.classList.remove('slide'); void c.getBBox(); c.classList.add('slide'); });
 }
-buildVerdict(); buildRobustness(); buildEvidence();
+buildVerdict(); buildRobustness(); buildPerformance(); buildEvidence();
 addEventListener('hashchange', route);
 addEventListener('resize', () => { if (current === 'verdict' && verdictAt && RM) verdictAt(R - 1); });
 route();
