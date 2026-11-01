@@ -1,5 +1,7 @@
 """Evaluation contract: absence is never a pass and there is no total score."""
+import json
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -20,7 +22,11 @@ def main():
          "seeds": [{"parity": False}, {"parity": False}]},
     ]}
     evidence = {"coverage": {"grounded_share": 0}}
-    out = build_scorecard(flagship, robustness, evidence)
+    # Isolated empty registry: the contract under test is "no evaluations
+    # registered", independent of whatever the live results.json holds.
+    empty = Path(tempfile.mkdtemp()) / "results.json"
+    empty.write_text(json.dumps({"evaluations": []}))
+    out = build_scorecard(flagship, robustness, evidence, results_path=empty)
     tracks = {r["id"]: r for r in out["tracks"]}
 
     assert "score" not in out and len(tracks) == 8
@@ -33,7 +39,15 @@ def main():
         assert tracks[key]["status"] == "not_run", (key, tracks[key])
     assert out["verdict"]["state"] == "ENGINEERING-VERIFIED / MARKET-UNVALIDATED"
     assert out["facts"]["registered_external_evaluations"] == 0
-    print("evaluation scorecard test: OK — 8 gates, no aggregate score")
+
+    # And with the live registry (may hold the market-realism record): no
+    # aggregate score ever appears, and a partial record never reads as pass.
+    live = build_scorecard(flagship, robustness, evidence)
+    assert "score" not in live
+    live_tracks = {r["id"]: r["status"] for r in live["tracks"]}
+    assert live_tracks["market_realism"] in ("not_run", "partial", "pass")
+    print("evaluation scorecard test: OK — 8 gates, no aggregate score, "
+          "isolated + live registries")
 
 
 if __name__ == "__main__":

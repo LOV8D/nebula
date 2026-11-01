@@ -68,7 +68,7 @@ def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
             "next": "Add domain-pack contract tests and commission an independent microstructure review."
         },
         "market_realism": {
-            "status": "pass" if passed["market_realism"] else "not_run",
+            "status": "pass" if passed["market_realism"] else ("partial" if counts["market_realism"] else "not_run"),
             "evidence": f"{counts['market_realism']} registered descriptive-realism evaluation(s); {passed['market_realism']} passed.",
             "limitation": "Current simulated paths have not been scored against held-out spreads, depth, volume, volatility or cross-asset distributions.",
             "next": "Freeze a stylized-facts suite and compare against historical resampling and an ABIDES-class baseline."

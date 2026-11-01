@@ -1,0 +1,172 @@
+{
+ "run_id": "glm-5.3-flash|p1|news_a_s0",
+ "scenario": "news_a",
+ "elapsed_s": 305.31,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": 0.087400424110055,
+   "ann_vol": 0.157024964831354,
+   "excess_kurtosis": 22.30660866565475,
+   "vol_clustering_lag1": 0.3325383655442466,
+   "vol_absret_corr": 0.2347232142662763,
+   "max_drawdown": -0.013801127147497039,
+   "avg_spread_bps": 10.900205369784912,
+   "total_volume": 495266.46170427557,
+   "n_halts": 0
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": 0.008368012666243319,
+   "ann_vol": 0.14180112042683607,
+   "excess_kurtosis": 10.63193039768017,
+   "vol_clustering_lag1": 0.15494111907709607,
+   "vol_absret_corr": 0.40501818229824615,
+   "max_drawdown": -0.013398327190464743,
+   "avg_spread_bps": 7.157966615188718,
+   "total_volume": 15946120.492692994,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": -0.28637504894847177,
+   "ann_vol": 0.29250133028587205,
+   "excess_kurtosis": 3.32842057891418,
+   "vol_clustering_lag1": 0.02176266291744859,
+   "vol_absret_corr": 0.1607677733250725,
+   "max_drawdown": -0.2925162549120983,
+   "avg_spread_bps": 14.123629812066786,
+   "total_volume": 3280856558.350456,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.037892549583056656,
+   "ann_vol": 0.2497303903852798,
+   "excess_kurtosis": 8.907434071170924,
+   "vol_clustering_lag1": -0.1461800695744295,
+   "vol_absret_corr": 0.11847595788144309,
+   "max_drawdown": -0.15554499929356813,
+   "avg_spread_bps": 12.487022559233147,
+   "total_volume": 987394.5520206209,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": -0.01209056469179548,
+   "ann_vol": 0.26876656659411174,
+   "excess_kurtosis": 3.7303611530477045,
+   "vol_clustering_lag1": 0.01553718255824907,
+   "vol_absret_corr": 0.0845358169144637,
+   "max_drawdown": -0.1275138304396084,
+   "avg_spread_bps": 10.902161044224293,
+   "total_volume": 49814.8899175568,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.1154153155450995,
+  "intents_n": 517,
+  "wake_mean_per_round": 4.556410256410256,
+  "flow_hhi": 0.31604823646544083,
+  "net_flow_by_class": {
+   "retail": 70676458219.0,
+   "mf_pm": 898661100.0,
+   "hf_pm": 609420688.0,
+   "foreig": -278335245.0
+  }
+ },
+ "usage": {
+  "calls": 100,
+  "cache_hits": 0,
+  "memo_hits": 370,
+  "in_tokens": 26401,
+  "out_tokens": 5834,
+  "errors": 4,
+  "consecutive_errors": 0,
+  "error_detail": "502"
+ },
+ "event_windows": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": 0.002355023888839458,
+   "EQ_win_vol": 0.002000508412035701,
+   "IR_win_ret": 0.003142090601791825,
+   "IR_win_vol": 0.0012687999826995328,
+   "FX_win_ret": -0.027267488327512357,
+   "FX_win_vol": 0.0027324051192348627,
+   "CMD_win_ret": -0.03890771536729121,
+   "CMD_win_vol": 0.0033086331049537164,
+   "CRYPTO_win_ret": 0.0003865509841880499,
+   "CRYPTO_win_vol": 0.0030887781028552963,
+   "win_dispersion": 0.27779127209416,
+   "win_intents": 660
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 150,
+   "headline": "Fed statement: policy remains data-dependent; risks roughly ",
+   "EQ_win_ret": 0.0068035374617736455,
+   "EQ_win_vol": 0.0016872142288129866,
+   "IR_win_ret": 0.00963332272481865,
+   "IR_win_vol": 0.0019398418378946004,
+   "FX_win_ret": -0.0952172411424953,
+   "FX_win_vol": 0.003137891068974108,
+   "CMD_win_ret": -0.07883120533400723,
+   "CMD_win_vol": 0.0027491798484991976,
+   "CRYPTO_win_ret": -0.08101090392869892,
+   "CRYPTO_win_vol": 0.0030625091645981512,
+   "win_dispersion": 0.27164614540533255,
+   "win_intents": 1364
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": 0.002355023888839458,
+  "EQ_win_vol": 0.002000508412035701,
+  "IR_win_ret": 0.003142090601791825,
+  "CRYPTO_win_vol": 0.0030887781028552963,
+  "win_dispersion": 0.27779127209416,
+  "win_intents": 660.0,
+  "EQ_win90_ret": 0.0068035374617736455,
+  "EQ_win90_vol": 0.0016872142288129866,
+  "IR_win90_ret": 0.00963332272481865
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 517,
+   "active": 387,
+   "pass_rate": 0.2514506769825918,
+   "net_dir": 0.3643410852713178,
+   "mean_size": 0.1734944900207356
+  }
+ ],
+ "manifest": {
+  "population": "bca1210e61",
+  "intervention": "news_a",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "glm-5.3-flash",
+   "prompt_version": "p1"
+  },
+  "seed": 11
+ }
+}

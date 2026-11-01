@@ -1,4 +1,395 @@
 {
   "schema_version": "nebula-performance-results-v0.1",
-  "evaluations": []
+  "evaluations": [
+    {
+      "track": "market_realism",
+      "status": "partial",
+      "date": "2026-11-01",
+      "asset": "EQ",
+      "scope": "20 recorded EQ return series (runs/evidence/demo/*/*_s*, runs/evidence/demo2/*/*_s*); brains: glm-5.3-flash, mock-heuristic-v1; null = per-run return-shuffle permutation, n=2000",
+      "evidence": "fat_tails 100% of runs (gate >= 80%) met; vol_clustering 95% of runs (gate >= 60%) met; no_serial_corr 15% of runs (gate >= 80%) missed; spread_positive 100% of runs (gate >= 80%) met",
+      "facts": {
+        "fat_tails": 1.0,
+        "vol_clustering": 0.95,
+        "no_serial_corr": 0.15,
+        "spread_positive": 1.0
+      },
+      "gates": {
+        "fat_tails": 0.8,
+        "vol_clustering": 0.6,
+        "no_serial_corr": 0.8,
+        "spread_positive": 0.8
+      },
+      "per_run": [
+        {
+          "run": "runs/evidence/demo/_smoke/baseline_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 347,
+          "excess_kurtosis": 21.9,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.1844,
+          "vol_clustering_p": 0.001,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.2947,
+          "serial_band": [
+            -0.1153,
+            0.1071
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.88,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_off_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 180.58,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0775,
+          "vol_clustering_p": 0.0095,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0829,
+          "serial_band": [
+            -0.0188,
+            0.0066
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 14.11,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_off_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 91.71,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.184,
+          "vol_clustering_p": 0.009,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.1972,
+          "serial_band": [
+            -0.0333,
+            0.1292
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 12.86,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_on_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 180.58,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0775,
+          "vol_clustering_p": 0.0055,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0829,
+          "serial_band": [
+            -0.0192,
+            0.0085
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 14.11,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_on_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 91.71,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.184,
+          "vol_clustering_p": 0.011,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.1972,
+          "serial_band": [
+            -0.0328,
+            0.1472
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 12.86,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/baseline_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 12.05,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.3715,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.3999,
+          "serial_band": [
+            -0.0989,
+            0.0954
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.24,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/baseline_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 3.09,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.475,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.4577,
+          "serial_band": [
+            -0.0997,
+            0.0948
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.13,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_high_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 203,
+          "excess_kurtosis": 31.48,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0609,
+          "vol_clustering_p": 0.305,
+          "vol_clustering": false,
+          "ret_acorr_lag1": -0.1389,
+          "serial_band": [
+            -0.1358,
+            0.1254
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.37,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_high_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 4.59,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.3199,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.4179,
+          "serial_band": [
+            -0.0966,
+            0.0926
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.77,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_low_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 25.26,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.1349,
+          "vol_clustering_p": 0.0185,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.1538,
+          "serial_band": [
+            -0.0973,
+            0.1072
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 8.48,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_low_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 6.95,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4459,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.5587,
+          "serial_band": [
+            -0.1019,
+            0.0953
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.2,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_a_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 286,
+          "excess_kurtosis": 82.2,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.3661,
+          "vol_clustering_p": 0.005,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.3222,
+          "serial_band": [
+            -0.1054,
+            0.0746
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 9.34,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_a_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 36.76,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.2208,
+          "vol_clustering_p": 0.0025,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.005,
+          "serial_band": [
+            -0.1112,
+            0.1035
+          ],
+          "no_serial_corr": true,
+          "avg_spread_bps": 9.24,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_b_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 136.95,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.094,
+          "vol_clustering_p": 0.029,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.1316,
+          "serial_band": [
+            -0.0334,
+            0.1202
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.44,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_b_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 33.34,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.2313,
+          "vol_clustering_p": 0.002,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0049,
+          "serial_band": [
+            -0.1191,
+            0.1194
+          ],
+          "no_serial_corr": true,
+          "avg_spread_bps": 9.86,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/_smoke/baseline_s0",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 14.83,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4298,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.5088,
+          "serial_band": [
+            -0.1002,
+            0.0976
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 14.32,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_a_s0",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 6.58,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.2936,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.4715,
+          "serial_band": [
+            -0.1017,
+            0.0998
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.1,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_a_s1",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 5.47,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4564,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.5732,
+          "serial_band": [
+            -0.0964,
+            0.1016
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.61,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_b_s0",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 7.79,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0971,
+          "vol_clustering_p": 0.0495,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0082,
+          "serial_band": [
+            -0.0994,
+            0.0964
+          ],
+          "no_serial_corr": true,
+          "avg_spread_bps": 9.72,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_b_s1",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 23.57,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4708,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.1056,
+          "serial_band": [
+            -0.1036,
+            0.0954
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.87,
+          "spread_positive": true
+        }
+      ],
+      "limitations": [
+        "Null model is the run's own shuffled returns, not historical resampling of real market data nor an ABIDES-class baseline.",
+        "Covers EQ price/spread behaviour only; depth at best quote and small-trade execution costs need TAQ and are out of scope here.",
+        "Tolerance bands are registered by this module; they are conventions, not validated market standards.",
+        "A no_serial_corr miss at the mark scale reflects round-scale autocorrelation in the simulated paths (e.g. trending Tier-B policies); real daily equity returns are near-uncorrelated, so this fact is the one to watch as brains change."
+      ],
+      "config_hash": "2d2d5e179033",
+      "registered_at": "2026-11-01T23:04:03"
+    }
+  ]
 }

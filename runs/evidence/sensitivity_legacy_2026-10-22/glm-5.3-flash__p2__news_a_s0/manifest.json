@@ -1,0 +1,34 @@
+{
+ "run_id": "glm-5.3-flash|p2|news_a_s0",
+ "created": "2026-10-22T09:05:03",
+ "runtime_version": "0.1.0",
+ "five_tuple": {
+  "population": "bca1210e61",
+  "intervention": "news_a",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "glm-5.3-flash",
+   "prompt_version": "p2"
+  },
+  "seed": 11
+ },
+ "days": 1,
+ "rounds_per_day": 390,
+ "n_agents": 883
+}

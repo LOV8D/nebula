@@ -81,7 +81,7 @@
       "label": "SEC Tick Size Pilot",
       "track": "historical_intervention",
       "status": "planned",
-      "source": "https://www.sec.gov/files/dera_wp_tick_size-market-quality.pdf",
+      "source": "https://www.sec.gov/about/divisions-offices/division-economic-risk-analysis/staff-papers-analyses/dera_wp_tick_size-market-quality",
       "target": "Masked recovery of directional effects on spreads, depth, price efficiency and trading costs."
     },
     {
