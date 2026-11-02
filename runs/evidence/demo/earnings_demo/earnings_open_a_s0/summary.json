@@ -1,0 +1,155 @@
+{
+ "run_id": "earnings_open_a_s0",
+ "scenario": "earnings_open_a",
+ "elapsed_s": 0.29,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": -0.04271610076299148,
+   "ann_vol": 0.21341051345459275,
+   "excess_kurtosis": 8.340534833254745,
+   "vol_clustering_lag1": 0.36515352362191844,
+   "vol_absret_corr": 0.28856773124790885,
+   "max_drawdown": -0.04917691269852398,
+   "avg_spread_bps": 16.140350888862127,
+   "total_volume": 890650.435902574,
+   "n_halts": 0
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": 0.03456676119336133,
+   "ann_vol": 0.13524880399105346,
+   "excess_kurtosis": 42.32730035935443,
+   "vol_clustering_lag1": 0.2044015230519235,
+   "vol_absret_corr": 0.4590147982103252,
+   "max_drawdown": -0.035343042305568395,
+   "avg_spread_bps": 7.5033042334308675,
+   "total_volume": 7394321.828681939,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": 0.21190334692373258,
+   "ann_vol": 0.2900447525708841,
+   "excess_kurtosis": 2.8330884472633207,
+   "vol_clustering_lag1": -0.0004457097192018202,
+   "vol_absret_corr": 0.22199762454195365,
+   "max_drawdown": -0.07790987792712356,
+   "avg_spread_bps": 12.879375084474566,
+   "total_volume": 2515149154.068998,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.008836550551942435,
+   "ann_vol": 0.22793684624534727,
+   "excess_kurtosis": 9.76139250648893,
+   "vol_clustering_lag1": -0.10508714605758132,
+   "vol_absret_corr": 0.01692573219113034,
+   "max_drawdown": -0.12253493687321348,
+   "avg_spread_bps": 12.088649583146195,
+   "total_volume": 976021.2979027714,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": -0.0373126530347162,
+   "ann_vol": 0.2929491441443459,
+   "excess_kurtosis": 3.5869892523076743,
+   "vol_clustering_lag1": -0.007556681185395615,
+   "vol_absret_corr": 0.0377817051402899,
+   "max_drawdown": -0.13826472773207754,
+   "avg_spread_bps": 10.89671077626886,
+   "total_volume": 50945.2260157758,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.18159552515826263,
+  "intents_n": 679,
+  "wake_mean_per_round": 2.9692307692307693,
+  "flow_hhi": 0.17641427595232523,
+  "net_flow_by_class": {
+   "retail": -21603407131.0,
+   "hf_pm": -3718487314.0,
+   "mf_pm": 916293921.0,
+   "foreign_inst": 823602461.0
+  }
+ },
+ "usage": {
+  "calls": 22,
+  "cache_hits": 0,
+  "memo_hits": 410,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue came in slightly below plan",
+   "EQ_win_ret": -0.011473048593896529,
+   "EQ_win_vol": 0.004102497754930985,
+   "win_dispersion": 0.3609247487575546,
+   "win_intents": 2706
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue came in slightly below plan",
+   "EQ_win_ret": -0.008491553720324618,
+   "EQ_win_vol": 0.0034507257196563,
+   "win_dispersion": 0.3924609965801312,
+   "win_intents": 5218
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.011473048593896529,
+  "EQ_win_vol": 0.004102497754930985,
+  "IR_win_ret": null,
+  "CRYPTO_win_vol": null,
+  "win_dispersion": 0.3609247487575546,
+  "win_intents": 2706.0,
+  "EQ_win90_ret": -0.008491553720324618,
+  "EQ_win90_vol": 0.0034507257196563,
+  "IR_win90_ret": null
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 679,
+   "active": 323,
+   "pass_rate": 0.524300441826215,
+   "net_dir": -0.4984520123839009,
+   "mean_size": 0.33121479272590904
+  }
+ ],
+ "manifest": {
+  "population": "47d972a3fa",
+  "intervention": "earnings_open_a",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.05,
+     -0.1
+    ],
+    "halt_rounds": [
+     12,
+     30
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 11
+ }
+}

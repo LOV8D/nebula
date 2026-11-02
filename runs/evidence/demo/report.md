@@ -1,6 +1,6 @@
-# Market Wind Tunnel — demo action output
+# Nebula — demo action output
 
-Generated (3s), seeds=1, brain `mock-heuristic-v1`.
+Generated (4s), seeds=1, brain `mock-heuristic-v1`.
 883-agent panel, five books, batch call auctions.
 
 1. **Policy-communication wording A/B.** The same Fed decision, neutral vs alarming framing. Immediate 30-round window: both dip (knee-jerk selling); by the 90-round window and the full day the paths separate: **-9.9% vs -6.1%** (90-round EQ), **-7.5% vs -0.9%** (full-day EQ). Wording moves the recovery, not the first reaction.
