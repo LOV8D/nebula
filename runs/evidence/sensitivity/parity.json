@@ -1,0 +1,82 @@
+{
+ "glm-5.3-flash__p1": [
+  {
+   "a": "glm-5.3-flash__p1__news_a_s0",
+   "b": "glm-5.3-flash__p1__news_b_s0",
+   "t_intervention": 150,
+   "ok": true,
+   "n_pre_intents": [
+    62,
+    62
+   ],
+   "first_intent_diff_t": null,
+   "first_price_diff_t": null,
+   "max_pre_gap": {
+    "CMD": 0.0,
+    "CRYPTO": 0.0,
+    "EQ": 0.0,
+    "FX": 0.0,
+    "IR": 0.0
+   }
+  },
+  {
+   "a": "glm-5.3-flash__p1__news_a_s1",
+   "b": "glm-5.3-flash__p1__news_b_s1",
+   "t_intervention": 150,
+   "ok": true,
+   "n_pre_intents": [
+    509,
+    509
+   ],
+   "first_intent_diff_t": null,
+   "first_price_diff_t": null,
+   "max_pre_gap": {
+    "CMD": 0.0,
+    "CRYPTO": 0.0,
+    "EQ": 0.0,
+    "FX": 0.0,
+    "IR": 0.0
+   }
+  }
+ ],
+ "glm-5.3-flash__p2": [
+  {
+   "a": "glm-5.3-flash__p2__news_a_s0",
+   "b": "glm-5.3-flash__p2__news_b_s0",
+   "t_intervention": 150,
+   "ok": true,
+   "n_pre_intents": [
+    63,
+    63
+   ],
+   "first_intent_diff_t": null,
+   "first_price_diff_t": null,
+   "max_pre_gap": {
+    "CMD": 0.0,
+    "CRYPTO": 0.0,
+    "EQ": 0.0,
+    "FX": 0.0,
+    "IR": 0.0
+   }
+  },
+  {
+   "a": "glm-5.3-flash__p2__news_a_s1",
+   "b": "glm-5.3-flash__p2__news_b_s1",
+   "t_intervention": 150,
+   "ok": true,
+   "n_pre_intents": [
+    443,
+    443
+   ],
+   "first_intent_diff_t": null,
+   "first_price_diff_t": null,
+   "max_pre_gap": {
+    "CMD": 0.0,
+    "CRYPTO": 0.0,
+    "EQ": 0.0,
+    "FX": 0.0,
+    "IR": 0.0
+   }
+  }
+ ]
+}

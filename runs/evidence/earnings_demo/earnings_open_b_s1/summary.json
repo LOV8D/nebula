@@ -1,0 +1,155 @@
+{
+ "run_id": "earnings_open_b_s1",
+ "scenario": "earnings_open_b",
+ "elapsed_s": 0.25,
+ "assets": {
+  "EQ": {
+   "daily_returns": [],
+   "total_ret": -0.03266082468808429,
+   "ann_vol": 0.0869788584818207,
+   "excess_kurtosis": 247.34057743112587,
+   "vol_clustering_lag1": 0.15300696417916232,
+   "vol_absret_corr": 0.5890184608663349,
+   "max_drawdown": -0.03266082468808429,
+   "avg_spread_bps": 13.101888063669287,
+   "total_volume": 52185.72888770102,
+   "n_halts": 0
+  },
+  "IR": {
+   "daily_returns": [],
+   "total_ret": -0.13464227503545168,
+   "ann_vol": 0.04115705209937582,
+   "excess_kurtosis": -0.48770659146315154,
+   "vol_clustering_lag1": 0.9704912544160226,
+   "vol_absret_corr": 0.018768582153723002,
+   "max_drawdown": -0.13501648684650647,
+   "avg_spread_bps": 8.224611622863248,
+   "total_volume": 473942.7406085446,
+   "n_halts": 0
+  },
+  "FX": {
+   "daily_returns": [],
+   "total_ret": 0.11965254076339993,
+   "ann_vol": 0.2881015027362898,
+   "excess_kurtosis": 6.051691818805743,
+   "vol_clustering_lag1": -0.0693757242251257,
+   "vol_absret_corr": 0.24736623869045732,
+   "max_drawdown": -0.11028356748016,
+   "avg_spread_bps": 12.33212022268637,
+   "total_volume": 2625979414.940172,
+   "n_halts": 0
+  },
+  "CMD": {
+   "daily_returns": [],
+   "total_ret": -0.27793276578014725,
+   "ann_vol": 0.2844294640881362,
+   "excess_kurtosis": 5.8870874511356615,
+   "vol_clustering_lag1": -0.14069409579480996,
+   "vol_absret_corr": 0.1509061703247187,
+   "max_drawdown": -0.3257501885477728,
+   "avg_spread_bps": 13.49169164571484,
+   "total_volume": 988177.1262189427,
+   "n_halts": 0
+  },
+  "CRYPTO": {
+   "daily_returns": [],
+   "total_ret": 0.09368210172769054,
+   "ann_vol": 0.257616770785989,
+   "excess_kurtosis": 5.054572659857639,
+   "vol_clustering_lag1": 0.002288100252650816,
+   "vol_absret_corr": 0.16352438458687266,
+   "max_drawdown": -0.1355387557164368,
+   "avg_spread_bps": 12.110552774508832,
+   "total_volume": 40203.06858015403,
+   "n_halts": 0
+  }
+ },
+ "cross": {
+  "dispersion_mean": 0.11707666817260545,
+  "intents_n": 456,
+  "wake_mean_per_round": 1.3076923076923077,
+  "flow_hhi": 0.5961669036681921,
+  "net_flow_by_class": {
+   "retail": -74248773639.0,
+   "hf_pm": -12756140649.0,
+   "foreign_inst": -8192320484.0,
+   "mf_pm": -1894493396.0
+  }
+ },
+ "usage": {
+  "calls": 19,
+  "cache_hits": 0,
+  "memo_hits": 403,
+  "in_tokens": 0,
+  "out_tokens": 0,
+  "errors": 0,
+  "consecutive_errors": 0,
+  "error_detail": null
+ },
+ "event_windows": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue missed; management warns th",
+   "EQ_win_ret": -0.028828382073944114,
+   "EQ_win_vol": 0.003089036559453249,
+   "win_dispersion": 0.22149268397514338,
+   "win_intents": 349
+  }
+ ],
+ "event_windows_long": [
+  {
+   "t": 0,
+   "headline": "Issuer 8-K, pre-open: Q3 revenue missed; management warns th",
+   "EQ_win_ret": -0.028828382073944114,
+   "EQ_win_vol": 0.0017834560891369286,
+   "win_dispersion": 0.17211434091928315,
+   "win_intents": 731
+  }
+ ],
+ "event_windows_avg": {
+  "EQ_win_ret": -0.028828382073944114,
+  "EQ_win_vol": 0.003089036559453249,
+  "IR_win_ret": null,
+  "CRYPTO_win_vol": null,
+  "win_dispersion": 0.22149268397514338,
+  "win_intents": 349.0,
+  "EQ_win90_ret": -0.028828382073944114,
+  "EQ_win90_vol": 0.0017834560891369286,
+  "IR_win90_ret": null
+ },
+ "drift": [
+  {
+   "day": 0,
+   "intents": 456,
+   "active": 277,
+   "pass_rate": 0.39254385964912286,
+   "net_dir": -0.9855595667870036,
+   "mean_size": 0.49509661015429357
+  }
+ ],
+ "manifest": {
+  "population": "47d972a3fa",
+  "intervention": "earnings_open_b",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.05,
+     -0.1
+    ],
+    "halt_rounds": [
+     12,
+     30
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "mock",
+   "model_id": "mock-heuristic-v1",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 112
+ }
+}

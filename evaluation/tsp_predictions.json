@@ -1,0 +1,15 @@
+{
+  "case": "sec_tick_size_pilot",
+  "registered": "2026-11-01",
+  "registered_before_post_data_pull": true,
+  "windows": {
+    "pre": ["2016-07-01", "2016-09-30"],
+    "post": ["2016-10-03", "2017-03-31"]
+  },
+  "predictions": [
+    {"id": "H1", "metric": "corwin_schultz_spread", "groups": ["G2", "G3"], "direction": "up"},
+    {"id": "H2", "metric": "parkinson_vol", "groups": ["G2", "G3"], "direction": "up"},
+    {"id": "H3", "metric": "vr5_deviation", "groups": ["G2", "G3"], "direction": "up"}
+  ],
+  "notes": "Direction claims only, pooled G2+G3 vs Control, post vs pre (DiD sign). G1 is recorded two-sided and not scored: its quote-only rule gives no confident prior. No effect sizes, no significance claims. See docs/tick-size-pilot-plan.md."
+}

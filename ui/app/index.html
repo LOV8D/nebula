@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nebula — by Asterium Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<!--STYLE-->
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><b>Nebula</b><span>Asterium Labs · Test the intervention before the market tests it.</span></div>
+    <nav id="nav" aria-label="Pages">
+      <a href="#verdict"><i>1</i>Verdict</a>
+      <a href="#ripple"><i>2</i>Ripple</a>
+      <a href="#robustness"><i>3</i>Robustness</a>
+      <a href="#performance"><i>4</i>Performance</a>
+      <a href="#evidence" class="appx">Evidence</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- 1 · VERDICT ------------------------------------------------------- -->
+<section id="verdict" class="page">
+  <div class="head">
+    <div class="eyebrow" id="v-eyebrow">Verdict · flagship news-wording A/B</div>
+    <h1 id="v-title"></h1>
+    <div class="chips" id="v-chips"></div>
+  </div>
+  <div class="panel">
+    <div class="tiles" id="v-tiles"></div>
+    <div class="wording" id="v-wording"></div>
+    <div class="chart" id="v-chart"><svg id="v-svg" viewBox="0 0 960 340" role="img" aria-label="EQ path of both arms, every seed"></svg><div class="readout" id="v-read"></div></div>
+    <div class="legend" id="v-legend"></div>
+  </div>
+  <div class="read-grid">
+    <div><h3>How to read this</h3><p>Direction and ranking only. The numbers are simulated full-day equity returns from an uncalibrated panel; they show which wording the simulated market preferred, not how much a real market would move.</p></div>
+    <div><h3>Is it a clean A/B?</h3><p id="v-parity-text"></p></div>
+    <div><h3>Does it hold elsewhere?</h3><p id="v-robust-text"></p></div>
+  </div>
+</section>
+
+<!-- 2 · RIPPLE --------------------------------------------------------- -->
+<section id="ripple" class="page" hidden>
+  <div class="head">
+    <div class="eyebrow">Ripple · who reacted, who pushed</div>
+    <h1>The statement lands, and the panel wakes up at once.</h1>
+    <p class="lede">One cell per agent, grouped by class. A cell lights when that agent makes an LLM decision in the round being replayed; the colour is the direction. Recorded run, replayed — nothing is re-executed.</p>
+  </div>
+  <div class="panel stage">
+    <div class="ctrl">
+      <button class="btn" id="r-play">Pause</button>
+      <div class="seg" role="group" aria-label="Arm"><button id="r-armA" aria-pressed="true">A · neutral</button><button id="r-armB" aria-pressed="false">B · alarming</button></div>
+      <button class="btn" id="r-jump">Jump to intervention</button>
+      <input type="range" id="r-scrub" min="0" max="389" value="150" aria-label="Replay position">
+      <span class="chip replay">REPLAY · recorded run</span>
+    </div>
+    <div class="stats">
+      <div><div class="v" id="r-t">0</div><div class="k" id="r-tk">round</div></div>
+      <div><div class="v" id="r-w">0</div><div class="k">LLM decisions this round</div></div>
+      <div><div class="v a" id="r-a">0</div><div class="k">A · EQ vs open</div></div>
+      <div><div class="v b" id="r-b">0</div><div class="k">B · EQ vs open</div></div>
+      <div><div class="v" id="r-d">0</div><div class="k">A − B (pp)</div></div>
+    </div>
+    <canvas id="r-grid" aria-label="Agent grid replay"></canvas>
+    <canvas id="r-tl" aria-label="LLM decisions per round"></canvas>
+    <div class="legend" id="r-legend"></div>
+    <div class="hover" id="r-hover">Hover a cell to see the agent; the stream below lists this round's decisions.</div>
+    <p class="caption">Green = buy, red = sell, dim = no decision this round. The expanding ring at the intervention is animation only: those decisions all happen in the same round, and the ring order is not a time order. Policy and rule tiers trade every round without an LLM decision, so they never light.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><span class="eyebrow">Decision stream · this round</span><span class="mut" id="r-stream-n"></span></div>
+    <ol class="stream" id="r-stream"></ol>
+  </div>
+  <div class="two">
+    <div class="panel">
+      <div class="panel-h"><span class="eyebrow">Who pushed · net direction after the intervention</span>
+        <span class="legend"><span><i class="sw a"></i>A</span><span><i class="sw b"></i>B</span></span></div>
+      <div class="who" id="r-who"></div>
+      <p class="caption">Net direction = Σ(side × size fraction) over every LLM decision from the intervention on, all seeds. Not dollar flow. The right column is the A − B gap, total and per agent.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><span class="eyebrow">Five books · this seed, A vs B</span></div>
+      <div class="books" id="r-books"></div>
+      <p class="caption">Each book on its own scale, % from the open. Volumes are not compared across books: their units differ.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · ROBUSTNESS ----------------------------------------------------- -->
+<section id="robustness" class="page" hidden>
+  <div class="head">
+    <div class="eyebrow">Robustness · seeds, models, prompts</div>
+    <h1 id="b-title"></h1>
+    <p class="lede">Each dot is one seed pair: A − B on simulated full-day equity return. Right of zero means the neutral wording finished higher. Row means are drawn as ticks, never instead of the dots.</p>
+  </div>
+  <div class="panel">
+    <svg id="b-svg" viewBox="0 0 960 360" role="img" aria-label="A minus B per seed, per model and prompt"></svg>
+    <div class="chips" style="margin-top:12px">
+      <span class="chip"><span class="dot a"></span>seed pair, A ahead</span>
+      <span class="chip"><span class="dot neg"></span>seed pair, B ahead</span>
+      <span class="chip warn"><span class="dot ring"></span>hollow = not identical before the intervention</span>
+      <span class="chip">│ row mean</span>
+      <span class="chip">grey rows: not quotable (GLM-only decision, 2026-10-22)</span>
+    </div>
+  </div>
+  <div class="panel scroll">
+    <table class="tbl" id="b-table"></table>
+  </div>
+</section>
+
+<!-- 4 · PERFORMANCE ---------------------------------------------------- -->
+<section id="performance" class="page" hidden>
+  <div class="head">
+    <div class="eyebrow">Performance · validation scorecard</div>
+    <h1 id="p-state"></h1>
+    <p class="lede" id="p-summary"></p>
+    <div class="chips" id="p-chips"></div>
+  </div>
+  <div class="perf-verdict">
+    <div><span>Claim allowed now</span><p id="p-allowed"></p></div>
+    <div><span>Claim not allowed</span><p id="p-not-allowed"></p></div>
+  </div>
+  <div class="tiles perf-tiles" id="p-facts"></div>
+  <div class="panel">
+    <div class="panel-h"><span class="eyebrow">Eight independent gates · no aggregate score</span><span class="mut" id="p-config"></span></div>
+    <div class="scorecard" id="p-scorecard"></div>
+  </div>
+  <div class="two perf-two">
+    <div class="panel">
+      <div class="panel-h"><span class="eyebrow">Equal-budget comparison arms</span></div>
+      <p class="caption" id="p-fairness"></p>
+      <div class="baseline-list" id="p-baselines"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><span class="eyebrow">Next benchmark cases</span></div>
+      <div class="case-list" id="p-cases"></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><span class="eyebrow">Method references</span></div>
+    <ul class="refs" id="p-refs"></ul>
+  </div>
+</section>
+
+<!-- APPENDIX · EVIDENCE ------------------------------------------------ -->
+<section id="evidence" class="page" hidden>
+  <div class="head">
+    <div class="eyebrow">Appendix · evidence</div>
+    <h1>Where every number comes from.</h1>
+  </div>
+  <div class="tiles" id="e-tiles"></div>
+  <div class="panel">
+    <div class="panel-h"><span class="eyebrow">Persona attributes by evidence kind</span></div>
+    <div class="stack" id="e-stack"></div>
+    <div class="legend" id="e-stack-legend"></div>
+    <p class="caption" id="e-unknown"></p>
+  </div>
+  <div class="read-grid">
+    <div><h3>Panel structure</h3><p><span data-n-agents>883</span> agents. Class mix and AUM/flow weights come from published market-share aggregates (Fed Z.1 fund-flow categories, SCF/ICI ownership surveys), coarse by construction.</p></div>
+    <div><h3>Behavioural parameters</h3><p>Attention, news sensitivity, disposition, herding and risk aversion are literature priors from behavioural-finance and brokerage-activity studies, deliberately uncalibrated. Every parameter carries a field-level evidence record.</p></div>
+    <div><h3>Identity cards</h3><p>Archetype templates plus deterministic variation; no field is copied from a real person. The attributes a real person would fill stay unset and are counted, never invented.</p></div>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><span class="eyebrow">Agent cards · one per role</span><span class="mut" id="e-card-run"></span></div>
+    <div class="cards" id="e-cards"></div>
+  </div>
+  <div class="read-grid">
+    <div><h3>Red lines</h3><ul>
+      <li>Direction and ranking only. No effect sizes, no point predictions.</li>
+      <li>Model output is not evidence; rationale text is audit material.</li>
+      <li>Instability across models, prompts and seeds is a deliverable.</li>
+      <li>An A/B pair that is not identical before the intervention is flagged, never averaged in silently.</li>
+    </ul></div>
+    <div><h3>Reproducibility</h3><ul>
+      <li>Five-tuple manifest: population × intervention × mechanism × model × seed.</li>
+      <li>Every intent carries provider, model, prompt version and prompt hash.</li>
+      <li>Manifests carry a code hash over runtime/, experiments/ and evidence/.</li>
+      <li>Real-brain responses are cached by prompt hash, so a re-run replays them.</li>
+    </ul></div>
+    <div><h3>This page</h3><ul id="e-sources"></ul></div>
+  </div>
+</section>
+
+</main>
+<footer class="wrap foot" id="foot"></footer>
+<!--DATA-->
+<!--APP-->
+</body>
+</html>

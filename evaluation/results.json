@@ -1,0 +1,762 @@
+{
+  "schema_version": "nebula-performance-results-v0.1",
+  "evaluations": [
+    {
+      "track": "market_realism",
+      "status": "partial",
+      "date": "2026-11-01",
+      "asset": "EQ",
+      "scope": "20 recorded EQ return series (runs/evidence/demo/*/*_s*, runs/evidence/demo2/*/*_s*); brains: glm-5.3-flash, mock-heuristic-v1; null = per-run return-shuffle permutation, n=2000",
+      "evidence": "fat_tails 100% of runs (gate >= 80%) met; vol_clustering 95% of runs (gate >= 60%) met; no_serial_corr 15% of runs (gate >= 80%) missed; spread_positive 100% of runs (gate >= 80%) met",
+      "facts": {
+        "fat_tails": 1.0,
+        "vol_clustering": 0.95,
+        "no_serial_corr": 0.15,
+        "spread_positive": 1.0
+      },
+      "gates": {
+        "fat_tails": 0.8,
+        "vol_clustering": 0.6,
+        "no_serial_corr": 0.8,
+        "spread_positive": 0.8
+      },
+      "per_run": [
+        {
+          "run": "runs/evidence/demo/_smoke/baseline_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 347,
+          "excess_kurtosis": 21.9,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.1844,
+          "vol_clustering_p": 0.001,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.2947,
+          "serial_band": [
+            -0.1153,
+            0.1071
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.88,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_off_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 180.58,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0775,
+          "vol_clustering_p": 0.0095,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0829,
+          "serial_band": [
+            -0.0188,
+            0.0066
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 14.11,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_off_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 91.71,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.184,
+          "vol_clustering_p": 0.009,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.1972,
+          "serial_band": [
+            -0.0333,
+            0.1292
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 12.86,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_on_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 180.58,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0775,
+          "vol_clustering_p": 0.0055,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0829,
+          "serial_band": [
+            -0.0192,
+            0.0085
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 14.11,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/cb_demo/cb_magnet_on_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 91.71,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.184,
+          "vol_clustering_p": 0.011,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.1972,
+          "serial_band": [
+            -0.0328,
+            0.1472
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 12.86,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/baseline_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 12.05,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.3715,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.3999,
+          "serial_band": [
+            -0.0989,
+            0.0954
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.24,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/baseline_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 3.09,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.475,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.4577,
+          "serial_band": [
+            -0.0997,
+            0.0948
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.13,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_high_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 203,
+          "excess_kurtosis": 31.48,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0609,
+          "vol_clustering_p": 0.305,
+          "vol_clustering": false,
+          "ret_acorr_lag1": -0.1389,
+          "serial_band": [
+            -0.1358,
+            0.1254
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.37,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_high_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 4.59,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.3199,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.4179,
+          "serial_band": [
+            -0.0966,
+            0.0926
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.77,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_low_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 25.26,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.1349,
+          "vol_clustering_p": 0.0185,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.1538,
+          "serial_band": [
+            -0.0973,
+            0.1072
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 8.48,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/fee_demo/fee_low_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 6.95,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4459,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.5587,
+          "serial_band": [
+            -0.1019,
+            0.0953
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.2,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_a_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 286,
+          "excess_kurtosis": 82.2,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.3661,
+          "vol_clustering_p": 0.005,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.3222,
+          "serial_band": [
+            -0.1054,
+            0.0746
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 9.34,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_a_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 36.76,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.2208,
+          "vol_clustering_p": 0.0025,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.005,
+          "serial_band": [
+            -0.1112,
+            0.1035
+          ],
+          "no_serial_corr": true,
+          "avg_spread_bps": 9.24,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_b_s0",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 136.95,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.094,
+          "vol_clustering_p": 0.029,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.1316,
+          "serial_band": [
+            -0.0334,
+            0.1202
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.44,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo/news_demo/news_b_s1",
+          "brain": "mock-heuristic-v1",
+          "n_rets": 389,
+          "excess_kurtosis": 33.34,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.2313,
+          "vol_clustering_p": 0.002,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0049,
+          "serial_band": [
+            -0.1191,
+            0.1194
+          ],
+          "no_serial_corr": true,
+          "avg_spread_bps": 9.86,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/_smoke/baseline_s0",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 14.83,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4298,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.5088,
+          "serial_band": [
+            -0.1002,
+            0.0976
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 14.32,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_a_s0",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 6.58,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.2936,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.4715,
+          "serial_band": [
+            -0.1017,
+            0.0998
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.1,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_a_s1",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 5.47,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4564,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.5732,
+          "serial_band": [
+            -0.0964,
+            0.1016
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 11.61,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_b_s0",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 7.79,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.0971,
+          "vol_clustering_p": 0.0495,
+          "vol_clustering": true,
+          "ret_acorr_lag1": 0.0082,
+          "serial_band": [
+            -0.0994,
+            0.0964
+          ],
+          "no_serial_corr": true,
+          "avg_spread_bps": 9.72,
+          "spread_positive": true
+        },
+        {
+          "run": "runs/evidence/demo2/news_demo/news_b_s1",
+          "brain": "glm-5.3-flash",
+          "n_rets": 389,
+          "excess_kurtosis": 23.57,
+          "fat_tails": true,
+          "vol_clustering_lag1": 0.4708,
+          "vol_clustering_p": 0.0,
+          "vol_clustering": true,
+          "ret_acorr_lag1": -0.1056,
+          "serial_band": [
+            -0.1036,
+            0.0954
+          ],
+          "no_serial_corr": false,
+          "avg_spread_bps": 10.87,
+          "spread_positive": true
+        }
+      ],
+      "limitations": [
+        "Null model is the run's own shuffled returns, not historical resampling of real market data nor an ABIDES-class baseline.",
+        "Covers EQ price/spread behaviour only; depth at best quote and small-trade execution costs need TAQ and are out of scope here.",
+        "Tolerance bands are registered by this module; they are conventions, not validated market standards.",
+        "A no_serial_corr miss at the mark scale reflects round-scale autocorrelation in the simulated paths (e.g. trending Tier-B policies); real daily equity returns are near-uncorrelated, so this fact is the one to watch as brains change."
+      ],
+      "config_hash": "2d2d5e179033",
+      "registered_at": "2026-11-01T23:04:03"
+    },
+    {
+      "track": "tsp_sim_arm",
+      "case": "tick-pilot mechanism, simulated (constrained $0.005 vs penny $0.0001)",
+      "gate": "mechanism",
+      "seeds": 2,
+      "directions": {
+        "quoted_spread_bps": "constrained_higher",
+        "close_close_vol_bps": "constrained_higher",
+        "vr5_deviation": "constrained_higher"
+      },
+      "arms": {
+        "constrained": [
+          {
+            "quoted_spread_bps": 24.36,
+            "close_close_vol_bps": 30.81,
+            "vr5_deviation": 0.3028
+          },
+          {
+            "quoted_spread_bps": 24.72,
+            "close_close_vol_bps": 32.6,
+            "vr5_deviation": 0.4541
+          }
+        ],
+        "penny": [
+          {
+            "quoted_spread_bps": 8.22,
+            "close_close_vol_bps": 25.69,
+            "vr5_deviation": 0.666
+          },
+          {
+            "quoted_spread_bps": 7.48,
+            "close_close_vol_bps": 26.35,
+            "vr5_deviation": 0.1304
+          }
+        ]
+      },
+      "verdicts": {
+        "quoted_spread_bps": {
+          "per_seed": [
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "close_close_vol_bps": {
+          "per_seed": [
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "vr5_deviation": {
+          "per_seed": [
+            false,
+            true
+          ],
+          "all_agree": false
+        }
+      },
+      "verdict": "PARTIAL",
+      "note": "Mechanism-replication evidence on the simulated market; NOT the historical Tick Size Pilot replication. Signs pre-registered in docs/tick-size-pilot-plan.md before this run; EQ stands in for a $1.00-$2.28 pilot-band stock. Mock brain \u2014 pipeline validation.",
+      "limitations": [
+        "single-name proxy at one price point ($2.05); the real pilot spans a size/liquidity cross-section",
+        "tick effect here acts on MM quotes and limit prices only; the real pilot also changed trade-at set and rebate economics",
+        "mock brain \u2014 cognition is rule-based, so this isolates the microstructure channel only"
+      ],
+      "config_hash": "c629d99a4534",
+      "registered_at": "2026-11-01T23:36:22"
+    },
+    {
+      "track": "tsp_sim_arm",
+      "case": "tick-pilot mechanism, simulated (constrained $0.005 vs penny $0.0001)",
+      "gate": "mechanism",
+      "seeds": 10,
+      "directions": {
+        "quoted_spread_bps": "constrained_higher",
+        "close_close_vol_bps": "constrained_higher",
+        "vr5_deviation": "constrained_higher"
+      },
+      "arms": {
+        "constrained": [
+          {
+            "quoted_spread_bps": 24.36,
+            "close_close_vol_bps": 30.81,
+            "vr5_deviation": 0.3028
+          },
+          {
+            "quoted_spread_bps": 24.72,
+            "close_close_vol_bps": 32.6,
+            "vr5_deviation": 0.4541
+          },
+          {
+            "quoted_spread_bps": 24.3,
+            "close_close_vol_bps": 28.13,
+            "vr5_deviation": 0.3604
+          },
+          {
+            "quoted_spread_bps": 25.48,
+            "close_close_vol_bps": 27.15,
+            "vr5_deviation": 0.4094
+          },
+          {
+            "quoted_spread_bps": 24.18,
+            "close_close_vol_bps": 28.75,
+            "vr5_deviation": 0.4539
+          },
+          {
+            "quoted_spread_bps": 24.91,
+            "close_close_vol_bps": 15.15,
+            "vr5_deviation": 0.5185
+          },
+          {
+            "quoted_spread_bps": 24.66,
+            "close_close_vol_bps": 25.08,
+            "vr5_deviation": 0.436
+          },
+          {
+            "quoted_spread_bps": 24.48,
+            "close_close_vol_bps": 24.02,
+            "vr5_deviation": 0.6627
+          },
+          {
+            "quoted_spread_bps": 24.48,
+            "close_close_vol_bps": 28.57,
+            "vr5_deviation": 0.1605
+          },
+          {
+            "quoted_spread_bps": 25.61,
+            "close_close_vol_bps": 26.64,
+            "vr5_deviation": 0.1251
+          }
+        ],
+        "penny": [
+          {
+            "quoted_spread_bps": 8.22,
+            "close_close_vol_bps": 25.69,
+            "vr5_deviation": 0.666
+          },
+          {
+            "quoted_spread_bps": 7.48,
+            "close_close_vol_bps": 26.35,
+            "vr5_deviation": 0.1304
+          },
+          {
+            "quoted_spread_bps": 8.2,
+            "close_close_vol_bps": 2.9,
+            "vr5_deviation": 0.8247
+          },
+          {
+            "quoted_spread_bps": 8.56,
+            "close_close_vol_bps": 3.91,
+            "vr5_deviation": 0.4298
+          },
+          {
+            "quoted_spread_bps": 8.11,
+            "close_close_vol_bps": 25.48,
+            "vr5_deviation": 0.2549
+          },
+          {
+            "quoted_spread_bps": 7.49,
+            "close_close_vol_bps": 2.12,
+            "vr5_deviation": 1.2655
+          },
+          {
+            "quoted_spread_bps": 7.98,
+            "close_close_vol_bps": 1.73,
+            "vr5_deviation": 1.6184
+          },
+          {
+            "quoted_spread_bps": 6.97,
+            "close_close_vol_bps": 0.81,
+            "vr5_deviation": 2.8435
+          },
+          {
+            "quoted_spread_bps": 7.93,
+            "close_close_vol_bps": 18.19,
+            "vr5_deviation": 0.6111
+          },
+          {
+            "quoted_spread_bps": 8.01,
+            "close_close_vol_bps": 1.84,
+            "vr5_deviation": 1.5188
+          }
+        ]
+      },
+      "verdicts": {
+        "quoted_spread_bps": {
+          "per_seed": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "close_close_vol_bps": {
+          "per_seed": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "all_agree": true
+        },
+        "vr5_deviation": {
+          "per_seed": [
+            false,
+            true,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "all_agree": false
+        }
+      },
+      "verdict": "PARTIAL",
+      "note": "Mechanism-replication evidence on the simulated market; NOT the historical Tick Size Pilot replication. Signs pre-registered in docs/tick-size-pilot-plan.md before this run; EQ stands in for a $1.00-$2.28 pilot-band stock. Mock brain \u2014 pipeline validation.",
+      "limitations": [
+        "single-name proxy at one price point ($2.05); the real pilot spans a size/liquidity cross-section",
+        "tick effect here acts on MM quotes and limit prices only; the real pilot also changed trade-at set and rebate economics",
+        "mock brain \u2014 cognition is rule-based, so this isolates the microstructure channel only"
+      ],
+      "config_hash": "34f76594b5d5",
+      "registered_at": "2026-11-01T23:36:29"
+    },
+    {
+      "track": "earnings_real",
+      "gate": "mechanism",
+      "case": "earnings-opening disclosure A/B on GLM-5.3-flash vs mock (Issuer & Event pack; reassuring vs blunt wording, LULD -5%/-10% bands)",
+      "model": "glm-5.3-flash",
+      "seeds": 2,
+      "parity": [
+        {
+          "seed": 0,
+          "ok": true,
+          "t_intervention": 0
+        },
+        {
+          "seed": 1,
+          "ok": true,
+          "t_intervention": 0
+        }
+      ],
+      "arms": {
+        "mock": {
+          "earnings_open_a": [
+            null,
+            null
+          ],
+          "earnings_open_b": [
+            null,
+            null
+          ]
+        },
+        "real": {
+          "earnings_open_a": [
+            {
+              "total_ret": 0.09577257432939601,
+              "excess_kurtosis": 2.3738796570043705,
+              "n_halts": 0,
+              "ann_vol": 0.30110883882268286,
+              "win90_ret": 0.009934948159619816,
+              "wake": 19
+            },
+            {
+              "total_ret": 0.4766945702729859,
+              "excess_kurtosis": 16.002670810576813,
+              "n_halts": 0,
+              "ann_vol": 0.32483615333852733,
+              "win90_ret": 0.03523468095164661,
+              "wake": 19
+            }
+          ],
+          "earnings_open_b": [
+            {
+              "total_ret": -0.028065318069997236,
+              "excess_kurtosis": 154.5711268660491,
+              "n_halts": 0,
+              "ann_vol": 0.057398578918865656,
+              "win90_ret": -0.028065318069997236,
+              "wake": 19
+            },
+            {
+              "total_ret": -0.0641690123986347,
+              "excess_kurtosis": 11.883416704522807,
+              "n_halts": 28,
+              "ann_vol": 0.2609580266898371,
+              "win90_ret": -0.06028431715955462,
+              "wake": 20
+            }
+          ]
+        }
+      },
+      "reading": "Direction/ranking only. Ordering (blunt arm worse on disorder metrics) reproduces from mock to real and is amplified: real blunt arm shows a -5% LULD band touch in 1/2 seeds and far heavier tails; real reassuring arm recovers with strong day returns. Single-seed extremes (A s1 +47.7%) are recorded, not averaged away \u2014 2 seeds cannot support effect-size claims.",
+      "verdict": "DIVERGENCE-REPORTED",
+      "limitations": [
+        "2 seeds; single-name EQ proxy for the issuer's stock",
+        "verdict is deliberately not PASS/FAIL: the deliverable is the recorded mock-vs-real divergence table",
+        "LULD bands are a mechanism-level stand-in (halt rounds 12/30), not exchange-microsecond halts"
+      ],
+      "config_hash": "55920d1510b8",
+      "registered_at": "2026-11-01T23:52:21"
+    },
+    {
+      "track": "population_fidelity",
+      "gate": "behavior_grounding",
+      "case": "L1 v0: retail panel aum_band marginals vs SCF 2022 conditional-on-holding statistics",
+      "panel_n": 560,
+      "panel_shares": {
+        "lt_10k": 0.0393,
+        "b10_50k": 0.35,
+        "b50_250k": 0.4643,
+        "b250_1m": 0.1321,
+        "gt_1m": 0.0143
+      },
+      "panel_median_band": "b50_250k",
+      "anchors": {
+        "source": "Changes in U.S. Family Finances from 2019 to 2022 (SCF), Federal Reserve Bulletin, October 2023 \u2014 Box 2 / Table 3, conditional on holding stock",
+        "conditional_median_usd": 52000,
+        "conditional_mean_usd": 491800,
+        "participation_by_income": {
+          "bottom_half": 0.34,
+          "upper_middle": 0.78,
+          "top_decile": 0.95
+        }
+      },
+      "tests": {
+        "M1_median_bracket": {
+          "ok": true,
+          "detail": "median band b50_250k in ('b10_50k', 'b50_250k')"
+        },
+        "M2_right_tail": {
+          "ok": true,
+          "detail": "gt_1m share 1.4% <= 20%"
+        },
+        "M3_heterogeneity": {
+          "ok": true,
+          "detail": "3 brackets >= 5%"
+        }
+      },
+      "verdict": "PASS",
+      "note": "Prior-panel fidelity only: 0% of these attributes are human-grounded; this eval quantifies how far the uncalibrated priors sit from published population moments. FINRA NFCS behavioral anchors (advisor usage, check frequency) are pending \u2014 the report crosstabs were not machine-fetchable this pass. Participation-rate anchors are not comparable (panel is investors-only).",
+      "limitations": [
+        "aum_band is a coarse 5-bracket synthesis of a lognormal prior; band-level comparison loses within-band information",
+        "SCF median is over stock value incl. retirement accounts; the panel band proxies investable assets \u2014 definitional mismatch of roughly one bracket",
+        "2 of 3 tolerances were chosen by the same agent that ran the panel generator \u2014 an independent party should own M1-M3 before this gate can reach PASS weight in external material"
+      ],
+      "config_hash": "e258df3c0179",
+      "registered_at": "2026-11-02T00:01:26"
+    }
+  ]
+}

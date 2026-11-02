@@ -10,9 +10,27 @@ trades if the other side shows up).
 Priority: price first, then pro-rata within a level in deterministic
 (agent_id sorted) sequence for reproducibility.
 """
-from .types import Order, Trade, BUY
+from .types import Order, Trade, BUY, SELL
 
 INF = float("inf")
+
+
+def round_tick(px, tick, side=None):
+    """Snap a price to the quote-increment grid (TSP-style tick constraint).
+
+    side=None rounds to the nearest tick; side=BUY/"buy" floors and
+    side=SELL/"sell" ceils, so a two-sided quote can never collapse inward.
+    tick falsy or non-positive => unchanged (no constraint)."""
+    if not tick or tick <= 0 or px is None:
+        return px
+    side = {"buy": BUY, "sell": SELL}.get(side, side)
+    import math
+    n = px / tick
+    if side == BUY:
+        return round(math.floor(n + 1e-9) * tick, 10)
+    if side == SELL:
+        return round(math.ceil(n - 1e-9) * tick, 10)
+    return round(round(n) * tick, 10)
 
 
 def clear_round(orders, ref_price):

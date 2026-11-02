@@ -6,6 +6,7 @@ the persona's reaction-delay distribution, and records every violation —
 this is BP validation layer 2 (setting compliance).
 """
 import random
+from . import matching
 from .types import Order, Violation, BUY, SELL
 
 
@@ -62,7 +63,8 @@ def wrap_intent(intent, persona, world, t, rng, out_orders, violations, pending)
     else:
         off_bps = (1.0 - intent.urgency) * 20.0   # patient => passive limit
         limit = px * (1 - off_bps / 1e4) if intent.side == BUY else px * (1 + off_bps / 1e4)
-        limit = round(limit, 6)
+        tick = world.tick.get(intent.asset)
+        limit = matching.round_tick(limit, tick) if tick else round(limit, 6)
     lo, hi = persona.get("reaction_delay_rounds", [0, 1])
     delay = max(0, min(30, int(rng.triangular(lo, hi, max(lo, 1)))))
     o = Order(intent.asset, aid, intent.side, qty, limit, t, intent.provider)

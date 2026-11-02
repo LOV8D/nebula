@@ -1,0 +1,36 @@
+{
+ "run_id": "news_b_s0",
+ "created": "2026-10-30T23:23:19",
+ "runtime_version": "0.2.0",
+ "code_hash": "73b06390bc",
+ "five_tuple": {
+  "population": "47d972a3fa",
+  "intervention": "news_b",
+  "mechanism": {
+   "circuit_breaker": {
+    "enabled": true,
+    "levels": [
+     -0.07,
+     -0.13,
+     -0.2
+    ],
+    "halt_rounds": [
+     15,
+     60,
+     1000000
+    ]
+   },
+   "fee_bps_retail": 0
+  },
+  "model": {
+   "provider": "openai_compat",
+   "model_id": "glm-5.3-flash",
+   "prompt_version": "p1",
+   "prompt_sha8": "f91ac628"
+  },
+  "seed": 11
+ },
+ "days": 1,
+ "rounds_per_day": 390,
+ "n_agents": 883
+}

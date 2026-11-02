@@ -2,7 +2,7 @@
 
 Pipeline: PIL draws every frame of each scene -> macOS `say` (Tingting,
 zh_CN) renders narration per scene -> ffmpeg assembles frames+audio into
-docs/wind_tunnel_explainer.mp4. Uses real experiment data from runs/demo2
+docs/wind_tunnel_explainer.mp4. Uses real experiment data from runs/evidence/demo2
 where the script references actual results.
 
     python3 tools/make_video.py            # full render (~3-5 min)
@@ -18,7 +18,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-WORK = ROOT / "runs" / "_video"
+WORK = ROOT / "runs" / "scratch" / "_video"
 W, H = 1280, 720
 FPS = 12
 
@@ -59,7 +59,7 @@ class Scene:
         d.text((48, 26), f"{self.idx:02d}", font=font(30), fill=fade(GOLD, 0.8))
         d.text((92, 26), self.title, font=font(30), fill=BLUE_D)
         # footer
-        d.text((48, H - 44), "Market Wind Tunnel · 市场风洞", font=font(16), fill=SUB)
+        d.text((48, H - 44), "Nebula · Asterium Labs", font=font(16), fill=SUB)
         d.text((W - 260, H - 44), "model output is not evidence", font=font(14), fill=SUB)
         d.line([40, 66, W - 40, 66], fill=LINE, width=2)
         return img, d
@@ -112,7 +112,7 @@ def sc01(s, t, d, img):
     d.text((W / 2 - d.textlength("市场风洞", font=big) / 2, 200), "市场风洞",
            font=big, fill=fade(BLUE_D, a))
     a2 = ease(min(1, max(0, t * 2 - 0.6)))
-    d.text((W / 2 - d.textlength("Market Wind Tunnel", font=font(36)) / 2, 300),
+    d.text((W / 2 - d.textlength("Nebula", font=font(36)) / 2, 300),
            "Market Wind Tunnel", font=font(36), fill=fade(SUB, a2))
     a3 = ease(min(1, max(0, t * 2 - 1.2)))
     d.text((W / 2 - d.textlength("新规则上线之前，先在虚拟市场里跑一遍", font=font(26)) / 2, 400),
@@ -319,7 +319,7 @@ def sc09(s, t, d, img):
 
 
 def _load_eq(run):
-    p = ROOT / "runs" / "demo2" / "news_demo" / run / "marks.jsonl"
+    p = ROOT / "runs" / "evidence" / "demo2" / "news_demo" / run / "marks.jsonl"
     if not p.exists():
         return []
     return [json.loads(l) for l in p.read_text().splitlines() if l.strip()]

@@ -10,7 +10,7 @@ import json
 import random
 from pathlib import Path
 
-from . import provenance
+from evidence import provenance
 
 CLASSES = {
     # ---------------- Tier A: LLM personas ----------------

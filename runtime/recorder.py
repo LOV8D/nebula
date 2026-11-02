@@ -12,13 +12,16 @@ from . import __version__
 
 
 def _code_hash():
-    """Digest of the runtime package. The prompt templates live in `llm.py`,
-    so this covers model prompts too — `runtime_version` alone cannot tell two
-    builds apart, and a run whose code is unidentified is not reproducible."""
+    """Digest of every package that decides what a run produces (see
+    paths.CODE_PACKAGES). The prompt templates live in `llm.py`, so this
+    covers model prompts too — `runtime_version` alone cannot tell two builds
+    apart, and a run whose code is unidentified is not reproducible."""
+    from .paths import ROOT, CODE_PACKAGES
     h = hashlib.md5()
-    for p in sorted(Path(__file__).resolve().parent.glob("*.py")):
-        h.update(p.name.encode())
-        h.update(p.read_bytes())
+    for pkg in CODE_PACKAGES:
+        for p in sorted((ROOT / pkg).glob("*.py")):
+            h.update(f"{pkg}/{p.name}".encode())
+            h.update(p.read_bytes())
     return h.hexdigest()[:10]
 
 

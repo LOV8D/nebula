@@ -58,6 +58,9 @@ class World:
         self.days = scenario["days"]
         self.assets0 = {a: scenario["assets"][a]["start"] for a in ASSETS}
         self.vol0 = {a: scenario["assets"][a]["vol_bps"] / 1e4 for a in ASSETS}
+        # optional quote-increment grid per asset (TSP-style tick pilot);
+        # falsy/absent => unconstrained
+        self.tick = {a: scenario["assets"][a].get("tick") for a in ASSETS}
         self.marks = {a: Mark(price=p, prev_price=p, day_open=p, mm_ref=p,
                               sigma=self.vol0[a])
                       for a, p in self.assets0.items()}
