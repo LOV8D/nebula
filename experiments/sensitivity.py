@@ -116,18 +116,17 @@ def _report(results, seeds):
         toks = (d["news_a"].get("in_tokens", 0) + d["news_b"].get("in_tokens", 0),
                 d["news_a"].get("out_tokens", 0) + d["news_b"].get("out_tokens", 0))
         rows.append((model, pv, a, b, a - b, err, per_seed, toks))
-    # A row is only "yes" when EVERY seed agrees: a two-seed mean can be
-    # positive while one seed is negative, and that row is not stable.
-    signs = {r[:2]: all(x > 0 for x in r[6]) for r in rows}
-    n_pos = sum(signs.values())
-    stable = n_pos in (0, len(signs)) and len(signs) > 1
+    # Shared direction semantics (evaluation/direction.py): report,
+    # dashboard and scorecard classify the same numbers identically.
+    from evaluation.direction import pair_direction
+    signs = {r[:2]: pair_direction(r[6]) for r in rows}
+    n_supported = sum(v in ("positive", "negative") for v in signs.values())
+    stable = n_supported == len(signs) and len(signs) > 1
     for model, pv, a, b, sep, err, per_seed, toks in rows:
-        if all(x > 0 for x in per_seed):
-            verdict = "yes"
-        elif all(x < 0 for x in per_seed):
-            verdict = "no (inverted)"
-        else:
-            verdict = "mixed (seeds disagree)"
+        d = pair_direction(per_seed)
+        verdict = {"positive": "yes", "negative": "no (inverted)",
+                   "mixed": "mixed (seeds disagree)", "tie": "tie",
+                   "insufficient": "insufficient"}[d]
         flag = " *" if err > 50 else ""    # error-polluted combo
         price = PRICE_PER_MTOK.get(model)
         cost = (f"${(toks[0] * price[0] + toks[1] * price[1]) / 1e6:.2f}"
@@ -137,8 +136,8 @@ def _report(results, seeds):
                      f"| {seeds_s} | {err} | {cost} | {verdict}{flag} |")
     flip = "STABLE" if stable else "FLIPS"
     lines += ["", f"**Verdict: {flip}.** "
-              f"{len(rows)} brain/prompt combos, {n_pos}/{len(rows)} show "
-              "neutral > alarming on full-day EQ in every seed.", ""]
+              f"{len(rows)} brain/prompt combos; {n_supported}/{len(rows)} have "
+              "every seed agreeing on one direction of A−B.", ""]
     if not stable:
         lines.append("The conclusion inverts across brains/prompts — report this "
                      "instability alongside any headline result. Per BP: "

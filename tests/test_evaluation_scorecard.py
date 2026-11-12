@@ -38,7 +38,10 @@ def main():
                 "prospective_oos", "decision_utility"):
         assert tracks[key]["status"] == "not_run", (key, tracks[key])
     assert out["verdict"]["state"] == "ENGINEERING-VERIFIED / MARKET-UNVALIDATED"
-    assert out["facts"]["registered_external_evaluations"] == 0
+    # T1b: records are classified by evidence kind; an empty registry has
+    # zero records of any kind and zero verified external outcomes
+    assert out["facts"]["registered_evaluations_total"] == 0
+    assert out["facts"]["verified_external_outcomes"] == 0
 
     # And with the live registry (may hold the market-realism record): no
     # aggregate score ever appears, and a partial record never reads as pass.
@@ -46,6 +49,17 @@ def main():
     assert "score" not in live
     live_tracks = {r["id"]: r["status"] for r in live["tracks"]}
     assert live_tracks["market_realism"] in ("not_run", "partial", "pass")
+    # T1b must-haves on the live registry: every record classified, the
+    # internal kinds never counted as external, tsp_sim_arm's two records
+    # are two records (not two external cases), population_fidelity PASS
+    # adds no holdout, earnings_real is not a PASS
+    lf = live["facts"]
+    assert lf["registered_evaluations_total"] >= 5
+    assert set(lf["registered_evaluations_by_kind"]) <= {
+        "internal_descriptive", "internal_mechanism",
+        "internal_divergence", "prior_check"}
+    assert lf["verified_external_outcomes"] == 0
+    assert lf["registered_evaluations_by_kind"].get("internal_mechanism") == 2
     print("evaluation scorecard test: OK — 8 gates, no aggregate score, "
           "isolated + live registries")
 

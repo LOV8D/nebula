@@ -63,3 +63,42 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# --- T2: interventions that parity cannot verify must not read as PASS ---
+
+def test_t2_semantics(tmp="/tmp/wt_parity_t2"):
+    """impact-only event difference IS an intervention; t=0 arms have no
+    measurable pre-window and must report UNKNOWN, never PASS."""
+    import json, shutil, sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from experiments.parity import check, describe, intervention_t
+
+    # impact-only difference
+    ea = [{"t": 0, "headline": "h", "sentiment": -0.2, "impact": 1.0,
+           "assets": ["EQ"], "source": "s"}]
+    eb = [dict(ea[0], impact=0.5)]
+    assert intervention_t(ea, eb) == 0
+    # asset-set difference
+    assert intervention_t(ea, [dict(ea[0], assets=["EQ", "IR"])]) == 0
+    # identical -> not an A/B
+    assert intervention_t(ea, [dict(ea[0])]) is None
+
+    # t=0 arms: no pre-window, ok must be None with a distinct reason
+    root = Path(tmp)
+    if root.exists():
+        shutil.rmtree(root)
+    for arm, ev in (("x_a_s0", ea), ("x_b_s0", eb)):
+        d = root / arm
+        d.mkdir(parents=True)
+        (d / "events.jsonl").write_text(
+            "\n".join(json.dumps(e) for e in ev) + "\n")
+        (d / "intents.jsonl").write_text("")
+        (d / "marks.jsonl").write_text(
+            json.dumps({"t": 0, "asset": "EQ", "price": 100.0}) + "\n")
+    r = check(root / "x_a_s0", root / "x_b_s0")
+    assert r["ok"] is None and "no measurable pre-window" in r["reason"], r
+    line = describe(r)
+    assert "UNKNOWN" in line and "PASS" not in line, line
+    print("parity t=0 / impact-only test: OK — unmeasurable never reads as PASS")

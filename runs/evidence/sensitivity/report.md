@@ -6,11 +6,12 @@ Direction and ranking only.
 
 | model | prompt | neutral (day) | alarming (day) | separation | per seed | llm errors | $/combo (est.) | conclusion stable? |
 |---|---|---|---|---|---|---|---|---|
-| glm-5.3-flash | p1 | +15.1% | +9.6% | +5.5% | -11.7% / +22.7% | 0 | $0.01 | mixed (seeds disagree) |
-| glm-5.3-flash | p2 | -2.4% | +5.3% | -7.7% | -4.6% / -10.8% | 0 | $0.01 | no (inverted) |
+| runs/evidence/sensitivity/glm-5.3-flash | p1 | +15.1% | +9.6% | +5.5% | -11.7% / +22.7% | 0 | — | mixed (seeds disagree) |
+| runs/evidence/sensitivity/glm-5.3-flash | p2 | -2.4% | +5.3% | -7.7% | -4.6% / -10.8% | 0 | — | no (inverted) |
 
-**Verdict: STABLE.** 2 brain/prompt combos, 0/2 show neutral > alarming on full-day EQ in every seed.
+**Verdict: FLIPS.** 2 brain/prompt combos; 1/2 have every seed agreeing on one direction of A−B.
 
+The conclusion inverts across brains/prompts — report this instability alongside any headline result. Per BP: sensitivity is a deliverable, not noise.
 
 `\*` marks an error-polluted combo (>50 failed LLM attempts,
 3 tries each): many decisions fell back to the Tier-B policy tier,

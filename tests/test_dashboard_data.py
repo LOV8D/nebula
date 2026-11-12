@@ -24,7 +24,16 @@ def main():
     from ui.bundle import MARKERS, bundle
     from ui.collect import collect
     d = collect()
-    assert set(d) == {"meta", "flagship", "agents", "replay", "who", "robustness", "performance", "evidence"}, set(d)
+    assert set(d) == {"meta", "flagship", "agents", "replay", "who", "robustness",
+                      "performance", "evidence", "cases", "case_order",
+                      "default_case"}, set(d)
+    # P1 isolation: both cases present; earnings has no robustness matrix;
+    # no news numbers leak into the earnings payload
+    assert d["default_case"] == "news_wording" and len(d["case_order"]) == 2
+    ecase = d["cases"]["earnings_disclosure"]
+    assert ecase["robustness"] is None and ecase["flagship"]["t0"] == 0
+    assert "DIFFERENT DISCLOSURE SCENARIOS" in ecase["attribution_note"]
+    assert d["cases"]["news_wording"]["robustness"]["rows"]
     f = d["flagship"]
     assert f["t0"] is not None and 0 < f["t0"] < f["rounds"], f["t0"]
     assert len(f["arms"]["a"]) == len(f["arms"]["b"]) == len(f["parity"]) > 0

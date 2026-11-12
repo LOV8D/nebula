@@ -27,8 +27,16 @@ def _jsonl(run_dir, name):
 
 
 def intervention_t(events_a, events_b):
-    """First round at which the two arms' published events differ."""
-    key = lambda e: (e["t"], e.get("headline"), e.get("sentiment"))  # noqa: E731
+    """First round at which the two arms' published events differ.
+
+    Compares normalized SEMANTIC event tuples — t, headline, sentiment,
+    impact and the asset set — so an arm that only changes `impact` (or
+    swaps asset coverage) still counts as an intervention at that round.
+    Run metadata fields that play no mechanism role are ignored."""
+    key = lambda e: (e["t"], e.get("headline"), e.get("sentiment"),
+                     round(e.get("impact", 1.0), 9),
+                     tuple(sorted(e.get("assets") or [])),
+                     e.get("source"))  # noqa: E731
     ka, kb = sorted(map(key, events_a)), sorted(map(key, events_b))
     for x, y in zip(ka, kb):
         if x != y:
@@ -61,6 +69,14 @@ def check(a_dir, b_dir):
     out["t_intervention"] = t0
     if t0 is None:
         return dict(out, ok=None, reason="arms publish identical events — not an A/B")
+    if t0 == 0:
+        # Nothing exists before the intervention, so pre-intervention parity
+        # is UNMEASURABLE, not passed. Initial scenario inputs (asset
+        # levels, panel) are a different check; do not rename this PASS.
+        return dict(out, ok=None, reason="intervention at t=0 — no measurable "
+                    "pre-window (initialization not verified by parity)",
+                    n_pre_intents=[0, 0], first_intent_diff_t=None,
+                    first_price_diff_t=None, max_pre_gap={})
 
     ia = sorted(_intent_key(i) for i in logs["a", "intents"] if i["t"] < t0)
     ib = sorted(_intent_key(i) for i in logs["b", "intents"] if i["t"] < t0)
@@ -112,6 +128,10 @@ def describe(r):
     if r["ok"] is None:
         return f"{name}: UNKNOWN — {r['reason']}"
     if r["ok"]:
+        if r.get("t_intervention") == 0:
+            return (f"{name}: NOT MEASURABLE — intervention at t=0; no "
+                    "pre-window exists, so 'identical before the "
+                    "intervention' cannot be claimed")
         return (f"{name}: PASS — identical before t={r['t_intervention']} "
                 f"({r['n_pre_intents'][0]} decisions)")
     worst = max(r["max_pre_gap"].items(), key=lambda kv: kv[1], default=("-", 0))

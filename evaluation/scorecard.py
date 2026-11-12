@@ -19,6 +19,13 @@ def _load(path):
 
 
 def _result_counts(records):
+    """Read-time classification of registry records (T1b).
+
+    The registry holds EVALUATION records of several evidence kinds —
+    internal mechanism experiments, prior-fidelity checks, mock-vs-real
+    divergence reports — and none of them is an independently verified
+    external outcome. Counting them as "external validations" was the bug;
+    this adapter classifies without rewriting history."""
     counts = Counter()
     passed = Counter()
     for row in records:
@@ -31,6 +38,39 @@ def _result_counts(records):
     return counts, passed
 
 
+#: track -> evidence kind. "internal" records can never count as external
+#: validations; only a record explicitly marked kind=external with an
+#: independently scored outcome ever will (none exists yet).
+EVIDENCE_KINDS = {
+    "market_realism": "internal_descriptive",
+    "tsp_sim_arm": "internal_mechanism",
+    "earnings_real": "internal_divergence",   # "real" = real model, not real people/market
+    "population_fidelity": "prior_check",     # priors vs published anchors; adds no holdout
+    "historical_intervention": "external_replication",
+    "prospective_oos": "external_prospective",
+    "decision_utility": "external_utility",
+    "human_holdout": "external_human",
+}
+_EXTERNAL_KINDS = {"external_replication", "external_prospective",
+                   "external_utility", "external_human"}
+
+
+def classify_records(records):
+    """-> (total, by_kind Counter, verified_external int, unclassified list)"""
+    by_kind = Counter()
+    unclassified = []
+    verified = 0
+    for row in records:
+        kind = EVIDENCE_KINDS.get(row.get("track"))
+        if kind is None:
+            kind = "unclassified"
+            unclassified.append(row.get("track"))
+        by_kind[kind] += 1
+        if kind in _EXTERNAL_KINDS and row.get("independently_scored") is True:
+            verified += 1
+    return len(records), by_kind, verified, unclassified
+
+
 def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
                     results_path=RESULTS):
     """Assess the current product from the exact evidence already in the UI."""
@@ -38,6 +78,7 @@ def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
     registry = _load(results_path)
     records = registry.get("evaluations", [])
     counts, passed = _result_counts(records)
+    n_records, by_kind, verified_external, unclassified = classify_records(records)
 
     parity = flagship.get("parity", [])
     parity_pass = sum(p.get("ok") is True for p in parity)
@@ -48,6 +89,14 @@ def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
     sens_pairs = [s for r in sensitivity for s in r.get("seeds", [])]
     sens_clean = sum(s.get("parity") is True for s in sens_pairs)
     sens_bad = sum(s.get("parity") is False for s in sens_pairs)
+    # shared direction semantics (T1a): a prompt row whose seeds disagree is
+    # MIXED and can never support a direction, whatever its mean says
+    from evaluation.direction import pair_direction, gate_status
+    directions = [r.get("direction") or pair_direction(
+        [s.get("sep") for s in r.get("seeds", []) if s.get("parity") is True])
+        for r in sensitivity]
+    robust_status = gate_status(directions, sens_clean, len(sens_pairs)) \
+        if sens_pairs else "not_run"
 
     integrity_ok = (bool(parity) and parity_pass == len(parity)
                     and flagship.get("panel_current")
@@ -99,11 +148,15 @@ def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
             "next": "Run an authorized, matched-information human holdout with pre-registered direction and distribution metrics."
         },
         "robustness": {
-            "status": "pass" if sens_pairs and sens_clean == len(sens_pairs) else ("blocked" if sens_bad else "partial"),
+            "status": robust_status,
             "evidence": (f"Flagship covers {len(parity)} clean pair(s). Current quotable sensitivity evidence: "
-                         f"{sens_clean}/{len(sens_pairs)} pair(s) pass parity"
-                         + (f"; {sens_bad} fail." if sens_bad else ".")),
-            "limitation": "The clean flagship uses one model, one prompt and two seeds; contaminated sensitivity pairs cannot support robustness claims.",
+                         f"{sens_clean}/{len(sens_pairs)} pair(s) pass parity; per-prompt directions: "
+                         + ", ".join(f"{r.get('sub', '?')}={d}"
+                                     for r, d in zip(sensitivity, directions) if r.get("quotable"))
+                         + ("." if sens_pairs else " (no matrix).")),
+            "limitation": "The clean flagship uses one model, one prompt and two seeds; a mixed prompt row "
+                          "(seeds disagreeing on the sign of A−B) can support neither direction, and this "
+                          "stage never upgrades a single-model two-seed matrix to pass.",
             "next": "Re-run a pre-registered GLM seed/prompt/parameter matrix after the gateway fix, then add eligible model baselines."
         },
         "prospective_oos": {
@@ -154,7 +207,9 @@ def build_scorecard(flagship, robustness, evidence, config_path=CONFIG,
             "flagship_parity_fail": parity_fail,
             "flagship_manifests_complete": bool(flagship.get("manifest_complete")),
             "human_grounded_share": grounded,
-            "registered_external_evaluations": len(records),
+            "registered_evaluations_total": n_records,
+            "registered_evaluations_by_kind": dict(by_kind),
+            "verified_external_outcomes": verified_external,
             "sensitivity_clean": sens_clean,
             "sensitivity_total": len(sens_pairs)
         },

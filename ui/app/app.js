@@ -41,11 +41,21 @@ function themeChanged() { readColors(); onTheme.forEach(f => f()); }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', themeChanged);
 new MutationObserver(themeChanged).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 
-const F = D.flagship, ARMS = F.arms, T0 = F.t0, R = F.rounds;
-const nSeeds = Math.min(ARMS.a.length, ARMS.b.length);
-const seps = [...Array(nSeeds)].map((_, i) => ARMS.a[i].day_ret - ARMS.b[i].day_ret);
-const PAR = F.parity;
-const parFail = PAR.filter(p => p.ok === false), parPass = PAR.filter(p => p.ok === true);
+// Case-switchable bindings (P1): the DEFAULT case loads at start; switching
+// rebinds these and re-renders every page. A view unsupported by a case
+// shows 'not applicable' — never another case's numbers.
+let F, ARMS, T0, R, nSeeds, seps, PAR, parFail, parPass, CASE;
+function bindCase(id) {
+  CASE = D.cases[id];
+  F = CASE.flagship; ARMS = F.arms; T0 = F.t0; R = F.rounds;
+  nSeeds = Math.min(ARMS.a.length, ARMS.b.length);
+  seps = [...Array(nSeeds)].map((_, i) => ARMS.a[i].day_ret - ARMS.b[i].day_ret);
+  PAR = F.parity;
+  parFail = PAR.filter(p => p.ok === false), parPass = PAR.filter(p => p.ok === true);
+  // legacy top-level views follow the active case
+  D.replay = CASE.replay; D.who = CASE.who; D.robustness = CASE.robustness;
+}
+bindCase(D.default_case);
 const PRE_FIX = '2026-10-29';   // runs before this date predate the gateway race fix
 
 function parityLine(p) {
@@ -57,10 +67,24 @@ function parityLine(p) {
 
 /* ================================================================ VERDICT */
 function buildVerdict() {
+  // first screen: what this case is, what differs, what any A/B gap may
+  // (and may not) be attributed to (P1 acceptance #1)
+  const intro = $('v-intro');
+  if (intro) {
+    intro.replaceChildren();
+    intro.append(
+      h('p', { class: 'lede' }, CASE.decision_question),
+      h('table', { class: 'diffs' },
+        h('tr', {}, h('th', {}, 'input'), h('th', {}, 'A'), h('th', {}, 'B')),
+        ...CASE.input_diffs.map(d => h('tr', {}, h('td', {}, d[0]), h('td', {}, d[1]), h('td', {}, d[2])))),
+      h('p', { class: 'chip warn', style: 'white-space:normal' }, CASE.attribution_note));
+  }
   const k = seps.filter(x => x > 0).length;
+  const la = CASE.arms.a.label.replace(/ — .*/, '').replace(/ \(A\)$/, '') || 'A';
+  const lb = CASE.arms.b.label.replace(/ — .*/, '').replace(/ \(B\)$/, '') || 'B';
   $('v-title').textContent =
-    k === nSeeds ? `Neutral wording (A) finished above alarming wording (B) in ${nSeeds === 2 ? 'both' : 'all ' + nSeeds} seeds.`
-    : k === 0 ? `Alarming wording (B) finished above neutral wording (A) in every seed.`
+    k === nSeeds ? `Arm A (${la}) finished above arm B (${lb}) in ${nSeeds === 2 ? 'both' : 'all ' + nSeeds} seeds.`
+    : k === 0 ? `Arm B (${lb}) finished above arm A (${la}) in every seed.`
     : `The seeds disagree: A finished above B in ${k} of ${nSeeds}.`;
   const chips = $('v-chips');
   chips.append(h('span', { class: 'chip' }, `${F.model} · prompt ${F.prompt}`));
@@ -91,12 +115,16 @@ function buildVerdict() {
   } else {
     pt.textContent = 'Not checked: the bulk run logs are not on this machine. Re-run the experiment to check parity.';
   }
-  const rows = D.robustness.rows.filter(r => r.quotable);
-  const all = rows.flatMap(r => r.seeds);
-  const pos = all.filter(s => s.sep > 0).length;
-  const clean = all.filter(s => s.parity === true).length;
-  $('v-robust-text').append(`Across ${plural(all.length, 'quotable seed pair')}, A finished higher in ${pos}; ${clean} ${clean === 1 ? 'is' : 'are'} a clean A/B. `,
-    h('a', { href: '#robustness' }, 'See every seed →'));
+  if (D.robustness) {
+    const rows = D.robustness.rows.filter(r => r.quotable);
+    const all = rows.flatMap(r => r.seeds);
+    const pos = all.filter(s => s.sep > 0).length;
+    const clean = all.filter(s => s.parity === true).length;
+    $('v-robust-text').append(`Across ${plural(all.length, 'quotable seed pair')}, A finished higher in ${pos}; ${clean} ${clean === 1 ? 'is' : 'are'} a clean A/B. `,
+      h('a', { href: '#robustness' }, 'See every seed →'));
+  } else {
+    $('v-robust-text').textContent = 'No prompt/seed sensitivity matrix has been run for this case — robustness is untested, not passed.';
+  }
   drawVerdictChart();
 }
 
@@ -162,7 +190,7 @@ function verdictTick(now) {
 }
 
 /* ================================================================ RIPPLE */
-const RP = (() => {
+function makeRP() { return (() => {
   const classes = D.agents.classes, rows = D.agents.rows, N = rows.length;
   const cls = new Array(N), tier = new Array(N);
   let k = 0;
@@ -307,10 +335,11 @@ const RP = (() => {
   onTheme.push(() => draw(performance.now()));
   addEventListener('resize', () => { if (current === 'ripple' && layout()) draw(performance.now()); });
   return { start };
-})();
+  })();
+}
 
 function buildWho() {
-  const box = $('r-who');
+  const box = $('r-who'); box.replaceChildren();
   const llm = D.agents.classes.filter(c => c.tier === 'llm');
   const rows = llm.map(c => {
     const a = D.who.a.net[c.name] || 0, b = D.who.b.net[c.name] || 0;
@@ -326,7 +355,8 @@ function buildWho() {
 }
 
 function buildBooks() {
-  const box = $('r-books'), A = D.replay.a.books, B = D.replay.b.books;
+  const box = $('r-books'); box.replaceChildren();
+  const A = D.replay.a.books, B = D.replay.b.books;
   D.meta.assets.forEach(as => {
     const pa = A[as].path, pb = B[as].path;
     if (!pa.length) return;
@@ -346,7 +376,16 @@ function buildBooks() {
 
 /* ================================================================ ROBUSTNESS */
 function buildRobustness() {
+  if (!D.robustness) {
+    $('b-title').textContent = 'Not applicable for this case';
+    $('b-svg').replaceChildren(); $('b-table').replaceChildren();
+    $('b-note').textContent = CASE.case_id === 'earnings_disclosure'
+      ? 'No prompt/seed sensitivity matrix has been run for the earnings case. The news case\u2019s robustness numbers belong to the news case and are not shown here.'
+      : 'No sensitivity matrix for this case.';
+    return;
+  }
   const rows = D.robustness.rows, svg = $('b-svg');
+  svg.replaceChildren(); $('b-table').replaceChildren();
   const q = rows.filter(r => r.quotable), qs = q.flatMap(r => r.seeds);
   const pos = qs.filter(s => s.sep > 0).length, clean = qs.filter(s => s.parity === true).length;
   $('b-title').textContent = `A finished higher in ${pos} of ${plural(qs.length, 'quotable seed pair')}` +
@@ -403,6 +442,7 @@ function buildRobustness() {
 /* ================================================================ PERFORMANCE */
 function buildPerformance() {
   const P = D.performance, V = P.verdict, f = P.facts;
+  $('p-chips').replaceChildren(); $('p-facts').replaceChildren();
   $('p-state').textContent = V.state;
   $('p-summary').textContent = V.summary;
   $('p-allowed').textContent = V.claim_allowed;
@@ -415,7 +455,9 @@ function buildPerformance() {
   $('p-facts').append(
     h('div', { class: 'tile' }, h('div', { class: 'n' }, `${f.flagship_parity_pass}/${f.flagship_parity_total}`), h('div', { class: 'k' }, 'flagship pairs pass parity')),
     h('div', { class: 'tile' }, h('div', { class: 'n', style: 'color:var(--down)' }, Math.round(f.human_grounded_share * 100) + '%'), h('div', { class: 'k' }, 'human-grounded persona attributes')),
-    h('div', { class: 'tile' }, h('div', { class: 'n' }, f.registered_external_evaluations), h('div', { class: 'k' }, 'registered external evaluations')),
+    h('div', { class: 'tile' }, h('div', { class: 'n' }, f.registered_evaluations_total), h('div', { class: 'k' }, 'registered evaluation records')),
+    h('div', { class: 'tile' }, h('div', { class: 'n' }, Object.entries(f.registered_evaluations_by_kind || {}).map(([k, v]) => `${v} ${k.replace('internal_', '').replace('_', ' ')}`).join(' · ')), h('div', { class: 'k' }, 'by evidence kind — none is an external outcome')),
+    h('div', { class: 'tile' }, h('div', { class: 'n', style: 'color:var(--down)' }, f.verified_external_outcomes), h('div', { class: 'k' }, 'independently verified external outcomes')),
     h('div', { class: 'tile' }, h('div', { class: 'n' }, `${f.sensitivity_clean}/${f.sensitivity_total}`), h('div', { class: 'k' }, 'current sensitivity pairs clean')));
 
   const statusClass = s => s === 'pass' ? 'ok' : s === 'partial' ? 'warn' : s === 'blocked' ? 'bad' : '';
@@ -440,6 +482,7 @@ function buildPerformance() {
 /* ================================================================ EVIDENCE */
 function buildEvidence() {
   const E = D.evidence, cov = E.coverage;
+  $('e-tiles').replaceChildren(); $('e-stack').replaceChildren(); $('e-stack-legend').replaceChildren(); $('e-cards').replaceChildren(); $('e-sources').replaceChildren();
   document.querySelectorAll('[data-n-agents]').forEach(e => e.textContent = cov.agents);
   $('e-tiles').append(
     h('div', { class: 'tile' }, h('div', { class: 'n' }, cov.agents), h('div', { class: 'k' }, 'agents in the panel')),
@@ -498,7 +541,35 @@ function route(want) {
   if (id === 'ripple') RP.start();
   if (id === 'robustness' && !RM) document.querySelectorAll('#b-svg .slide').forEach(c => { c.classList.remove('slide'); void c.getBBox(); c.classList.add('slide'); });
 }
-buildVerdict(); buildRobustness(); buildPerformance(); buildEvidence();
+function rebuildAll() {
+  // each builder is isolated: if one throws, the pages it did not reach are
+  // cleared explicitly below rather than left showing the previous case
+  const builders = { verdict: buildVerdict, robustness: buildRobustness,
+                     performance: buildPerformance, evidence: buildEvidence };
+  for (const [name, fn] of Object.entries(builders)) {
+    try { fn(); } catch (e) {
+      console.error('builder failed:', name, e);
+      const t = document.querySelector(`#${name} h1`);
+      if (t) t.textContent = 'This view failed to render for the selected case.';
+    }
+  }
+  try { RP = makeRP(); if (current === 'ripple') RP.start(); }
+  catch (e) { console.error('replay failed', e); }
+}
+(() => {
+  const sel = $('case-pick');
+  D.case_order.forEach(id => {
+    const o = h('option', { value: id }, D.cases[id].title);
+    if (id === D.default_case) o.selected = true;
+    sel.append(o);
+  });
+  sel.addEventListener('change', () => {
+    bindCase(sel.value);
+    rebuildAll();
+    route(current || 'verdict');
+  });
+})();
+rebuildAll();
 addEventListener('hashchange', route);
 addEventListener('resize', () => { if (current === 'verdict' && verdictAt && RM) verdictAt(R - 1); });
 route();

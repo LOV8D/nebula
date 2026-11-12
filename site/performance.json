@@ -16,7 +16,14 @@
     "flagship_parity_fail": 0,
     "flagship_manifests_complete": true,
     "human_grounded_share": 0.0,
-    "registered_external_evaluations": 5,
+    "registered_evaluations_total": 5,
+    "registered_evaluations_by_kind": {
+      "internal_descriptive": 1,
+      "internal_mechanism": 2,
+      "internal_divergence": 1,
+      "prior_check": 1
+    },
+    "verified_external_outcomes": 0,
     "sensitivity_clean": 4,
     "sensitivity_total": 4
   },
@@ -76,9 +83,9 @@
       "label": "Robustness & sensitivity",
       "question": "Does the decision conclusion survive legitimate seeds, prompts, models and parameter uncertainty?",
       "gate": "Every included A/B pair passes parity; the conclusion and its failure regions are reported over pre-registered seeds, prompts, accessible models and parameter sweeps.",
-      "status": "pass",
-      "evidence": "Flagship covers 2 clean pair(s). Current quotable sensitivity evidence: 4/4 pair(s) pass parity.",
-      "limitation": "The clean flagship uses one model, one prompt and two seeds; contaminated sensitivity pairs cannot support robustness claims.",
+      "status": "partial",
+      "evidence": "Flagship covers 2 clean pair(s). Current quotable sensitivity evidence: 4/4 pair(s) pass parity; per-prompt directions: prompt p1 \u00b7 sensitivity=mixed, prompt p2 \u00b7 sensitivity=negative.",
+      "limitation": "The clean flagship uses one model, one prompt and two seeds; a mixed prompt row (seeds disagreeing on the sign of A\u2212B) can support neither direction, and this stage never upgrades a single-model two-seed matrix to pass.",
       "next": "Re-run a pre-registered GLM seed/prompt/parameter matrix after the gateway fix, then add eligible model baselines."
     },
     {

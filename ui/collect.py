@@ -94,9 +94,10 @@ def _arm(run_dirs):
     return seeds
 
 
-def _flagship(ab_root, panel_hash):
-    a_dirs = sorted(ab_root.glob("news_a_s*"))
-    b_dirs = sorted(ab_root.glob("news_b_s*"))
+def _flagship(ab_root, panel_hash, scens=("news_a", "news_b")):
+    """One case's flagship A/B (scenario-prefix aware)."""
+    a_dirs = sorted(ab_root.glob(f"{scens[0]}_s*"))
+    b_dirs = sorted(ab_root.glob(f"{scens[1]}_s*"))
     if not a_dirs or not b_dirs:
         raise SystemExit(f"no news_a/news_b runs under {ab_root} — run `make demo2` first")
     man = _json(a_dirs[0] / "manifest.json", {})
@@ -162,11 +163,11 @@ def _replay(run_dir, idx):
             "intents": rows, "books": books}
 
 
-def _who_moved(ab_root, t0, cls_of):
+def _who_moved(ab_root, t0, cls_of, scens=("news_a", "news_b")):
     """Net direction per class after the intervention, both arms, all seeds:
     sum(side x size_frac) over LLM decisions with t >= t0. Not dollar flow."""
     out = {}
-    for arm, scen in (("a", "news_a"), ("b", "news_b")):
+    for arm, scen in (("a", scens[0]), ("b", scens[1])):
         net, n = defaultdict(float), defaultdict(int)
         for d in sorted(ab_root.glob(f"{scen}_s*")):
             for it in _jsonl(d, "intents"):
@@ -196,15 +197,28 @@ def _robustness(flag, sens_dir):
         if "news_a" not in d or "news_b" not in d:
             continue
         a, b = d["news_a"], d["news_b"]
+        # seed pairing by index is safe only after verifying both arms
+        # recorded the same number of seeds (dirs are named _s{i})
+        if len(a["day_seeds"]) != len(b["day_seeds"]):
+            continue
         seeds = []
         for i, (x, y) in enumerate(zip(a["day_seeds"], b["day_seeds"])):
             p = parity.check(sens_dir / f"{model}__{pv}__news_a_s{i}",
                              sens_dir / f"{model}__{pv}__news_b_s{i}")
-            seeds.append({"a": x, "b": y, "sep": x - y, "parity": p["ok"]})
+            sep = x - y if (x is not None and y is not None) else None
+            seeds.append({"a": x, "b": y, "sep": sep, "parity": p["ok"]})
+        # comparable = parity-true pairs with a usable separation
+        comp = [s["sep"] for s in seeds if s["parity"] is True
+                and s["sep"] is not None]
+        from evaluation.direction import pair_direction, gate_status
         rows.append({"label": model, "sub": f"prompt {pv} · sensitivity",
                      "model": model, "prompt": pv,
                      "quotable": model.startswith(QUOTABLE_MODEL_PREFIX),
-                     "errors": a.get("errors", 0) + b.get("errors", 0), "seeds": seeds})
+                     "errors": a.get("errors", 0) + b.get("errors", 0),
+                     "seeds": seeds,
+                     "direction": pair_direction(comp),
+                     "gate": gate_status([pair_direction(comp)], len(comp),
+                                         len(seeds))})
     return {"rows": rows, "source": _rel(sens_dir / "results.json")}
 
 
@@ -244,9 +258,43 @@ def _evidence(panel, run_dir):
 
 
 # ---------------------------------------------------------------- top level
+_SCENS = {"news_wording": ("news_a", "news_b"),
+          "earnings_disclosure": ("earnings_open_a", "earnings_open_b")}
+
+
+def collect_case(case, panel, panel_hash, idx, cls_of, replay_seed=0):
+    """Per-case payload: arms, replay, who-moved, robustness-or-None.
+    Nothing from another case may appear here (P1 isolation rule)."""
+    scens = _SCENS[case["case_id"]]
+    root = Path(case["run_roots"]["real"])
+    if not root.exists():
+        root = Path(case["run_roots"]["mock"])
+    flag = _flagship(root, panel_hash, scens)
+    run_a = root / f"{scens[0]}_s{replay_seed}"
+    run_b = root / f"{scens[1]}_s{replay_seed}"
+    robust = None
+    if case.get("sensitivity_dir") and Path(case["sensitivity_dir"]).exists():
+        robust = _robustness(flag, Path(case["sensitivity_dir"]))
+    return {
+        "case_id": case["case_id"], "title": case["title"],
+        "task_kind": case["task_kind"],
+        "decision_question": case["decision_question"],
+        "arms": case["arms"], "input_diffs": case["input_diffs"],
+        "attribution_note": case["attribution_note"],
+        "parity_note": case["parity_note"],
+        "limitations": case["limitations"], "views": case["views"],
+        "available": case["available"],
+        "flagship": flag,
+        "replay": {"a": _replay(run_a, idx), "b": _replay(run_b, idx)},
+        "who": _who_moved(root, flag["t0"], cls_of, scens),
+        "robustness": robust,
+    }
+
+
 def collect(ab_root=None, sens_dir=None, replay_seed=0):
     from experiments.demo import _panel
     from runtime.recorder import _code_hash
+    from .cases import all_cases
     ab_root = Path(ab_root) if ab_root else FLAGSHIP
     sens_dir = Path(sens_dir) if sens_dir else SENSITIVITY
     panel = _panel()
@@ -255,10 +303,16 @@ def collect(ab_root=None, sens_dir=None, replay_seed=0):
     idx = {a["persona_id"]: i for i, a in enumerate(order)}
     cls_of = {a["persona_id"]: a["cls"] for a in panel}
 
-    flag = _flagship(ab_root, panel_hash)
-    run_a = ab_root / f"news_a_s{replay_seed}"
-    run_b = ab_root / f"news_b_s{replay_seed}"
-    robust = _robustness(flag, sens_dir)
+    # every case, isolated payloads (P1); the legacy top-level keys below
+    # keep pointing at the DEFAULT case so existing consumers do not break
+    cases = {c["case_id"]: collect_case(c, panel, panel_hash, idx, cls_of,
+                                        replay_seed)
+             for c in all_cases()}
+    default = "news_wording"
+    dc = cases[default]
+    flag = dc["flagship"]
+    run_a = Path(flag["root"]) / f"{_SCENS[default][0]}_s{replay_seed}"
+    robust = dc["robustness"] or _robustness(flag, sens_dir)
     evidence = _evidence(panel, run_a)
     from evaluation.scorecard import build_scorecard
     performance = build_scorecard(flag, robust, evidence)
@@ -267,10 +321,13 @@ def collect(ab_root=None, sens_dir=None, replay_seed=0):
                  "code_hash": _code_hash(), "panel_hash": panel_hash,
                  "panel": _rel(PANEL), "n_agents": len(panel),
                  "assets": list(ASSETS), "asset_names": ASSET_NAMES},
+        "case_order": list(cases),
+        "default_case": default,
+        "cases": cases,
         "flagship": flag,
         "agents": {"classes": classes, "rows": agent_rows},
-        "replay": {"a": _replay(run_a, idx), "b": _replay(run_b, idx)},
-        "who": _who_moved(ab_root, flag["t0"], cls_of),
+        "replay": dc["replay"],
+        "who": dc["who"],
         "robustness": robust,
         "performance": performance,
         "evidence": evidence,
